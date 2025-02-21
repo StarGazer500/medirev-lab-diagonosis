@@ -33,7 +33,7 @@ class CreatePatientView(View):
                 "id": patient.id,
                 "first_name": patient.first_name,
                 "last_name": patient.last_name,
-                "date_of_birth": patient.date_of_birth.isoformat(),
+                "date_of_birth": patient.date_of_birth,
                 "gender": patient.gender,
                 "contact_number": patient.contact_number,
                 "email": patient.email,
@@ -53,7 +53,7 @@ class GetPatientView(View):
                 "id": patient.id,
                 "first_name": patient.first_name,
                 "last_name": patient.last_name,
-                "date_of_birth": patient.date_of_birth.isoformat(),
+                "date_of_birth": patient.date_of_birth,
                 "gender": patient.gender,
                 "contact_number": patient.contact_number,
                 "email": patient.email,
@@ -62,6 +62,53 @@ class GetPatientView(View):
         except Patient.DoesNotExist:
             return JsonResponse({"error": "Patient not found"}, status=404)
 
+
+
+class CreateDoctorView(View):
+    async def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)
+            first_name = data.get('first_name')
+            last_name = data.get('last_name')
+            specialty = data.get('specialty')
+            
+
+            # Create a new patient
+            doctor = await Doctor.objects.acreate(
+                first_name=first_name,
+                last_name=last_name,
+                specialty = specialty
+            
+            )
+
+            response_data = {
+                "id": doctor.id,
+                "first_name": doctor.first_name,
+                "last_name": doctor.last_name,
+                "specialty": doctor.specialty
+              
+            }
+            return JsonResponse(response_data, status=201)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+# Async view to retrieve a Patient
+class GetDoctorView(View):
+    async def get(self, request, *args, **kwargs):
+        doctor_id = kwargs.get('doctor_id')
+        try:
+            doctor = await Doctor.objects.aget(id=doctor_id)
+            
+            response_data = {
+                "id": doctor.id,
+                "first_name": doctor.first_name,
+                "last_name": doctor.last_name,
+                "specialty": doctor.specialty
+              
+            }
+            return JsonResponse(response_data,status = 200)
+        except Patient.DoesNotExist:
+            return JsonResponse({"error": "Doctor not found"}, status=404)
 
 
 # Async view to create a LabOrderRequest
@@ -90,10 +137,10 @@ class CreateLabOrderRequestView(View):
             response_data = {
                 "id": lab_order_request.id,
                 "patient": str(lab_order_request.patient),
-                "doctor": str(lab_order_request.doctor),
+                # "doctor": str(lab_order_request.doctor),
                 "test_name": lab_order_request.test_name,
                 "status": lab_order_request.status,
-                "requested_date": lab_order_request.requested_date.isoformat(),
+                "requested_date": lab_order_request.requested_date,
             }
             return JsonResponse(response_data, status=201)
         except Exception as e:
@@ -105,7 +152,7 @@ class GetLabOrderRequestView(View):
     async def get(self, request, *args, **kwargs):
         order_id = kwargs.get('order_id')
         try:
-            lab_order_request = await LabOrderRequest.objects.aget(id=order_id)
+            lab_order_request = await LabOrderRequest.objects.select_related('patient').aget(id=order_id)
             
             response_data = {
                 "id": lab_order_request.id,
@@ -113,8 +160,8 @@ class GetLabOrderRequestView(View):
                 # "doctor": str(lab_order_request.doctor),
                 "test_name": lab_order_request.test_name,
                 "status": lab_order_request.status,
-                "requested_date": lab_order_request.requested_date.isoformat(),
-                "order_date": lab_order_request.order_date.isoformat(),
+                "requested_date": lab_order_request.requested_date,
+                "order_date": lab_order_request.order_date,
             }
             return JsonResponse(response_data,status=200)
         except LabOrderRequest.DoesNotExist:
@@ -159,7 +206,7 @@ class GetLabResultView(View):
     async def get(self, request, *args, **kwargs):
         lab_result_id = kwargs.get('lab_result_id')
         try:
-            lab_result = await LabResult.objects.aget(id=lab_result_id)
+            lab_result = await LabResult.objects.select_related('lab_order','doctor').aget(id=lab_result_id)
             
             response_data = {
                 "id": lab_result.id,
@@ -174,7 +221,7 @@ class GetLabResultView(View):
             return JsonResponse({"error": "Lab result not found"}, status=404)
         
 
-@method_decorator(csrf_exempt, name='dispatch')
+# @method_decorator(csrf_exempt, name='dispatch')
 class CreateLabReportView(View):
     async def post(self, request, *args, **kwargs):
         try:
@@ -209,7 +256,7 @@ class GetLabReportView(View):
     async def get(self, request, *args, **kwargs):
         lab_report_id = kwargs.get('lab_report_id')
         try:
-            lab_report = await LabReport.objects.aget(id=lab_report_id)
+            lab_report = await LabReport.objects.select_related('lab_result').aget(id=lab_report_id)
             
             response_data = {
                 "id": lab_report.id,

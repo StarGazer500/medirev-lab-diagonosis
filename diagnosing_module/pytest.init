@@ -1,4 +1,0 @@
-[pytest]
-# Enable strict mode for asyncio
-asyncio_mode = strict
-
