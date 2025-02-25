@@ -8,6 +8,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -501,24 +503,51 @@
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                <label for="name">Your Name</label>
+                                <input type="text" class="form-control" id="first-name" name ="first_name" placeholder="Your First Name">
+                                <label for="first-name">First Name</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="mail" placeholder="Your Email">
-                                <label for="mail">Your Email</label>
+                                <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Your Last Name">
+                                <label for="last-name">Last Name</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="mobile" placeholder="Your Mobile">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="birth-date" name="date_of_birth" placeholder="Date of Birth">
+                                <label for="birth-date">Date of Birth</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="gender" name="gender">
+                                    <option selected>Male</option>
+                                    <option value="">Female</option>
+                                    <option value="">Bisexual</option>
+                                    <option value="">Other</option>
+                                    
+                                </select>
+                                <!-- <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender"> -->
+                                <label for="gender">Gender</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input  type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="mobile" name ="contact_number" placeholder="Your Mobile">
                                 <label for="mobile">Your Mobile</label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-floating">
+                        <!-- <div class="col-sm-6"> -->
+                            <!-- <div class="form-floating">
                                 <select class="form-select" id="service">
                                     <option selected>Pathology Testing</option>
                                     <option value="">Microbiology Tests</option>
@@ -526,17 +555,17 @@
                                     <option value="">Histopatology Tests</option>
                                 </select>
                                 <label for="service">Choose A Service</label>
-                            </div>
-                        </div>
+                            </div> -->
+                        <!-- </div> -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a message here" id="message"
+                                <textarea class="form-control" name=" test_description" placeholder="Describe the Kind of Test" id="message"
                                     style="height: 130px"></textarea>
-                                <label for="message">Message</label>
+                                <label for="message"> Describe The Lab Test You Want to have</label>
                             </div>
                         </div>
                         <div class="col-12 text-center">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
+                            <button  id ="submit-btn" class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
                         </div>
                     </div>
                 </div>
@@ -774,7 +803,8 @@
     <script src="{% static 'lab_request/lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="{% static 'lab_request/js/main.js' %}"></script>
+    <script src="{% static 'lab_request/js/main.js' %}" defer></script>
+    <script src="{% static 'lab_request/js/index.js' %}"></script>
 </body>
 
 </html>

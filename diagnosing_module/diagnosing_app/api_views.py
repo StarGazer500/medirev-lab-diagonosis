@@ -1,10 +1,12 @@
 from django.http import JsonResponse
+from django.db import IntegrityError
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import LabOrderRequest, Patient, Doctor,LabResult,LabReport
 from django.shortcuts import get_object_or_404
 import json
+
 
 
 # @method_decorator(csrf_exempt, name='dispatch')
@@ -39,8 +41,27 @@ class CreatePatientView(View):
                 "email": patient.email,
             }
             return JsonResponse(response_data, status=201)
+        
+        except IntegrityError as e:
+            print("intergrity")
+            # Handle unique constraint errors or other integrity errors
+            if 'UNIQUE constraint failed' in str(e):
+                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+            else:
+                print("different int")
+                # If it's another integrity error, log the error and return a generic message
+                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
+
+            # Log the exception for debugging (use logging in production)
+            print(str(e))  # In production, use a proper logging mechanism
+            
+            # Return a generic error message
+      
+            return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
+
+
 
 # Async view to retrieve a Patient
 class GetPatientView(View):
@@ -61,6 +82,8 @@ class GetPatientView(View):
             return JsonResponse(response_data)
         except Patient.DoesNotExist:
             return JsonResponse({"error": "Patient not found"}, status=404)
+        
+        
 
 
 
@@ -89,8 +112,25 @@ class CreateDoctorView(View):
               
             }
             return JsonResponse(response_data, status=201)
+      
+        except IntegrityError as e:
+            print("intergrity")
+            # Handle unique constraint errors or other integrity errors
+            if 'UNIQUE constraint failed' in str(e):
+                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+            else:
+                print("different int")
+                # If it's another integrity error, log the error and return a generic message
+                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
+
+            # Log the exception for debugging (use logging in production)
+            print(str(e))  # In production, use a proper logging mechanism
+            
+            # Return a generic error message
+            return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
+
 
 # Async view to retrieve a Patient
 class GetDoctorView(View):
@@ -115,58 +155,79 @@ class GetDoctorView(View):
 # @method_decorator(csrf_exempt, name='dispatch')
 class CreateLabOrderRequestView(View):
     async def post(self, request, *args, **kwargs):
+        print("reached",json.loads(request.body))
         try:
             data = json.loads(request.body)
-            patient_id = data.get('patient_id')
-            # doctor_id = data.get('doctor_id')
-            test_name = data.get('test_name')
+            
+            # Extract patient data from the request
+            patient_data = {
+                'first_name': data.get('first_name'),
+                'last_name': data.get('last_name'),
+                'date_of_birth': data.get('date_of_birth'),
+                'gender': data.get('gender'),
+                'contact_number': data.get('contact_number'),
+                'email': data.get('email')
+            }
+
+             # Extract lab order data
+            test_description = data.get('test_description')
             requested_date = data.get('requested_date')
-
-            # Fetch the patient and doctor from DB
-            patient = await Patient.objects.aget(id=patient_id)  # Async ORM query
-            # doctor = await Doctor.objects.aget(id=doctor_id)
-
-            # Create the lab order request
+            
+            # Create patient record
+            patient = await Patient.objects.acreate(**patient_data)
+            
+            # Create the lab order request with the newly created patient
             lab_order_request = await LabOrderRequest.objects.acreate(
                 patient=patient,
-                # doctor=doctor,
-                test_name=test_name,
+                test_description=test_description,
                 requested_date=requested_date,
             )
-
+            
             response_data = {
                 "id": lab_order_request.id,
-                "patient": str(lab_order_request.patient),
-                # "doctor": str(lab_order_request.doctor),
-                "test_name": lab_order_request.test_name,
-                "status": lab_order_request.status,
+                "patient": f"{patient.first_name} {patient.last_name}",
+                "test_description": lab_order_request.test_description,
+                "request_status": lab_order_request.request_status,
                 "requested_date": lab_order_request.requested_date,
             }
             return JsonResponse(response_data, status=201)
+        
+        except IntegrityError as e:
+            print("intergrity")
+            # Handle unique constraint errors or other integrity errors
+            if 'UNIQUE constraint failed' in str(e):
+                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+            else:
+                print("different int")
+                # If it's another integrity error, log the error and return a generic message
+                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
 
+            # Log the exception for debugging (use logging in production)
+            print(str(e))  # In production, use a proper logging mechanism
+            
+            # Return a generic error message
+            return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
 
-#Async view to Retrieve a LabOrderRequest
+# GetLabOrderRequestView remains mostly the same, but let's fix the field name
 class GetLabOrderRequestView(View):
     async def get(self, request, *args, **kwargs):
         order_id = kwargs.get('order_id')
         try:
             lab_order_request = await LabOrderRequest.objects.select_related('patient').aget(id=order_id)
-            
             response_data = {
                 "id": lab_order_request.id,
-                "patient": str(lab_order_request.patient),
-                # "doctor": str(lab_order_request.doctor),
-                "test_name": lab_order_request.test_name,
+                "patient": f"{lab_order_request.patient.first_name} {lab_order_request.patient.last_name}",
+                "test_description": lab_order_request.test_description,
                 "status": lab_order_request.status,
                 "requested_date": lab_order_request.requested_date,
                 "order_date": lab_order_request.order_date,
             }
-            return JsonResponse(response_data,status=200)
+            return JsonResponse(response_data, status=200)
         except LabOrderRequest.DoesNotExist:
             return JsonResponse({"error": "Order not found"}, status=404)
-        
+
 
 # Async view to create a LabResult
 # @method_decorator(csrf_exempt, name='dispatch')
@@ -198,8 +259,27 @@ class CreateLabResultView(View):
                 "created_at": lab_result.created_at.isoformat(),
             }
             return JsonResponse(response_data, status=201)
+    
+        
+        except IntegrityError as e:
+            print("intergrity")
+            # Handle unique constraint errors or other integrity errors
+            if 'UNIQUE constraint failed' in str(e):
+                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+            else:
+                print("different int")
+                # If it's another integrity error, log the error and return a generic message
+                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
+
+            # Log the exception for debugging (use logging in production)
+            print(str(e))  # In production, use a proper logging mechanism
+            
+            # Return a generic error message
+            return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
+
+
 
 # Async view to retrieve a LabResult
 class GetLabResultView(View):
@@ -248,8 +328,26 @@ class CreateLabReportView(View):
                 "shared_with_doctor": lab_report.shared_with_doctor,
             }
             return JsonResponse(response_data, status=201)
+    
+        except IntegrityError as e:
+            print("intergrity")
+            # Handle unique constraint errors or other integrity errors
+            if 'UNIQUE constraint failed' in str(e):
+                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+            else:
+                print("different int")
+                # If it's another integrity error, log the error and return a generic message
+                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
+
+            # Log the exception for debugging (use logging in production)
+            print(str(e))  # In production, use a proper logging mechanism
+            
+            # Return a generic error message
+            return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
+
+
 
 # Async view to retrieve a LabReport
 class GetLabReportView(View):

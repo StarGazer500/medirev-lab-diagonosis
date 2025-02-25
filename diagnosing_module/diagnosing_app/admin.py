@@ -14,18 +14,18 @@ class DoctorAdmin(admin.ModelAdmin):
     ordering = ('last_name', 'first_name')
 
 class LabOrderRequestAdmin(admin.ModelAdmin):
-    list_display = ('patient', 'test_name', 'order_date', 'status')
-    list_filter = ('status',)
-    search_fields = ('test_name', 'patient__first_name', 'patient__last_name')
+    list_display = ('patient', 'test_description', 'order_date', 'request_status')
+    list_filter = ('request_status',)
+    search_fields = ('test_description', 'patient__first_name', 'patient__last_name')
 
 class LabResultAdmin(admin.ModelAdmin):
     list_display = ('lab_order', 'result', 'test_date')
-    search_fields = ('lab_order__test_name',)
+    search_fields = ('lab_order__test_description',)
 
 class LabReportAdmin(admin.ModelAdmin):
     list_display = ('lab_result', 'generated_at', 'shared_with_doctor')
     list_filter = ('shared_with_doctor',)
-    search_fields = ('lab_result__lab_order__test_name',)
+    search_fields = ('lab_result__lab_order__test_description',)
 
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(Doctor, DoctorAdmin)

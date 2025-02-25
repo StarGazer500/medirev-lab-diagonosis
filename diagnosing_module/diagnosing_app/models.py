@@ -29,9 +29,9 @@ class LabOrderRequest(models.Model):
     ]
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     # doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    test_name = models.CharField(max_length=255)
+    test_description = models.TextField(default="Initial data")
     order_date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(
+    request_status = models.CharField(
         max_length=10, 
         choices=ORDER_STATUS_CHOICES, 
         default='PENDING'
@@ -39,7 +39,7 @@ class LabOrderRequest(models.Model):
     requested_date = models.DateTimeField()
     
     def __str__(self):
-        return f"Order #{self.id} - {self.test_name} for {self.patient}"
+        return f"Order #{self.id} - {self.test_description} for {self.patient}"
 
     # def is_completed(self):
     #     return self.status == 'COMPLETED'
@@ -66,4 +66,5 @@ class LabReport(models.Model):
     def __str__(self):
         return f"Report for Order #{self.lab_result.lab_order.id}"
 
- 
+#  class Department():
+#     department

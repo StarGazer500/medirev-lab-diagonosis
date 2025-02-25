@@ -1,0 +1,4 @@
+run "make collect-static" as "py-collect-static"
+run "make start-dev-server" as "py-run-dev"
+run "make start-prod-server" as "py-run-prod"
+run "make migrate-db" as "py-migrate-db"
