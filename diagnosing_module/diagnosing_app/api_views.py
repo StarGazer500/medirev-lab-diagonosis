@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from .models import LabOrderRequest, Patient, Doctor,LabResult,LabReport
 from django.shortcuts import get_object_or_404
 import json
-
+from asgiref.sync import sync_to_async
 
 
 # @method_decorator(csrf_exempt, name='dispatch')
@@ -62,8 +62,32 @@ class CreatePatientView(View):
             return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
 
 
+class GetAllPatientView(View):
+    async def get(self, request, *args, **kwargs):
+        try:
+            # Fetch all patients
+            patients = await sync_to_async(list)(Patient.objects.all())
+            print(patients)
+            # Prepare the response data
+            response_data = [
+                {
+                    "id": patient.id,
+                    "first_name": patient.first_name,
+                    "last_name": patient.last_name,
+                    "date_of_birth": patient.date_of_birth,
+                    "gender": patient.gender,
+                    "contact_number": patient.contact_number,
+                    "email": patient.email,
+                }
+                for patient in patients
+            ]
+            return JsonResponse(response_data, safe=False)  # safe=False allows the list as JSON
+        except Exception as e:
+            print("error is ",e)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
 
 # Async view to retrieve a Patient
+
 class GetPatientView(View):
     async def get(self, request, *args, **kwargs):
         patient_id = kwargs.get('patient_id')
@@ -82,7 +106,59 @@ class GetPatientView(View):
             return JsonResponse(response_data)
         except Patient.DoesNotExist:
             return JsonResponse({"error": "Patient not found"}, status=404)
-        
+
+    async def put(self, request, *args, **kwargs):
+        patient_id = kwargs.get('patient_id')
+        try:
+            patient = await Patient.objects.aget(id=patient_id)
+            # Parse the incoming JSON data
+            data = json.loads(request.body)
+            
+            # Update patient fields if they are provided in the request
+            patient.first_name = data.get('first_name', patient.first_name)
+            patient.last_name = data.get('last_name', patient.last_name)
+            patient.date_of_birth = data.get('date_of_birth', patient.date_of_birth)
+            patient.gender = data.get('gender', patient.gender)
+            patient.contact_number = data.get('contact_number', patient.contact_number)
+            patient.email = data.get('email', patient.email)
+            
+            # Save the updated patient
+            await patient.asave()
+            
+            # Prepare response with updated data
+            response_data = {
+                "id": patient.id,
+                "first_name": patient.first_name,
+                "last_name": patient.last_name,
+                "date_of_birth": patient.date_of_birth,
+                "gender": patient.gender,
+                "contact_number": patient.contact_number,
+                "email": patient.email,
+            }
+            return JsonResponse(response_data)
+        except Patient.DoesNotExist:
+            return JsonResponse({"error": "Patient not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    async def delete(self, request, *args, **kwargs):
+        patient_id = kwargs.get('patient_id')
+        try:
+            # Try to get the patient object to delete
+            patient = await Patient.objects.aget(id=patient_id)
+            
+            # Delete the patient
+            await patient.adelete()
+            
+            # Return success response
+            return JsonResponse({"message": "Patient deleted successfully"}, status=200)
+        except Patient.DoesNotExist:
+            return JsonResponse({"error": "Patient not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
         
 
 
@@ -198,7 +274,7 @@ class CreateLabOrderRequestView(View):
             if 'UNIQUE constraint failed' in str(e):
                 return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
             else:
-                print("different int")
+                print("different integrity",e)
                 # If it's another integrity error, log the error and return a generic message
                 return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
 
@@ -210,8 +286,11 @@ class CreateLabOrderRequestView(View):
             # Return a generic error message
             return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
 
-# GetLabOrderRequestView remains mostly the same, but let's fix the field name
+
+
 class GetLabOrderRequestView(View):
+
+    # GET method to retrieve lab order request details
     async def get(self, request, *args, **kwargs):
         order_id = kwargs.get('order_id')
         try:
@@ -220,13 +299,92 @@ class GetLabOrderRequestView(View):
                 "id": lab_order_request.id,
                 "patient": f"{lab_order_request.patient.first_name} {lab_order_request.patient.last_name}",
                 "test_description": lab_order_request.test_description,
-                "status": lab_order_request.status,
+                "status": lab_order_request.request_status,
                 "requested_date": lab_order_request.requested_date,
                 "order_date": lab_order_request.order_date,
             }
             return JsonResponse(response_data, status=200)
         except LabOrderRequest.DoesNotExist:
             return JsonResponse({"error": "Order not found"}, status=404)
+
+    # PUT method to update an existing lab order request
+    async def put(self, request, *args, **kwargs):
+        order_id = kwargs.get('order_id')
+        try:
+            lab_order_request = await LabOrderRequest.objects.select_related('patient').aget(id=order_id)
+            # Parse the incoming JSON data
+            data = json.loads(request.body)
+            
+            # Update fields if they are provided in the request
+            lab_order_request.test_description = data.get('test_description', lab_order_request.test_description)
+            lab_order_request.request_status = data.get('request_status', lab_order_request.request_status)
+     
+           
+
+            # Save the updated lab order request
+            await lab_order_request.asave()
+
+            # Prepare response with updated data
+            response_data = {
+                "id": lab_order_request.id,
+                "patient": f"{lab_order_request.patient.first_name} {lab_order_request.patient.last_name}",
+                "test_description": lab_order_request.test_description,
+                "status": lab_order_request.request_status,
+                "requested_date": lab_order_request.requested_date,
+                "order_date": lab_order_request.order_date,
+            }
+            return JsonResponse(response_data, status=200)
+        except LabOrderRequest.DoesNotExist:
+            return JsonResponse({"error": "Order not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print("error",e)
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # DELETE method to remove a lab order request
+    async def delete(self, request, *args, **kwargs):
+        order_id = kwargs.get('order_id')
+        try:
+            # Try to get the lab order request object to delete
+            lab_order_request = await LabOrderRequest.objects.aget(id=order_id)
+            
+            # Delete the lab order request
+            await lab_order_request.adelete()
+            
+            # Return success response
+            return JsonResponse({"message": "Lab order request deleted successfully"}, status=200)
+        except LabOrderRequest.DoesNotExist:
+            return JsonResponse({"error": "Order not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+
+
+class GetAllLabOrderRequestView(View):
+    async def get(self, request, *args, **kwargs):
+        try:
+            # Fetch all Lab Requests with related patient data
+            labrequests = await sync_to_async(list)(
+                LabOrderRequest.objects.select_related('patient').all()
+            )
+            
+            # Prepare the response data
+            response_data = [
+                {
+                    "id": labrequest.id,
+                    "patient": f"{labrequest.patient.first_name} {labrequest.patient.last_name}",
+                    "test_description": labrequest.test_description,
+                    "request_status": labrequest.request_status,
+                    "requested_date": labrequest.requested_date,
+                    "order_date": labrequest.order_date,
+                }
+                for labrequest in labrequests
+            ]
+            return JsonResponse(response_data, safe=False)
+        except Exception as e:
+            print("error is ", e)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
 
 
 # Async view to create a LabResult
