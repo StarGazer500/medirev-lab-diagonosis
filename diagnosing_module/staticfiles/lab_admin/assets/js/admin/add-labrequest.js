@@ -63,8 +63,54 @@ $(document).ready(function() {
     }
 
 
+    function fetchPatientData() {
+        // let id = 1; // Replace with the actual patient ID if need
+        // ed
+        
+        let patientId = localStorage.getItem('patientId');
+        $.ajax({
+            url: `/laboratory/get-patient/${patientId}`, // Replace with your actual endpoint
+            type: 'GET',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function(response) {
+                // Check if response has data
+                if (response) {
+                    console.log(response)
+                    // Call the function to populate the patient data
+                    // populatePatientData(response);
+                    $('input[name="first_name"]').val(response.first_name);
+                    $('input[name="last_name"]').val(response.last_name);
+                    $('input[name="date_of_birth"]').val(response.date_of_birth);
+                    $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+                    $('input[name="contact_number"]').val(response.contact_number)
+                    $('input[name="email"]').val(response.email)
+                } 
+            },
+            error: function(xhr, status, error) {
+                console.log("Error fetching patient data:", error);
+                
+                var errorMessage = 'Failed to load patient data.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                    console.log(errorMessage)
+                }
+                
+                // var modal = createModal(errorMessage);
+                // modal.show();
+            }
+        });
+    }
+    // window.location.href = `/laboratory/add-appointment/`;
+    let source_url = localStorage.getItem("source_url")
+    // fetchPatientData()
+    console.log(source_url)
+    source_url==="http://localhost:8000/laboratory/patients/" ? fetchPatientData() : null
+
     $('#labrequestForm').on('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
+        let patientId = localStorage.getItem('patientId');
         
         // let patientId = localStorage.getItem('patientId');
         let formData = {
@@ -75,7 +121,9 @@ $(document).ready(function() {
             contact_number: $('input[name="contact_number"]').val(),
             test_description: $('#message').val().trim(),
             email: $('input[name="email"]').val(),
-            requested_date: new Date().toISOString()
+            requested_date: new Date().toISOString(),
+            patientId:patientId
+            
         };
     
         $.ajax({

@@ -59,6 +59,7 @@ $(document).ready(function() {
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item edit-labrequest-btn" href="/laboratory/edit-appointment/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                             <a class="dropdown-item delete-labrequest-btn" href="#" data-labrequest-id="${labrequest.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item add-lab-result-btn" href="/laboratory/add-lab-result/"><i class="fa fa-pencil m-r-5"></i> Generate Results</a> 
                         </div>
                     </div>
                 </td>
@@ -69,6 +70,49 @@ $(document).ready(function() {
         $('#labrequest-tbody').append(labrequestRow);
 
     }
+
+    $(document).on('click', '.add-appointment', function(event) {
+        event.preventDefault(); // Prevent default action (navigation)
+       
+    
+      
+        localStorage.setItem("source_url",window.location.href)
+        
+
+        window.location.href = `/laboratory/add-appointment/`;
+    });
+
+
+    $(document).on('click', '.add-lab-result-btn', function(event) {
+        event.preventDefault(); // Prevent default action (navigation)
+       
+    
+        // Get the parent row of the clicked Edit button
+        var labrequestRow = $(this).closest('tr');
+        // console.log("patient email",patientRow)
+        
+        // Extract the email and other necessary information from the row
+        // var patientEmail = patientRow.data('patient-email');
+        // console.log(patientEmail)
+        var labrequestId =labrequestRow.data('labrequest-id');
+        console.log("id",labrequestId)
+        
+        // For now, log the email (you can store it in localStorage, sessionStorage, or use it directly)
+        // console.log("Patient Email:", patientEmail);
+        // console.log("Patient ID:", patientId);
+    
+        // Store the email in localStorage (or sessionStorage) if needed
+        // localStorage.setItem('patientEmail', patientEmail);
+        localStorage.setItem('labrequestId', labrequestId);
+        localStorage.setItem("source_url",window.location.href)
+        
+
+        // console.log("patient email",patientEmail)
+    
+    
+        // Redirect to the Edit page or do something else
+        window.location.href = `/laboratory/add-lab-result/`;
+    });
 
 
     $(document).on('click', '.edit-labrequest-btn', function(event) {

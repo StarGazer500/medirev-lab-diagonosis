@@ -1,34 +1,33 @@
 $(document).ready(function() {
-    // Function to fetch patient data from the server
-    function fetchPatientData() {
+    // Function to fetch lab request data from the server
+    function fetchLabReportsData() {
         $.ajax({
-            url: '/laboratory/get-all-patient/', // Replace with your actual endpoint
+            url: '/laboratory/get-all-lab-reports/',
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
             },
             success: function(response) {
                 // Clear existing table rows
-                $('#patient-tbody').empty();
-                // console.log(response)
+                $('#labreport-tbody').empty();
                 
                 // Check if response has data
                 if (response && response.length > 0) {
-                    console.log("res",response)
-                    // console.log(response)
-                    // Append each patient to the table
-                    $.each(response, function(index, patient) {
-                        appendPatientToTable(patient);
+                    console.log("res", response);
+                    
+                    // Append each lab request to the table
+                    $.each(response, function(index, labreport) {
+                        appendLabReportsToTable(labreport);
                     });
                 } else {
-                    // Show message if no patients
-                    $('#patient-tbody').append('<tr><td colspan="8" class="text-center">No patient records found</td></tr>');
+                    // Show message if no lab requests
+                    $('#labreport-tbody').append('<tr><td colspan="7" class="text-center">No Lab Reports records found</td></tr>');
                 }
             },
             error: function(xhr, status, error) {
-                console.log("Error fetching patient data:", error);
+                console.log("Error fetching Lab Reports data:", error);
                 
-                var errorMessage = 'Failed to load patient data.';
+                var errorMessage = 'Failed to load Lab Reports data.';
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
@@ -39,28 +38,26 @@ $(document).ready(function() {
         });
     }
     
-    // Function to append a single patient to the table
-    function appendPatientToTable(patient) {
-        // Format date (assuming date is in ISO format)
-        let formattedDate = formatDate(patient.date_of_birth);
-        
-        // Create table row with patient data
-        var patientRow = `
-            <tr  data-patient-id="${patient.id}" >
-               
-                <td>${patient.first_name}</td>
-                <td>${patient.last_name}</td>
-                <td>${formattedDate}</td>
-                <td>${patient.gender}</td>
-                <td>${patient.contact_number}</td>
-                <td>${patient.email}</td>
+    // Function to append a single lab request to the table
+    function  appendLabReportsToTable(labreport) {
+        // Format dates (assuming date is in ISO format)
+        let formattedgeneratedatDate = formatDate(labreport.generated_at);
+       
+        // Create table row with lab request data
+        var labreportRow = `
+            <tr data-labreport-id="${labreport.id}">
+                <td>${labreport.id}</td>
+                <td>${labreport.lab_result}</td>
+                <td>${labreport.doctor}</td>
+                <td>${labreport.report_data}</td>
+                <td>${formattedgeneratedatDate}</td>
+                <td>${labreport.shared_with_doctor}</td>
                 <td class="text-right">
                     <div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item edit-patient-btn" href="/laboratory/edit-patient/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item delete-patient-btn" href="#" data-patient-id="${patient.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                            <a class="dropdown-item add-appointment-btn" href="/laboratory/add-appointment/"><i class="fa fa-pencil m-r-5"></i> Add Appointment</a>   
+                            <a class="dropdown-item edit-labreport-btn" href="/laboratory/edit-lab-report/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item delete-labreport-btn" href="#" data-labreport-id="${labreport.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         </div>
                     </div>
                 </td>
@@ -68,69 +65,51 @@ $(document).ready(function() {
         `;
         
         // Append the row to the table body
-        $('#patient-tbody').append(patientRow);
+        $('#labreport-tbody').append(labreportRow);
+
     }
 
-    $(document).on('click', '.edit-patient-btn', function(event) {
+    $(document).on('click', '.add-lab-report-btn', function(event) {
         event.preventDefault(); // Prevent default action (navigation)
        
     
-        // Get the parent row of the clicked Edit button
-        var patientRow = $(this).closest('tr');
-        // console.log("patient email",patientRow)
-        
-        // Extract the email and other necessary information from the row
-        // var patientEmail = patientRow.data('patient-email');
-        // console.log(patientEmail)
-        var patientId = patientRow.data('patient-id');
-        console.log("id",patientId)
-        
-        // For now, log the email (you can store it in localStorage, sessionStorage, or use it directly)
-        // console.log("Patient Email:", patientEmail);
-        // console.log("Patient ID:", patientId);
-    
-        // Store the email in localStorage (or sessionStorage) if needed
-        // localStorage.setItem('patientEmail', patientEmail);
-        localStorage.setItem('patientId', patientId);
-
-        // console.log("patient email",patientEmail)
-    
-    
-        // Redirect to the Edit page or do something else
-        window.location.href = `/laboratory/edit-patient/`;
-    });
-
-
-    $(document).on('click', '.add-appointment-btn', function(event) {
-        event.preventDefault(); // Prevent default action (navigation)
-       
-    
-        // Get the parent row of the clicked Edit button
-        var patientRow = $(this).closest('tr');
-        // console.log("patient email",patientRow)
-        
-        // Extract the email and other necessary information from the row
-        // var patientEmail = patientRow.data('patient-email');
-        // console.log(patientEmail)
-        var patientId = patientRow.data('patient-id');
-        console.log("id",patientId)
-        
-        // For now, log the email (you can store it in localStorage, sessionStorage, or use it directly)
-        // console.log("Patient Email:", patientEmail);
-        // console.log("Patient ID:", patientId);
-    
-        // Store the email in localStorage (or sessionStorage) if needed
-        // localStorage.setItem('patientEmail', patientEmail);
-        localStorage.setItem('patientId', patientId);
+      
         localStorage.setItem("source_url",window.location.href)
         
 
+        window.location.href = `/laboratory/add-lab-report/`;
+    });
+
+
+    $(document).on('click', '.edit-labreport-btn', function(event) {
+        event.preventDefault(); // Prevent default action (navigation)
+       
+    
+        // Get the parent row of the clicked Edit button
+        var labreportRow = $(this).closest('tr');
+        // console.log("patient email",patientRow)
+        
+        // Extract the email and other necessary information from the row
+        // var patientEmail = patientRow.data('patient-email');
+        // console.log(patientEmail)
+        var labreporttId =labreportRow.data('labreport-id');
+        console.log("id",labreporttId)
+        
+        // For now, log the email (you can store it in localStorage, sessionStorage, or use it directly)
+        // console.log("Patient Email:", patientEmail);
+        // console.log("Patient ID:", patientId);
+    
+        // Store the email in localStorage (or sessionStorage) if needed
+        // localStorage.setItem('patientEmail', patientEmail);
+        localStorage.setItem('labreporttId', labreporttId);
+
         // console.log("patient email",patientEmail)
     
     
         // Redirect to the Edit page or do something else
-        window.location.href = `/laboratory/add-appointment/`;
+        window.location.href = `/laboratory/edit-lab-report/`;
     });
+    
     
     // Helper function to format date (YYYY-MM-DD to DD-MM-YY)
     function formatDate(dateString) {
@@ -146,7 +125,7 @@ $(document).ready(function() {
         return `${day}-${month}-${year}`;
     }
     
-    // Get CSRF token from cookie (reusing your existing function)
+    // Get CSRF token from cookie
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -162,28 +141,25 @@ $(document).ready(function() {
         return cookieValue;
     }
     
-    // Delete patient handler (using event delegation)
-    $(document).on('click', '.delete-patient-btn', function(e) {
+    // Delete lab request handler (using event delegation)
+    $(document).on('click', '.delete-labreport-btn', function(e) {
         e.preventDefault();
-        const patientId = $(this).data('patient-id');
-        console.log(patientId)
+        const labreportId = $(this).data('labreport-id');
         
         // Show confirmation modal
-        var modal = createModal(`Are you sure you want to delete this patient record? <br><br>
+        var modal = createModal(`Are you sure you want to delete this Lab Report record? <br><br>
             <div class="text-center">
-                <button type="button" class="btn btn-danger" id="confirmDelete" data-id="${patientId}">Delete</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete" data-id="${labreportId}">Delete</button>
                 <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">Cancel</button>
             </div>`);
         modal.show();
         
         // Handle confirm delete button
         $('#confirmDelete').click(function() {
-
             const id = $(this).data('id');
-         
             
             $.ajax({
-                url: `/laboratory/get-patient/${id}/`,
+                url: `/laboratory/get-lab-reports/${id}/`,
                 type: 'DELETE',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken')
@@ -197,24 +173,24 @@ $(document).ready(function() {
                     $('body').css('padding-right', '');
                     
                     // Show success message
-                    var successModal = createModal("Patient record deleted successfully.");
+                    var successModal = createModal("Lab Report record deleted successfully.");
                     successModal.show();
 
-                     // When success modal is closed, ensure proper cleanup
-                $('#dynamicModal').on('hidden.bs.modal', function() {
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
-                    $('body').css('padding-right', '');
-                    $(this).remove();
-                });
+                    $('#dynamicModal').on('hidden.bs.modal', function() {
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+                        $('body').css('padding-right', '');
+                        $(this).remove();
+                    });
+                        
                     
-                    // Refresh patient list
-                    fetchPatientData();
+                    // Refresh lab request list
+                    fetchLabReportsData();
                 },
                 error: function(xhr, status, error) {
-                    console.log("Error deleting patient:", error);
+                    console.log("Error deleting Lab Report:", error);
                     
-                    var errorMessage = 'Failed to delete patient record.';
+                    var errorMessage = 'Failed to delete Lab Report record.';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
                     }
@@ -227,14 +203,7 @@ $(document).ready(function() {
         });
     });
     
-
-    // Initial load of patient data
-    fetchPatientData();
-    
-    // Optional: Refresh data periodically (every 60 seconds)
-    // setInterval(fetchPatientData, 60000);
-    
-    // Reuse your existing createModal function
+    // Create modal function
     function createModal(bodyContent) {
         // Remove any existing modal with the same ID first
         $('#dynamicModal').remove();
@@ -278,4 +247,10 @@ $(document).ready(function() {
         
         return modalInstance;
     }
+    
+    // Handle datetimepicker error
+   
+    
+    // Initial load of lab request data
+    fetchLabReportsData();
 });

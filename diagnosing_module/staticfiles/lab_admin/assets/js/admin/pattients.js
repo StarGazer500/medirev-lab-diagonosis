@@ -59,7 +59,8 @@ $(document).ready(function() {
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item edit-patient-btn" href="/laboratory/edit-patient/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item delete-patient-btn" href="#" data-patient-id="${patient.id}" class="delete-patient-btn"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item delete-patient-btn" href="#" data-patient-id="${patient.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item add-appointment-btn" href="/laboratory/add-appointment/"><i class="fa fa-pencil m-r-5"></i> Add Appointment</a>   
                         </div>
                     </div>
                 </td>
@@ -97,6 +98,38 @@ $(document).ready(function() {
     
         // Redirect to the Edit page or do something else
         window.location.href = `/laboratory/edit-patient/`;
+    });
+
+
+    $(document).on('click', '.add-appointment-btn', function(event) {
+        event.preventDefault(); // Prevent default action (navigation)
+       
+    
+        // Get the parent row of the clicked Edit button
+        var patientRow = $(this).closest('tr');
+        // console.log("patient email",patientRow)
+        
+        // Extract the email and other necessary information from the row
+        // var patientEmail = patientRow.data('patient-email');
+        // console.log(patientEmail)
+        var patientId = patientRow.data('patient-id');
+        console.log("id",patientId)
+        
+        // For now, log the email (you can store it in localStorage, sessionStorage, or use it directly)
+        // console.log("Patient Email:", patientEmail);
+        // console.log("Patient ID:", patientId);
+    
+        // Store the email in localStorage (or sessionStorage) if needed
+        // localStorage.setItem('patientEmail', patientEmail);
+        localStorage.setItem('patientId', patientId);
+        localStorage.setItem("source_url",window.location.href)
+        
+
+        // console.log("patient email",patientEmail)
+    
+    
+        // Redirect to the Edit page or do something else
+        window.location.href = `/laboratory/add-appointment/`;
     });
     
     // Helper function to format date (YYYY-MM-DD to DD-MM-YY)

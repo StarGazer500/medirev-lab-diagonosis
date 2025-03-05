@@ -63,13 +63,14 @@ $(document).ready(function() {
     }
 
 
-    function fetchPatientData() {
+    function fetchLabResultData() {
         // let id = 1; // Replace with the actual patient ID if need
         // ed
         
-        let patientId = localStorage.getItem('patientId');
+        let labresultId= localStorage.getItem('labresultId');
+        console.log("lab results",labresultId)
         $.ajax({
-            url: `/laboratory/get-patient/${patientId}`, // Replace with your actual endpoint
+            url: `/laboratory/get-lab-result/${labresultId}/`, // Replace with your actual endpoint
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
@@ -80,18 +81,15 @@ $(document).ready(function() {
                     console.log(response)
                     // Call the function to populate the patient data
                     // populatePatientData(response);
-                    $('input[name="first_name"]').val(response.first_name);
-                    $('input[name="last_name"]').val(response.last_name);
-                    $('input[name="date_of_birth"]').val(response.date_of_birth);
-                    $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
-                    $('input[name="contact_number"]').val(response.contact_number)
-                    $('input[name="email"]').val(response.email)
+                    $('input[name="lab_result_id"]').val(response.id);
+                    fetchLabDoctorsData()
+                  
                 } 
             },
             error: function(xhr, status, error) {
-                console.log("Error fetching patient data:", error);
+                console.log("Error fetching Result data:", error);
                 
-                var errorMessage = 'Failed to load patient data.';
+                var errorMessage = 'Failed to load Result data.';
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                     console.log(errorMessage)
@@ -102,32 +100,81 @@ $(document).ready(function() {
             }
         });
     }
+
     // window.location.href = `/laboratory/add-appointment/`;
     let source_url = localStorage.getItem("source_url")
     // fetchPatientData()
     console.log(source_url)
-    source_url==="http://localhost:8000/laboratory/patients/" ? fetchPatientData() : null
+   
+    source_url==="http://localhost:8000/laboratory/lab-results/" ? fetchLabResultData() : fetchLabDoctorsData()
 
-    $('#labrequestForm').on('submit', function(e) {
+    function fetchLabDoctorsData() {
+        $.ajax({
+            url: `/laboratory/get-all-doctor/`, // Replace with your actual endpoint
+            type: 'GET',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function(response) {
+                // Check if the response contains doctor data
+                if (response && response.length > 0) {
+                    console.log(response);
+    
+                    // Get the dropdown element
+                    let $doctorDropdown = $('#doctorDropdown');
+    
+                    // Clear any existing options
+                    $doctorDropdown.empty();
+    
+                    // Add a default 'Select a doctor' option
+                    $doctorDropdown.append('<option value="">Select a doctor</option>');
+    
+                    // Loop through each doctor in the response and add them to the dropdown
+                    response.forEach(function(doctor) {
+                        let option = `<option value="${doctor.id}">${doctor.first_name} ${doctor.last_name}</option>`;
+                        $doctorDropdown.append(option);
+                    });
+    
+                    // Show the dropdown container
+                    $('#doctorDropdownContainer').show();
+                } else {
+                    console.log("No doctors found.");
+                    $('#doctorDropdownContainer').hide(); // Hide the dropdown if no doctors found
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error fetching Doctor data:", error);
+    
+                var errorMessage = 'Failed to load Doctor data.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                    console.log(errorMessage);
+                }
+    
+                var modal = createModal(errorMessage);
+                modal.show();
+            }
+        });
+    }
+    
+    // Event listener for the 'Shared With Doctor' checkbox
+   
+    
+
+    $('#labreportForm').on('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
-        let patientId = localStorage.getItem('patientId');
         
         // let patientId = localStorage.getItem('patientId');
         let formData = {
-            first_name: $('input[name="first_name"]').val(),
-            last_name: $('input[name="last_name"]').val(),
-            date_of_birth: $('input[name="date_of_birth"]').val(),
-            gender: $('input[name="gender"]:checked').val(),
-            contact_number: $('input[name="contact_number"]').val(),
-            test_description: $('#message').val().trim(),
-            email: $('input[name="email"]').val(),
-            requested_date: new Date().toISOString(),
-            patientId:patientId
+            lab_result_id: $('input[name="lab_result_id"]').val(),
+            report_data : $('textarea[name="report_data"]').val().trim(),
+            shared_with_doctor: $('input[name="shared_with_doctor"]').prop('checked'),
+            doctor_id: $('#doctorDropdown').val() 
             
         };
     
         $.ajax({
-            url: `/laboratory/create-laborder-request/`, // Adjust the endpoint as needed
+            url: `/laboratory/create-lab-report/`, // Adjust the endpoint as needed
             type: 'POST',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
@@ -135,7 +182,7 @@ $(document).ready(function() {
             },
             data: JSON.stringify(formData),
             success: function(response) {
-                var modal = createModal("Appointment submitted successfully.An appointment date will be forwarded in your email in short time!");
+                var modal = createModal("Lab Report  submitted successfully.An appointment date will be forwarded in your email in short time!");
                 modal.show();
                 
             },

@@ -27,7 +27,7 @@ class LabOrderRequest(models.Model):
         ('COMPLETED', 'Completed'),
         ('CANCELLED', 'Cancelled'),
     ]
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     # doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     test_description = models.TextField(default="Initial data")
     order_date = models.DateTimeField(default=timezone.now)
@@ -48,7 +48,6 @@ class LabOrderRequest(models.Model):
 
 class LabResult(models.Model):
     lab_order = models.OneToOneField(LabOrderRequest, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     result = models.TextField()
     test_date = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,6 +59,7 @@ class LabResult(models.Model):
  
 class LabReport(models.Model):
     lab_result = models.OneToOneField(LabResult, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE,default=1)
     report_data = models.TextField()  
     generated_at = models.DateTimeField(auto_now_add=True)
     shared_with_doctor = models.BooleanField(default=False)

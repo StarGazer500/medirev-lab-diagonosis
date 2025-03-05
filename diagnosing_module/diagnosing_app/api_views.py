@@ -227,6 +227,28 @@ class GetDoctorView(View):
             return JsonResponse({"error": "Doctor not found"}, status=404)
 
 
+class GetAllDoctorView(View):
+    async def get(self, request, *args, **kwargs):
+        try:
+            # Fetch all patients
+            doctors = await sync_to_async(list)(Doctor.objects.all())
+            
+            # Prepare the response data
+            response_data = [
+                {
+                    "id": doctor.id,
+                    "first_name": doctor.first_name,
+                    "last_name": doctor.last_name,
+                    "specialty": doctor.specialty
+                }
+                for doctor in doctors
+            ]
+            return JsonResponse(response_data, safe=False)  # safe=False allows the list as JSON
+        except Exception as e:
+            print("error is ",e)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
+
+
 # Async view to create a LabOrderRequest
 # @method_decorator(csrf_exempt, name='dispatch')
 class CreateLabOrderRequestView(View):
@@ -242,16 +264,36 @@ class CreateLabOrderRequestView(View):
                 'date_of_birth': data.get('date_of_birth'),
                 'gender': data.get('gender'),
                 'contact_number': data.get('contact_number'),
-                'email': data.get('email')
+                'email': data.get('email'),
+               
             }
 
              # Extract lab order data
             test_description = data.get('test_description')
             requested_date = data.get('requested_date')
             
-            # Create patient record
-            patient = await Patient.objects.acreate(**patient_data)
+           
             
+            # check if patient exist or create one
+            patient, created = await Patient.objects.aget_or_create(
+                email=patient_data.get("email"),
+                defaults=patient_data
+            )
+            print("patient retrieved", patient)
+
+             # check if order exist
+            try:
+                existing_order = await LabOrderRequest.objects.select_related('patient').aget(patient_id=patient.id)
+                print(existing_order)
+                return JsonResponse({
+                    "message": "This lab order request already exists",
+                    "id": existing_order.id
+                }, status=400)
+            except LabOrderRequest.DoesNotExist:
+                # If the order does not exist, continue to create a new one
+                pass
+
+           
             # Create the lab order request with the newly created patient
             lab_order_request = await LabOrderRequest.objects.acreate(
                 patient=patient,
@@ -272,7 +314,7 @@ class CreateLabOrderRequestView(View):
             print("intergrity")
             # Handle unique constraint errors or other integrity errors
             if 'UNIQUE constraint failed' in str(e):
-                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+                return JsonResponse({"message": "This Appointment has been created already. Please provide a unique email."}, status=400)
             else:
                 print("different integrity",e)
                 # If it's another integrity error, log the error and return a generic message
@@ -393,25 +435,26 @@ class CreateLabResultView(View):
     async def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
+            print("data",data)
             lab_order_id = data.get('lab_order_id')
-            doctor_id = data.get('doctor_id')
+            
             result = data.get('result')
 
             # Fetch the LabOrderRequest and Doctor
-            lab_order = await LabOrderRequest.objects.aget(id=lab_order_id)
-            doctor = await Doctor.objects.aget(id=doctor_id)
+            lab_order = await LabOrderRequest.objects.select_related('patient').aget(id=lab_order_id)
+            
+            
 
             # Create the LabResult instance
             lab_result = await LabResult.objects.acreate(
                 lab_order=lab_order,
-                doctor=doctor,
                 result=result
             )
 
             response_data = {
                 "id": lab_result.id,
                 "lab_order": lab_result.lab_order.id,
-                "doctor": str(lab_result.doctor),
+                
                 "result": lab_result.result,
                 "test_date": lab_result.test_date.isoformat(),
                 "created_at": lab_result.created_at.isoformat(),
@@ -423,9 +466,10 @@ class CreateLabResultView(View):
             print("intergrity")
             # Handle unique constraint errors or other integrity errors
             if 'UNIQUE constraint failed' in str(e):
-                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+                return JsonResponse({"message": "The Lab Result has been created already. Please provide a unique Order Id."}, status=400)
             else:
-                print("different int")
+                print("different integrity",e)
+                
                 # If it's another integrity error, log the error and return a generic message
                 return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
 
@@ -441,15 +485,15 @@ class CreateLabResultView(View):
 
 # Async view to retrieve a LabResult
 class GetLabResultView(View):
+    # GET method to retrieve lab result details
     async def get(self, request, *args, **kwargs):
         lab_result_id = kwargs.get('lab_result_id')
         try:
-            lab_result = await LabResult.objects.select_related('lab_order','doctor').aget(id=lab_result_id)
+            lab_result = await LabResult.objects.select_related('lab_order').aget(id=lab_result_id)
             
             response_data = {
                 "id": lab_result.id,
                 "lab_order": lab_result.lab_order.id,
-                "doctor": str(lab_result.doctor),
                 "result": lab_result.result,
                 "test_date": lab_result.test_date.isoformat(),
                 "created_at": lab_result.created_at.isoformat(),
@@ -457,22 +501,104 @@ class GetLabResultView(View):
             return JsonResponse(response_data)
         except LabResult.DoesNotExist:
             return JsonResponse({"error": "Lab result not found"}, status=404)
+
+    # PUT method to update an existing lab result
+    async def put(self, request, *args, **kwargs):
+        lab_result_id = kwargs.get('lab_result_id')
+        try:
+            lab_result = await LabResult.objects.select_related('lab_order').aget(id=lab_result_id)
+            
+            # Parse the incoming JSON data
+            data = json.loads(request.body)
+            
+            # Update fields if they are provided in the request
+            lab_result.result = data.get('result', lab_result.result)
+           
+            
+            # Save the updated lab result
+            await lab_result.asave()
+
+            # Prepare response with updated data
+            response_data = {
+                "id": lab_result.id,
+                "lab_order": lab_result.lab_order.id,
+                "result": lab_result.result,
+                "test_date": lab_result.test_date.isoformat(),
+                "created_at": lab_result.created_at.isoformat(),
+            }
+            return JsonResponse(response_data, status=200)
+        except LabResult.DoesNotExist:
+            return JsonResponse({"error": "Lab result not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print("error", e)
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # DELETE method to remove a lab result
+    async def delete(self, request, *args, **kwargs):
+        lab_result_id = kwargs.get('lab_result_id')
+        try:
+            # Try to get the lab result object to delete
+            lab_result = await LabResult.objects.aget(id=lab_result_id)
+            
+            # Delete the lab result
+            await lab_result.adelete()
+            
+            # Return success response
+            return JsonResponse({"message": "Lab result deleted successfully"}, status=200)
+        except LabResult.DoesNotExist:
+            return JsonResponse({"error": "Lab result not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+
+class GetAllLabResultView(View):
+    async def get(self, request, *args, **kwargs):
+        try:
+            # Fetch all Lab Requests with related patient data
+            lab_results = await sync_to_async(list)(
+                LabResult.objects.select_related('lab_order').all()
+            )
+            
+            # Prepare the response data
+            response_data = [
+                {
+                    "id": lab_result.id,
+                    "lab_order": lab_result.lab_order.id,
+                   
+                    "result": lab_result.result,
+                    "test_date": lab_result.test_date.isoformat(),
+                    "created_at": lab_result.created_at.isoformat(),
+                }
+                for lab_result in lab_results
+            ]
+            return JsonResponse(response_data, safe=False)
+        except Exception as e:
+            print("error is ", e)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
         
+
 
 # @method_decorator(csrf_exempt, name='dispatch')
 class CreateLabReportView(View):
     async def post(self, request, *args, **kwargs):
+
         try:
             data = json.loads(request.body)
+            print("data",data)
             lab_result_id = data.get('lab_result_id')
+            doctor_id = data.get('doctor_id')
             report_data = data.get('report_data')
             shared_with_doctor = data.get('shared_with_doctor', False)
 
             # Fetch the LabResult
-            lab_result = await LabResult.objects.aget(id=lab_result_id)
+            lab_result = await LabResult.objects.select_related('lab_order').aget(id=lab_result_id)
+            doctor = await Doctor.objects.aget(id=doctor_id)
 
             # Create the LabReport instance
             lab_report = await LabReport.objects.acreate(
+                doctor=doctor,
                 lab_result=lab_result,
                 report_data=report_data,
                 shared_with_doctor=shared_with_doctor
@@ -481,6 +607,7 @@ class CreateLabReportView(View):
             response_data = {
                 "id": lab_report.id,
                 "lab_result": lab_report.lab_result.id,
+                "doctor": f"{lab_report.doctor.first_name} {lab_report.doctor.last_name}",
                 "report_data": lab_report.report_data,
                 "generated_at": lab_report.generated_at.isoformat(),
                 "shared_with_doctor": lab_report.shared_with_doctor,
@@ -491,7 +618,7 @@ class CreateLabReportView(View):
             print("intergrity")
             # Handle unique constraint errors or other integrity errors
             if 'UNIQUE constraint failed' in str(e):
-                return JsonResponse({"message": "The email is already in use. Please provide a unique email."}, status=400)
+                return JsonResponse({"message": "The report has already been generated. Please provide a Id."}, status=400)
             else:
                 print("different int")
                 # If it's another integrity error, log the error and return a generic message
@@ -507,20 +634,105 @@ class CreateLabReportView(View):
 
 
 
-# Async view to retrieve a LabReport
 class GetLabReportView(View):
+    # GET method to retrieve lab report details
     async def get(self, request, *args, **kwargs):
         lab_report_id = kwargs.get('lab_report_id')
         try:
-            lab_report = await LabReport.objects.select_related('lab_result').aget(id=lab_report_id)
+            lab_report = await LabReport.objects.select_related('lab_result', 'doctor').aget(id=lab_report_id)
             
             response_data = {
                 "id": lab_report.id,
                 "lab_result": lab_report.lab_result.id,
                 "report_data": lab_report.report_data,
+                "doctor_id": lab_report.doctor.id,
                 "generated_at": lab_report.generated_at.isoformat(),
                 "shared_with_doctor": lab_report.shared_with_doctor,
             }
             return JsonResponse(response_data)
         except LabReport.DoesNotExist:
             return JsonResponse({"error": "Lab report not found"}, status=404)
+
+    # PUT method to update an existing lab report
+    async def put(self, request, *args, **kwargs):
+        lab_report_id = kwargs.get('lab_report_id')
+        try:
+            lab_report = await LabReport.objects.select_related('lab_result', 'doctor').aget(id=lab_report_id)
+
+            # Parse the incoming JSON data
+            data = json.loads(request.body)
+
+            # Update fields if they are provided in the request
+            lab_report.report_data = data.get('report_data', lab_report.report_data)
+            lab_report.shared_with_doctor = data.get('shared_with_doctor', lab_report.shared_with_doctor)
+
+            # Optionally update doctor if provided
+            doctor_id = data.get('doctor_id')
+            if doctor_id:
+                doctor = await Doctor.objects.aget(id=doctor_id)
+                lab_report.doctor = doctor
+
+            # Save the updated lab report
+            await lab_report.asave()
+
+            # Prepare the response with updated data
+            response_data = {
+                "id": lab_report.id,
+                "lab_result": lab_report.lab_result.id,
+                "report_data": lab_report.report_data,
+                "doctor": f"{lab_report.doctor.first_name} {lab_report.doctor.last_name}",
+                "generated_at": lab_report.generated_at.isoformat(),
+                "shared_with_doctor": lab_report.shared_with_doctor,
+            }
+            return JsonResponse(response_data, status=200)
+        except LabReport.DoesNotExist:
+            return JsonResponse({"error": "Lab report not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print("error", e)
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # DELETE method to remove a lab report
+    async def delete(self, request, *args, **kwargs):
+        lab_report_id = kwargs.get('lab_report_id')
+        try:
+            # Try to get the lab report object to delete
+            lab_report = await LabReport.objects.aget(id=lab_report_id)
+            
+            # Delete the lab report
+            await lab_report.adelete()
+            
+            # Return success response
+            return JsonResponse({"message": "Lab report deleted successfully"}, status=200)
+        except LabReport.DoesNotExist:
+            return JsonResponse({"error": "Lab report not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+class GetAllLabReportView(View):
+    async def get(self, request, *args, **kwargs):
+        try:
+            # Fetch all Lab Requests with related patient data
+            lab_reports = await sync_to_async(list)(
+                LabReport.objects.select_related('lab_result','doctor').all()
+            )
+            
+            # Prepare the response data
+            response_data = [
+                {
+                    "id": lab_report.id,
+                "lab_result": lab_report.lab_result.id,
+                "doctor": f"{lab_report.doctor.first_name} {lab_report.doctor.last_name}",
+                "report_data": lab_report.report_data,
+                "generated_at": lab_report.generated_at.isoformat(),
+                "shared_with_doctor": lab_report.shared_with_doctor,
+                }
+                for lab_report in lab_reports
+            ]
+            return JsonResponse(response_data, safe=False)
+        except Exception as e:
+            print("error is ", e)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
+        
+
