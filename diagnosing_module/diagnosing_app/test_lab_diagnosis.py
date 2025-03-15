@@ -6,11 +6,11 @@ from datetime import datetime
 
 import json
 from datetime import datetime, date
-from .models import Patient, LabOrderRequest, Doctor, LabResult
+from .models import Patient, MedirevOrderRequest, Doctor, MedirevResult
 
 @pytest.mark.django_db
 @pytest.mark.asyncio(loop_scope="session")
-class TestLabDiagnosisEndpoints:
+class TestMedirevDiagnosisEndpoints:
     @pytest_asyncio.fixture(autouse=True,loop_scope="session",scope="function")
     async def setup_test_data(self):
         """Fixture that runs before each test"""
@@ -37,7 +37,7 @@ class TestLabDiagnosisEndpoints:
         # Initialize AsyncClient
         self.client = AsyncClient()
         
-        # return self  # Return self to make instance attributes available
+        # return self  # Return self to make instance attributes avaiMedirevle
     
         # Cleanup will happen automatically due to django_db mark
 
@@ -121,9 +121,9 @@ class TestLabDiagnosisEndpoints:
         assert data['last_name'] == doctor.get("last_name")
 
     # @pytest.mark.asyncio
-    async def test_create_lab_order(self,request):
-        """Test creating a lab order request"""
-        url = reverse('create-laborder-request')
+    async def test_create_Medirev_order(self,request):
+        """Test creating a Medirev order request"""
+        url = reverse('create-Medirevorder-request')
         patient = request.session.data
         data = {
             "patient_id": patient.get("id"),
@@ -144,27 +144,27 @@ class TestLabDiagnosisEndpoints:
         assert response_data['test_name'] == data['test_name']
 
     # @pytest.mark.asyncio
-    async def test_get_lab_order(self,request):
-        """Test retrieving a lab order request"""
-        lab_request = request.session.order_request
-        url = reverse('get-laborder-request', kwargs={'order_id': lab_request.get("id")})
+    async def test_get_Medirev_order(self,request):
+        """Test retrieving a Medirev order request"""
+        Medirev_request = request.session.order_request
+        url = reverse('get-Medirevorder-request', kwargs={'order_id': Medirev_request.get("id")})
         print(url)
         response = await self.client.get(url)
         
         
         # assert response.status_code == 200
         data = response.json()
-        print("lab data",data)        
-        # assert data['test_name'] == self.lab_order.test_name
+        print("Medirev data",data)        
+        # assert data['test_name'] == self.Medirev_order.test_name
 
     # @pytest.mark.asyncio
-    async def test_create_lab_result(self,request):
-        """Test creating a lab result"""
-        url = reverse('create-lab-results')
-        lab_request = request.session.order_request
+    async def test_create_Medirev_result(self,request):
+        """Test creating a Medirev result"""
+        url = reverse('create-Medirev-results')
+        Medirev_request = request.session.order_request
         doctor = request.session.data1
         data = {
-            "lab_order_id": lab_request.get("id"),
+            "Medirev_order_id": Medirev_request.get("id"),
             "doctor_id": doctor.get("id"),
             "result": "Normal"
         }
@@ -177,30 +177,30 @@ class TestLabDiagnosisEndpoints:
         
         # assert response.status_code == 201
         response_data = response.json()
-        request.session.lab_result = response_data
+        request.session.Medirev_result = response_data
         print("results",response_data)
         assert response_data['result'] == data['result']
 
     # @pytest.mark.asyncio
-    async def test_get_lab_result(self,request):
-        """Test retrieving a lab result"""
-        labresult = request.session.lab_result
-        url = reverse('get-lab-result', kwargs={'lab_result_id': labresult.get("id")})
+    async def test_get_Medirev_result(self,request):
+        """Test retrieving a Medirev result"""
+        Medirevresult = request.session.Medirev_result
+        url = reverse('get-Medirev-result', kwargs={'Medirev_result_id': Medirevresult.get("id")})
         print(url)
         response = await self.client.get(url)
         
         assert response.status_code == 200
         data = response.json()
-        print("get labresult",data)
-        assert data['result'] == labresult.get("result")
+        print("get Medirevresult",data)
+        assert data['result'] == Medirevresult.get("result")
 
     # @pytest.mark.asyncio
-    async def test_create_lab_report(self,request):
-        """Test creating a lab report"""
-        url = reverse('create-lab-report')
-        labresult = request.session.lab_result 
+    async def test_create_Medirev_report(self,request):
+        """Test creating a Medirev report"""
+        url = reverse('create-Medirev-report')
+        Medirevresult = request.session.Medirev_result 
         data = {
-            "lab_result_id": labresult.get("id"),
+            "Medirev_result_id": Medirevresult.get("id"),
             "report_data": "Blood test shows normal levels.",
             "shared_with_doctor": True
         }
@@ -213,22 +213,22 @@ class TestLabDiagnosisEndpoints:
         
         assert response.status_code == 201
         response_data = response.json()
-        request.session.labreport= response_data
+        request.session.Medirevreport= response_data
         print("report",response_data)
         assert response_data['report_data'] == data['report_data']
         assert response_data['shared_with_doctor'] == data['shared_with_doctor']
 
     # @pytest.mark.asyncio
-    async def test_get_lab_report(self,request):
-        """Test retrieving a lab report"""
-        labreport = request.session.labreport
-        url = reverse('get-lab-reports', kwargs={'lab_report_id': labreport.get("id")})
+    async def test_get_Medirev_report(self,request):
+        """Test retrieving a Medirev report"""
+        Medirevreport = request.session.Medirevreport
+        url = reverse('get-Medirev-reports', kwargs={'Medirev_report_id': Medirevreport.get("id")})
         response = await self.client.get(url)
         
         assert response.status_code == 200
         data = response.json()
-        print("labrepor",data)
-        # assert data['lab_result'] == labreport.get.id
-        assert data['report_data'] == labreport.get("report_data")
+        print("Medirevrepor",data)
+        # assert data['Medirev_result'] == Medirevreport.get.id
+        assert data['report_data'] == Medirevreport.get("report_data")
         assert 'generated_at' in data
         assert data['shared_with_doctor'] is True

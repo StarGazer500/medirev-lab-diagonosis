@@ -271,8 +271,8 @@
     // Stacked inlines ---------------------------------------------------------
     $.fn.stackedFormset = function(selector, options) {
         const $rows = $(this);
-        const updateInlineLabel = function(row) {
-            $(selector).find(".inline_label").each(function(i) {
+        const updateInlineMedirevel = function(row) {
+            $(selector).find(".inline_Medirevel").each(function(i) {
                 const count = i + 1;
                 $(this).html($(this).html().replace(/(#\d+)/g, "#" + count));
             });
@@ -326,12 +326,12 @@
             deleteCssClass: "inline-deletelink",
             deleteText: options.deleteText,
             emptyCssClass: "empty-form",
-            removed: updateInlineLabel,
+            removed: updateInlineMedirevel,
             added: function(row) {
                 initPrepopulatedFields(row);
                 reinitDateTimeShortCuts();
                 updateSelectFilter();
-                updateInlineLabel(row);
+                updateInlineMedirevel(row);
             },
             addButton: options.addButton
         });

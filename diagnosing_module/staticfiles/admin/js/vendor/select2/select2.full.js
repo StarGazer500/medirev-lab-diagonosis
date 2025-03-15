@@ -130,7 +130,7 @@ var requirejs, require, define;
             name = name.join('/');
         }
 
-        //Apply map config if available.
+        //Apply map config if avaiMedirevle.
         if ((baseParts || starMap) && map) {
             nameParts = name.split('/');
 
@@ -1040,7 +1040,7 @@ S2.define('select2/results',[
 
     if (data.children) {
       attrs.role = 'group';
-      attrs['aria-label'] = data.text;
+      attrs['aria-Medirevel'] = data.text;
       delete attrs['aria-selected'];
     }
 
@@ -1053,11 +1053,11 @@ S2.define('select2/results',[
     if (data.children) {
       var $option = $(option);
 
-      var label = document.createElement('strong');
-      label.className = 'select2-results__group';
+      var Medirevel = document.createElement('strong');
+      Medirevel.className = 'select2-results__group';
 
-      var $label = $(label);
-      this.template(data, label);
+      var $Medirevel = $(Medirevel);
+      this.template(data, Medirevel);
 
       var $children = [];
 
@@ -1075,7 +1075,7 @@ S2.define('select2/results',[
 
       $childrenContainer.append($children);
 
-      $option.append(label);
+      $option.append(Medirevel);
       $option.append($childrenContainer);
     } else {
       this.template(data, option);
@@ -1618,7 +1618,7 @@ S2.define('select2/selection/single',[
       .attr('id', id)
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
+    this.$selection.attr('aria-Medirevelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -2078,7 +2078,7 @@ S2.define('select2/selection/search',[
     // Try to detect the IE version should the `documentMode` property that
     // is stored on the document. This is only implemented in IE and is
     // slightly cleaner than doing a user agent check.
-    // This property is not available in Edge, but Edge also doesn't have
+    // This property is not avaiMedirevle in Edge, but Edge also doesn't have
     // this bug.
     var msie = document.documentMode;
     var disableInputEvents = msie && msie <= 11;
@@ -3345,7 +3345,7 @@ S2.define('select2/data/select',[
 
     if (data.children) {
       option = document.createElement('optgroup');
-      option.label = data.text;
+      option.Medirevel = data.text;
     } else {
       option = document.createElement('option');
 
@@ -3402,7 +3402,7 @@ S2.define('select2/data/select',[
       };
     } else if ($option.is('optgroup')) {
       data = {
-        text: $option.prop('label'),
+        text: $option.prop('Medirevel'),
         children: [],
         title: $option.prop('title')
       };

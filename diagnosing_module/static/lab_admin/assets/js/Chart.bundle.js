@@ -727,7 +727,7 @@ module.exports = {
   rgb2cmyk: rgb2cmyk,
   rgb2keyword: rgb2keyword,
   rgb2xyz: rgb2xyz,
-  rgb2lab: rgb2lab,
+  rgb2Medirev: rgb2Medirev,
   rgb2lch: rgb2lch,
 
   hsl2rgb: hsl2rgb,
@@ -759,18 +759,18 @@ module.exports = {
   keyword2hsv: keyword2hsv,
   keyword2hwb: keyword2hwb,
   keyword2cmyk: keyword2cmyk,
-  keyword2lab: keyword2lab,
+  keyword2Medirev: keyword2Medirev,
   keyword2xyz: keyword2xyz,
 
   xyz2rgb: xyz2rgb,
-  xyz2lab: xyz2lab,
+  xyz2Medirev: xyz2Medirev,
   xyz2lch: xyz2lch,
 
-  lab2xyz: lab2xyz,
-  lab2rgb: lab2rgb,
-  lab2lch: lab2lch,
+  Medirev2xyz: Medirev2xyz,
+  Medirev2rgb: Medirev2rgb,
+  Medirev2lch: Medirev2lch,
 
-  lch2lab: lch2lab,
+  lch2Medirev: lch2Medirev,
   lch2xyz: lch2xyz,
   lch2rgb: lch2rgb
 }
@@ -889,7 +889,7 @@ function rgb2xyz(rgb) {
   return [x * 100, y *100, z * 100];
 }
 
-function rgb2lab(rgb) {
+function rgb2Medirev(rgb) {
   var xyz = rgb2xyz(rgb),
         x = xyz[0],
         y = xyz[1],
@@ -912,7 +912,7 @@ function rgb2lab(rgb) {
 }
 
 function rgb2lch(args) {
-  return lab2lch(rgb2lab(args));
+  return Medirev2lch(rgb2Medirev(args));
 }
 
 function hsl2rgb(hsl) {
@@ -1148,7 +1148,7 @@ function xyz2rgb(xyz) {
   return [r * 255, g * 255, b * 255];
 }
 
-function xyz2lab(xyz) {
+function xyz2Medirev(xyz) {
   var x = xyz[0],
       y = xyz[1],
       z = xyz[2],
@@ -1170,13 +1170,13 @@ function xyz2lab(xyz) {
 }
 
 function xyz2lch(args) {
-  return lab2lch(xyz2lab(args));
+  return Medirev2lch(xyz2Medirev(args));
 }
 
-function lab2xyz(lab) {
-  var l = lab[0],
-      a = lab[1],
-      b = lab[2],
+function Medirev2xyz(Medirev) {
+  var l = Medirev[0],
+      a = Medirev[1],
+      b = Medirev[2],
       x, y, z, y2;
 
   if (l <= 8) {
@@ -1194,10 +1194,10 @@ function lab2xyz(lab) {
   return [x, y, z];
 }
 
-function lab2lch(lab) {
-  var l = lab[0],
-      a = lab[1],
-      b = lab[2],
+function Medirev2lch(Medirev) {
+  var l = Medirev[0],
+      a = Medirev[1],
+      b = Medirev[2],
       hr, h, c;
 
   hr = Math.atan2(b, a);
@@ -1209,11 +1209,11 @@ function lab2lch(lab) {
   return [l, c, h];
 }
 
-function lab2rgb(args) {
-  return xyz2rgb(lab2xyz(args));
+function Medirev2rgb(args) {
+  return xyz2rgb(Medirev2xyz(args));
 }
 
-function lch2lab(lch) {
+function lch2Medirev(lch) {
   var l = lch[0],
       c = lch[1],
       h = lch[2],
@@ -1226,11 +1226,11 @@ function lch2lab(lch) {
 }
 
 function lch2xyz(args) {
-  return lab2xyz(lch2lab(args));
+  return Medirev2xyz(lch2Medirev(args));
 }
 
 function lch2rgb(args) {
-  return lab2rgb(lch2lab(args));
+  return Medirev2rgb(lch2Medirev(args));
 }
 
 function keyword2rgb(keyword) {
@@ -1253,8 +1253,8 @@ function keyword2cmyk(args) {
   return rgb2cmyk(keyword2rgb(args));
 }
 
-function keyword2lab(args) {
-  return rgb2lab(keyword2rgb(args));
+function keyword2Medirev(args) {
+  return rgb2Medirev(keyword2rgb(args));
 }
 
 function keyword2xyz(args) {
@@ -6271,7 +6271,7 @@ if (typeof window !== 'undefined') {
 // DEPRECATIONS
 
 /**
- * Provided for backward compatibility, not available anymore
+ * Provided for backward compatibility, not avaiMedirevle anymore
  * @namespace Chart.Legend
  * @deprecated since version 2.1.5
  * @todo remove at version 3
@@ -6280,7 +6280,7 @@ if (typeof window !== 'undefined') {
 Chart.Legend = plugins.legend._element;
 
 /**
- * Provided for backward compatibility, not available anymore
+ * Provided for backward compatibility, not avaiMedirevle anymore
  * @namespace Chart.Title
  * @deprecated since version 2.1.5
  * @todo remove at version 3
@@ -6421,7 +6421,7 @@ var helpers = require(45);
 
 defaults._set('bar', {
 	hover: {
-		mode: 'label'
+		mode: 'Medirevel'
 	},
 
 	scales: {
@@ -6486,23 +6486,23 @@ defaults._set('horizontalBar', {
 	tooltips: {
 		callbacks: {
 			title: function(item, data) {
-				// Pick first xLabel for now
+				// Pick first xMedirevel for now
 				var title = '';
 
 				if (item.length > 0) {
-					if (item[0].yLabel) {
-						title = item[0].yLabel;
-					} else if (data.labels.length > 0 && item[0].index < data.labels.length) {
-						title = data.labels[item[0].index];
+					if (item[0].yMedirevel) {
+						title = item[0].yMedirevel;
+					} else if (data.Medirevels.length > 0 && item[0].index < data.Medirevels.length) {
+						title = data.Medirevels[item[0].index];
 					}
 				}
 
 				return title;
 			},
 
-			label: function(item, data) {
-				var datasetLabel = data.datasets[item.datasetIndex].label || '';
-				return datasetLabel + ': ' + item.xLabel;
+			Medirevel: function(item, data) {
+				var datasetMedirevel = data.datasets[item.datasetIndex].Medirevel || '';
+				return datasetMedirevel + ': ' + item.xMedirevel;
 			}
 		},
 		mode: 'index',
@@ -6640,8 +6640,8 @@ module.exports = function(Chart) {
 			rectangle._index = index;
 
 			rectangle._model = {
-				datasetLabel: dataset.label,
-				label: chart.data.labels[index],
+				datasetMedirevel: dataset.Medirevel,
+				Medirevel: chart.data.Medirevels[index],
 				borderSkipped: custom.borderSkipped ? custom.borderSkipped : rectangleOptions.borderSkipped,
 				backgroundColor: custom.backgroundColor ? custom.backgroundColor : helpers.valueAtIndexOrDefault(dataset.backgroundColor, index, rectangleOptions.backgroundColor),
 				borderColor: custom.borderColor ? custom.borderColor : helpers.valueAtIndexOrDefault(dataset.borderColor, index, rectangleOptions.borderColor),
@@ -6949,10 +6949,10 @@ defaults._set('bubble', {
 				// Title doesn't make sense for scatter since we format the data as a point
 				return '';
 			},
-			label: function(item, data) {
-				var datasetLabel = data.datasets[item.datasetIndex].label || '';
+			Medirevel: function(item, data) {
+				var datasetMedirevel = data.datasets[item.datasetIndex].Medirevel || '';
 				var dataPoint = data.datasets[item.datasetIndex].data[item.index];
-				return datasetLabel + ': (' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.r + ')';
+				return datasetMedirevel + ': (' + item.xMedirevel + ', ' + item.yMedirevel + ', ' + dataPoint.r + ')';
 			}
 		}
 	}
@@ -7123,13 +7123,13 @@ defaults._set('doughnut', {
 
 		var data = chart.data;
 		var datasets = data.datasets;
-		var labels = data.labels;
+		var Medirevels = data.Medirevels;
 
 		if (datasets.length) {
 			for (var i = 0; i < datasets[0].data.length; ++i) {
 				text.push('<li><span style="background-color:' + datasets[0].backgroundColor[i] + '"></span>');
-				if (labels[i]) {
-					text.push(labels[i]);
+				if (Medirevels[i]) {
+					text.push(Medirevels[i]);
 				}
 				text.push('</li>');
 			}
@@ -7139,11 +7139,11 @@ defaults._set('doughnut', {
 		return text.join('');
 	},
 	legend: {
-		labels: {
-			generateLabels: function(chart) {
+		Medirevels: {
+			generateMedirevels: function(chart) {
 				var data = chart.data;
-				if (data.labels.length && data.datasets.length) {
-					return data.labels.map(function(label, i) {
+				if (data.Medirevels.length && data.datasets.length) {
+					return data.Medirevels.map(function(Medirevel, i) {
 						var meta = chart.getDatasetMeta(0);
 						var ds = data.datasets[0];
 						var arc = meta.data[i];
@@ -7155,7 +7155,7 @@ defaults._set('doughnut', {
 						var bw = custom.borderWidth ? custom.borderWidth : valueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
 
 						return {
-							text: label,
+							text: Medirevel,
 							fillStyle: fill,
 							strokeStyle: stroke,
 							lineWidth: bw,
@@ -7202,20 +7202,20 @@ defaults._set('doughnut', {
 			title: function() {
 				return '';
 			},
-			label: function(tooltipItem, data) {
-				var dataLabel = data.labels[tooltipItem.index];
+			Medirevel: function(tooltipItem, data) {
+				var dataMedirevel = data.Medirevels[tooltipItem.index];
 				var value = ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 
-				if (helpers.isArray(dataLabel)) {
-					// show value on first line of multiline label
+				if (helpers.isArray(dataMedirevel)) {
+					// show value on first line of multiline Medirevel
 					// need to clone because we are changing the value
-					dataLabel = dataLabel.slice();
-					dataLabel[0] += value;
+					dataMedirevel = dataMedirevel.slice();
+					dataMedirevel[0] += value;
 				} else {
-					dataLabel += value;
+					dataMedirevel += value;
 				}
 
-				return dataLabel;
+				return dataMedirevel;
 			}
 		}
 	}
@@ -7253,9 +7253,9 @@ module.exports = function(Chart) {
 			var chartArea = chart.chartArea;
 			var opts = chart.options;
 			var arcOpts = opts.elements.arc;
-			var availableWidth = chartArea.right - chartArea.left - arcOpts.borderWidth;
-			var availableHeight = chartArea.bottom - chartArea.top - arcOpts.borderWidth;
-			var minSize = Math.min(availableWidth, availableHeight);
+			var avaiMedirevleWidth = chartArea.right - chartArea.left - arcOpts.borderWidth;
+			var avaiMedirevleHeight = chartArea.bottom - chartArea.top - arcOpts.borderWidth;
+			var minSize = Math.min(avaiMedirevleWidth, avaiMedirevleHeight);
 			var offset = {x: 0, y: 0};
 			var meta = me.getMeta();
 			var cutoutPercentage = opts.cutoutPercentage;
@@ -7276,7 +7276,7 @@ module.exports = function(Chart) {
 				var min = {x: contains180 ? -1 : Math.min(start.x * (start.x < 0 ? 1 : cutout), end.x * (end.x < 0 ? 1 : cutout)), y: contains270 ? -1 : Math.min(start.y * (start.y < 0 ? 1 : cutout), end.y * (end.y < 0 ? 1 : cutout))};
 				var max = {x: contains0 ? 1 : Math.max(start.x * (start.x > 0 ? 1 : cutout), end.x * (end.x > 0 ? 1 : cutout)), y: contains90 ? 1 : Math.max(start.y * (start.y > 0 ? 1 : cutout), end.y * (end.y > 0 ? 1 : cutout))};
 				var size = {width: (max.x - min.x) * 0.5, height: (max.y - min.y) * 0.5};
-				minSize = Math.min(availableWidth / size.width, availableHeight / size.height);
+				minSize = Math.min(avaiMedirevleWidth / size.width, avaiMedirevleHeight / size.height);
 				offset = {x: (max.x + min.x) * -0.5, y: (max.y + min.y) * -0.5};
 			}
 
@@ -7327,7 +7327,7 @@ module.exports = function(Chart) {
 					circumference: circumference,
 					outerRadius: outerRadius,
 					innerRadius: innerRadius,
-					label: valueAtIndexOrDefault(dataset.label, index, chart.data.labels[index])
+					Medirevel: valueAtIndexOrDefault(dataset.Medirevel, index, chart.data.Medirevels[index])
 				}
 			});
 
@@ -7413,7 +7413,7 @@ defaults._set('line', {
 	spanGaps: false,
 
 	hover: {
-		mode: 'label'
+		mode: 'Medirevel'
 	},
 
 	scales: {
@@ -7752,7 +7752,7 @@ defaults._set('polarArea', {
 		gridLines: {
 			circular: true
 		},
-		pointLabels: {
+		pointMedirevels: {
 			display: false
 		},
 		ticks: {
@@ -7773,13 +7773,13 @@ defaults._set('polarArea', {
 
 		var data = chart.data;
 		var datasets = data.datasets;
-		var labels = data.labels;
+		var Medirevels = data.Medirevels;
 
 		if (datasets.length) {
 			for (var i = 0; i < datasets[0].data.length; ++i) {
 				text.push('<li><span style="background-color:' + datasets[0].backgroundColor[i] + '"></span>');
-				if (labels[i]) {
-					text.push(labels[i]);
+				if (Medirevels[i]) {
+					text.push(Medirevels[i]);
 				}
 				text.push('</li>');
 			}
@@ -7789,11 +7789,11 @@ defaults._set('polarArea', {
 		return text.join('');
 	},
 	legend: {
-		labels: {
-			generateLabels: function(chart) {
+		Medirevels: {
+			generateMedirevels: function(chart) {
 				var data = chart.data;
-				if (data.labels.length && data.datasets.length) {
-					return data.labels.map(function(label, i) {
+				if (data.Medirevels.length && data.datasets.length) {
+					return data.Medirevels.map(function(Medirevel, i) {
 						var meta = chart.getDatasetMeta(0);
 						var ds = data.datasets[0];
 						var arc = meta.data[i];
@@ -7805,7 +7805,7 @@ defaults._set('polarArea', {
 						var bw = custom.borderWidth ? custom.borderWidth : valueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
 
 						return {
-							text: label,
+							text: Medirevel,
 							fillStyle: fill,
 							strokeStyle: stroke,
 							lineWidth: bw,
@@ -7840,8 +7840,8 @@ defaults._set('polarArea', {
 			title: function() {
 				return '';
 			},
-			label: function(item, data) {
-				return data.labels[item.index] + ': ' + item.yLabel;
+			Medirevel: function(item, data) {
+				return data.Medirevels[item.index] + ': ' + item.yMedirevel;
 			}
 		}
 	}
@@ -7884,7 +7884,7 @@ module.exports = function(Chart) {
 			var opts = chart.options;
 			var animationOpts = opts.animation;
 			var scale = chart.scale;
-			var labels = chart.data.labels;
+			var Medirevels = chart.data.Medirevels;
 
 			var circumference = me.calculateCircumference(dataset.data[index]);
 			var centerX = scale.xCenter;
@@ -7922,7 +7922,7 @@ module.exports = function(Chart) {
 					outerRadius: reset ? resetRadius : distance,
 					startAngle: reset && animationOpts.animateRotate ? datasetStartAngle : startAngle,
 					endAngle: reset && animationOpts.animateRotate ? datasetStartAngle : endAngle,
-					label: helpers.valueAtIndexOrDefault(labels, index, labels[index])
+					Medirevel: helpers.valueAtIndexOrDefault(Medirevels, index, Medirevels[index])
 				}
 			});
 
@@ -8160,8 +8160,8 @@ defaults._set('scatter', {
 			title: function() {
 				return '';     // doesn't make sense for scatter since data are formatted as a point
 			},
-			label: function(item) {
-				return '(' + item.xLabel + ', ' + item.yLabel + ')';
+			Medirevel: function(item) {
+				return '(' + item.xMedirevel + ', ' + item.yMedirevel + ')';
 			}
 		}
 	}
@@ -8367,7 +8367,7 @@ module.exports = function(Chart) {
 	// Destroy method on the chart will remove the instance of the chart from this reference.
 	Chart.instances = {};
 
-	// Controllers available for dataset visualization eg. bar, line, slice, etc.
+	// Controllers avaiMedirevle for dataset visualization eg. bar, line, slice, etc.
 	Chart.controllers = {};
 
 	/**
@@ -8377,10 +8377,10 @@ module.exports = function(Chart) {
 		config = config || {};
 
 		// Do NOT use configMerge() for the data object because this method merges arrays
-		// and so would change references to labels and datasets, preventing data updates.
+		// and so would change references to Medirevels and datasets, preventing data updates.
 		var data = config.data = config.data || {};
 		data.datasets = data.datasets || [];
-		data.labels = data.labels || [];
+		data.Medirevels = data.Medirevels || [];
 
 		config.options = helpers.configMerge(
 			defaults.global,
@@ -9016,7 +9016,7 @@ module.exports = function(Chart) {
 		},
 
 		getElementsAtEvent: function(e) {
-			return Interaction.modes.label(this, e, {intersect: true});
+			return Interaction.modes.Medirevel(this, e, {intersect: true});
 		},
 
 		getElementsAtXAxis: function(e) {
@@ -10097,7 +10097,7 @@ module.exports = function(Chart) {
 		}
 		return index <= 0 ? collection[0] : collection[index - 1];
 	};
-	// Implementation of the nice number algorithm used in determining where axis labels will go
+	// Implementation of the nice number algorithm used in determining where axis Medirevels will go
 	helpers.niceNum = function(range, round) {
 		var exponent = Math.floor(helpers.log10(range));
 		var fraction = range / Math.pow(10, exponent);
@@ -10339,7 +10339,7 @@ module.exports = function(Chart) {
 		}
 		return longest;
 	};
-	helpers.numberOfLabelLines = function(arrayOfThings) {
+	helpers.numberOfMedirevelLines = function(arrayOfThings) {
 		var numberOfLines = 1;
 		helpers.each(arrayOfThings, function(thing) {
 			if (helpers.isArray(thing)) {
@@ -10543,12 +10543,12 @@ module.exports = {
 		},
 
 		/**
-		 * @function Chart.Interaction.modes.label
+		 * @function Chart.Interaction.modes.Medirevel
 		 * @deprecated since version 2.4.0
 		 * @todo remove at version 3
 		 * @private
 		 */
-		label: indexMode,
+		Medirevel: indexMode,
 
 		/**
 		 * Returns items at the same index. If the options.intersect parameter is true, we only return items if we intersect something
@@ -11009,7 +11009,7 @@ module.exports = {
 						bottom: 0
 					};
 
-					// Don't use min size here because of label rotation. When the labels are rotated, their rotation highly depends
+					// Don't use min size here because of Medirevel rotation. When the Medirevels are rotated, their rotation highly depends
 					// on the margin. Sometimes they need to increase in size slightly
 					box.update(box.fullWidth ? chartWidth : maxChartAreaWidth, chartHeight / 2, scaleMargin);
 				} else {
@@ -11061,7 +11061,7 @@ module.exports = {
 		// Let the left layout know the final margin
 		helpers.each(leftBoxes.concat(rightBoxes), finalFitVerticalBox);
 
-		// Recalculate because the size of each layout might have changed slightly due to the margins (label rotation for instance)
+		// Recalculate because the size of each layout might have changed slightly due to the margins (Medirevel rotation for instance)
 		totalLeftBoxesWidth = leftPadding;
 		totalRightBoxesWidth = rightPadding;
 		totalTopBoxesHeight = topPadding;
@@ -11082,7 +11082,7 @@ module.exports = {
 			totalBottomBoxesHeight += box.height;
 		});
 
-		// We may be adding some padding to account for rotated x axis labels
+		// We may be adding some padding to account for rotated x axis Medirevels
 		var leftPaddingAddition = Math.max(maxHorizontalLeftPadding - totalLeftBoxesWidth, 0);
 		totalLeftBoxesWidth += leftPaddingAddition;
 		totalRightBoxesWidth += Math.max(maxHorizontalRightPadding - totalRightBoxesWidth, 0);
@@ -11091,7 +11091,7 @@ module.exports = {
 		totalTopBoxesHeight += topPaddingAddition;
 		totalBottomBoxesHeight += Math.max(maxVerticalBottomPadding - totalBottomBoxesHeight, 0);
 
-		// Figure out if our chart area changed. This would occur if the dataset layout label rotation
+		// Figure out if our chart area changed. This would occur if the dataset layout Medirevel rotation
 		// changed due to the application of the margins in step 6. Since we can only get bigger, this is safe to do
 		// without calling `fit` again
 		var newMaxChartAreaHeight = height - totalTopBoxesHeight - totalBottomBoxesHeight;
@@ -11592,13 +11592,13 @@ defaults._set('scale', {
 		borderDashOffset: 0.0
 	},
 
-	// scale label
-	scaleLabel: {
+	// scale Medirevel
+	scaleMedirevel: {
 		// display property
 		display: false,
 
-		// actual label
-		labelString: '',
+		// actual Medirevel
+		MedirevelString: '',
 
 		// line height
 		lineHeight: 1.2,
@@ -11610,7 +11610,7 @@ defaults._set('scale', {
 		}
 	},
 
-	// label settings
+	// Medirevel settings
 	ticks: {
 		beginAtZero: false,
 		minRotation: 0,
@@ -11621,23 +11621,23 @@ defaults._set('scale', {
 		display: true,
 		autoSkip: true,
 		autoSkipPadding: 0,
-		labelOffset: 0,
-		// We pass through arrays to be rendered as multiline labels, we convert Others to strings here.
+		MedirevelOffset: 0,
+		// We pass through arrays to be rendered as multiline Medirevels, we convert Others to strings here.
 		callback: Ticks.formatters.values,
 		minor: {},
 		major: {}
 	}
 });
 
-function labelsFromTicks(ticks) {
-	var labels = [];
+function MedirevelsFromTicks(ticks) {
+	var Medirevels = [];
 	var i, ilen;
 
 	for (i = 0, ilen = ticks.length; i < ilen; ++i) {
-		labels.push(ticks[i].label);
+		Medirevels.push(ticks[i].Medirevel);
 	}
 
-	return labels;
+	return Medirevels;
 }
 
 function getLineValue(scale, index, offsetGridLines) {
@@ -11700,7 +11700,7 @@ module.exports = function(Chart) {
 		},
 
 		/**
-		 * Returns the scale tick objects ({label, major})
+		 * Returns the scale tick objects ({Medirevel, major})
 		 * @since 2.7
 		 */
 		getTicks: function() {
@@ -11739,7 +11739,7 @@ module.exports = function(Chart) {
 		},
 		update: function(maxWidth, maxHeight, margins) {
 			var me = this;
-			var i, ilen, labels, label, ticks, tick;
+			var i, ilen, Medirevels, Medirevel, ticks, tick;
 
 			// Update Lifecycle - Probably don't want to ever extend or overwrite this function ;)
 			me.beforeUpdate();
@@ -11780,30 +11780,30 @@ module.exports = function(Chart) {
 
 			me.afterBuildTicks();
 
-			me.beforeTickToLabelConversion();
+			me.beforeTickToMedirevelConversion();
 
-			// New implementations should return the formatted tick labels but for BACKWARD
+			// New implementations should return the formatted tick Medirevels but for BACKWARD
 			// COMPAT, we still support no return (`this.ticks` internally changed by calling
 			// this method and supposed to contain only string values).
-			labels = me.convertTicksToLabels(ticks) || me.ticks;
+			Medirevels = me.convertTicksToMedirevels(ticks) || me.ticks;
 
-			me.afterTickToLabelConversion();
+			me.afterTickToMedirevelConversion();
 
-			me.ticks = labels;   // BACKWARD COMPATIBILITY
+			me.ticks = Medirevels;   // BACKWARD COMPATIBILITY
 
 			// IMPORTANT: from this point, we consider that `this.ticks` will NEVER change!
 
-			// BACKWARD COMPAT: synchronize `_ticks` with labels (so potentially `this.ticks`)
-			for (i = 0, ilen = labels.length; i < ilen; ++i) {
-				label = labels[i];
+			// BACKWARD COMPAT: synchronize `_ticks` with Medirevels (so potentially `this.ticks`)
+			for (i = 0, ilen = Medirevels.length; i < ilen; ++i) {
+				Medirevel = Medirevels[i];
 				tick = ticks[i];
 				if (!tick) {
 					ticks.push(tick = {
-						label: label,
+						Medirevel: Medirevel,
 						major: false
 					});
 				} else {
-					tick.label = label;
+					tick.Medirevel = Medirevel;
 				}
 			}
 
@@ -11834,7 +11834,7 @@ module.exports = function(Chart) {
 		},
 		setDimensions: function() {
 			var me = this;
-			// Set the unconstrained dimension before label rotation
+			// Set the unconstrained dimension before Medirevel rotation
 			if (me.isHorizontal()) {
 				// Reset position before calculating rotation
 				me.width = me.maxWidth;
@@ -11876,17 +11876,17 @@ module.exports = function(Chart) {
 			helpers.callback(this.options.afterBuildTicks, [this]);
 		},
 
-		beforeTickToLabelConversion: function() {
-			helpers.callback(this.options.beforeTickToLabelConversion, [this]);
+		beforeTickToMedirevelConversion: function() {
+			helpers.callback(this.options.beforeTickToMedirevelConversion, [this]);
 		},
-		convertTicksToLabels: function() {
+		convertTicksToMedirevels: function() {
 			var me = this;
 			// Convert ticks to strings
 			var tickOpts = me.options.ticks;
 			me.ticks = me.ticks.map(tickOpts.userCallback || tickOpts.callback, this);
 		},
-		afterTickToLabelConversion: function() {
-			helpers.callback(this.options.afterTickToLabelConversion, [this]);
+		afterTickToMedirevelConversion: function() {
+			helpers.callback(this.options.afterTickToMedirevelConversion, [this]);
 		},
 
 		//
@@ -11898,41 +11898,41 @@ module.exports = function(Chart) {
 			var me = this;
 			var context = me.ctx;
 			var tickOpts = me.options.ticks;
-			var labels = labelsFromTicks(me._ticks);
+			var Medirevels = MedirevelsFromTicks(me._ticks);
 
 			// Get the width of each grid by calculating the difference
 			// between x offsets between 0 and 1.
 			var tickFont = parseFontOptions(tickOpts);
 			context.font = tickFont.font;
 
-			var labelRotation = tickOpts.minRotation || 0;
+			var MedirevelRotation = tickOpts.minRotation || 0;
 
-			if (labels.length && me.options.display && me.isHorizontal()) {
-				var originalLabelWidth = helpers.longestText(context, tickFont.font, labels, me.longestTextCache);
-				var labelWidth = originalLabelWidth;
+			if (Medirevels.length && me.options.display && me.isHorizontal()) {
+				var originalMedirevelWidth = helpers.longestText(context, tickFont.font, Medirevels, me.longestTextCache);
+				var MedirevelWidth = originalMedirevelWidth;
 				var cosRotation, sinRotation;
 
-				// Allow 3 pixels x2 padding either side for label readability
+				// Allow 3 pixels x2 padding either side for Medirevel readability
 				var tickWidth = me.getPixelForTick(1) - me.getPixelForTick(0) - 6;
 
-				// Max label rotation can be set or default to 90 - also act as a loop counter
-				while (labelWidth > tickWidth && labelRotation < tickOpts.maxRotation) {
-					var angleRadians = helpers.toRadians(labelRotation);
+				// Max Medirevel rotation can be set or default to 90 - also act as a loop counter
+				while (MedirevelWidth > tickWidth && MedirevelRotation < tickOpts.maxRotation) {
+					var angleRadians = helpers.toRadians(MedirevelRotation);
 					cosRotation = Math.cos(angleRadians);
 					sinRotation = Math.sin(angleRadians);
 
-					if (sinRotation * originalLabelWidth > me.maxHeight) {
+					if (sinRotation * originalMedirevelWidth > me.maxHeight) {
 						// go back one step
-						labelRotation--;
+						MedirevelRotation--;
 						break;
 					}
 
-					labelRotation++;
-					labelWidth = cosRotation * originalLabelWidth;
+					MedirevelRotation++;
+					MedirevelWidth = cosRotation * originalMedirevelWidth;
 				}
 			}
 
-			me.labelRotation = labelRotation;
+			me.MedirevelRotation = MedirevelRotation;
 		},
 		afterCalculateTickRotation: function() {
 			helpers.callback(this.options.afterCalculateTickRotation, [this]);
@@ -11951,11 +11951,11 @@ module.exports = function(Chart) {
 				height: 0
 			};
 
-			var labels = labelsFromTicks(me._ticks);
+			var Medirevels = MedirevelsFromTicks(me._ticks);
 
 			var opts = me.options;
 			var tickOpts = opts.ticks;
-			var scaleLabelOpts = opts.scaleLabel;
+			var scaleMedirevelOpts = opts.scaleMedirevel;
 			var gridLineOpts = opts.gridLines;
 			var display = opts.display;
 			var isHorizontal = me.isHorizontal();
@@ -11979,10 +11979,10 @@ module.exports = function(Chart) {
 			}
 
 			// Are we showing a title for the scale?
-			if (scaleLabelOpts.display && display) {
-				var scaleLabelLineHeight = parseLineHeight(scaleLabelOpts);
-				var scaleLabelPadding = helpers.options.toPadding(scaleLabelOpts.padding);
-				var deltaHeight = scaleLabelLineHeight + scaleLabelPadding.height;
+			if (scaleMedirevelOpts.display && display) {
+				var scaleMedirevelLineHeight = parseLineHeight(scaleMedirevelOpts);
+				var scaleMedirevelPadding = helpers.options.toPadding(scaleMedirevelOpts.padding);
+				var deltaHeight = scaleMedirevelLineHeight + scaleMedirevelPadding.height;
 
 				if (isHorizontal) {
 					minSize.height += deltaHeight;
@@ -11993,42 +11993,42 @@ module.exports = function(Chart) {
 
 			// Don't bother fitting the ticks if we are not showing them
 			if (tickOpts.display && display) {
-				var largestTextWidth = helpers.longestText(me.ctx, tickFont.font, labels, me.longestTextCache);
-				var tallestLabelHeightInLines = helpers.numberOfLabelLines(labels);
+				var largestTextWidth = helpers.longestText(me.ctx, tickFont.font, Medirevels, me.longestTextCache);
+				var tallestMedirevelHeightInLines = helpers.numberOfMedirevelLines(Medirevels);
 				var lineSpace = tickFont.size * 0.5;
 				var tickPadding = me.options.ticks.padding;
 
 				if (isHorizontal) {
 					// A horizontal axis is more constrained by the height.
-					me.longestLabelWidth = largestTextWidth;
+					me.longestMedirevelWidth = largestTextWidth;
 
-					var angleRadians = helpers.toRadians(me.labelRotation);
+					var angleRadians = helpers.toRadians(me.MedirevelRotation);
 					var cosRotation = Math.cos(angleRadians);
 					var sinRotation = Math.sin(angleRadians);
 
 					// TODO - improve this calculation
-					var labelHeight = (sinRotation * largestTextWidth)
-						+ (tickFont.size * tallestLabelHeightInLines)
-						+ (lineSpace * (tallestLabelHeightInLines - 1))
+					var MedirevelHeight = (sinRotation * largestTextWidth)
+						+ (tickFont.size * tallestMedirevelHeightInLines)
+						+ (lineSpace * (tallestMedirevelHeightInLines - 1))
 						+ lineSpace; // padding
 
-					minSize.height = Math.min(me.maxHeight, minSize.height + labelHeight + tickPadding);
+					minSize.height = Math.min(me.maxHeight, minSize.height + MedirevelHeight + tickPadding);
 
 					me.ctx.font = tickFont.font;
-					var firstLabelWidth = computeTextSize(me.ctx, labels[0], tickFont.font);
-					var lastLabelWidth = computeTextSize(me.ctx, labels[labels.length - 1], tickFont.font);
+					var firstMedirevelWidth = computeTextSize(me.ctx, Medirevels[0], tickFont.font);
+					var lastMedirevelWidth = computeTextSize(me.ctx, Medirevels[Medirevels.length - 1], tickFont.font);
 
 					// Ensure that our ticks are always inside the canvas. When rotated, ticks are right aligned
 					// which means that the right padding is dominated by the font height
-					if (me.labelRotation !== 0) {
-						me.paddingLeft = opts.position === 'bottom' ? (cosRotation * firstLabelWidth) + 3 : (cosRotation * lineSpace) + 3; // add 3 px to move away from canvas edges
-						me.paddingRight = opts.position === 'bottom' ? (cosRotation * lineSpace) + 3 : (cosRotation * lastLabelWidth) + 3;
+					if (me.MedirevelRotation !== 0) {
+						me.paddingLeft = opts.position === 'bottom' ? (cosRotation * firstMedirevelWidth) + 3 : (cosRotation * lineSpace) + 3; // add 3 px to move away from canvas edges
+						me.paddingRight = opts.position === 'bottom' ? (cosRotation * lineSpace) + 3 : (cosRotation * lastMedirevelWidth) + 3;
 					} else {
-						me.paddingLeft = firstLabelWidth / 2 + 3; // add 3 px to move away from canvas edges
-						me.paddingRight = lastLabelWidth / 2 + 3;
+						me.paddingLeft = firstMedirevelWidth / 2 + 3; // add 3 px to move away from canvas edges
+						me.paddingRight = lastMedirevelWidth / 2 + 3;
 					}
 				} else {
-					// A vertical axis is more constrained by the width. Labels are the
+					// A vertical axis is more constrained by the width. Medirevels are the
 					// dominant factor here, so get that length first and account for padding
 					if (tickOpts.mirror) {
 						largestTextWidth = 0;
@@ -12107,7 +12107,7 @@ module.exports = function(Chart) {
 		 * @param index
 		 * @param datasetIndex
 		 */
-		getLabelForIndex: helpers.noop,
+		getMedirevelForIndex: helpers.noop,
 
 		/**
 		 * Returns the location of the given data point. Value can either be an index or a numerical value
@@ -12186,7 +12186,7 @@ module.exports = function(Chart) {
 		},
 
 		/**
-		 * Returns a subset of ticks to be plotted to avoid overlapping labels.
+		 * Returns a subset of ticks to be plotted to avoid overlapping Medirevels.
 		 * @private
 		 */
 		_autoSkip: function(ticks) {
@@ -12195,9 +12195,9 @@ module.exports = function(Chart) {
 			var isHorizontal = me.isHorizontal();
 			var optionTicks = me.options.ticks.minor;
 			var tickCount = ticks.length;
-			var labelRotationRadians = helpers.toRadians(me.labelRotation);
-			var cosRotation = Math.cos(labelRotationRadians);
-			var longestRotatedLabel = me.longestLabelWidth * cosRotation;
+			var MedirevelRotationRadians = helpers.toRadians(me.MedirevelRotation);
+			var cosRotation = Math.cos(MedirevelRotationRadians);
+			var longestRotatedMedirevel = me.longestMedirevelWidth * cosRotation;
 			var result = [];
 			var i, tick, shouldSkip;
 
@@ -12210,8 +12210,8 @@ module.exports = function(Chart) {
 			if (isHorizontal) {
 				skipRatio = false;
 
-				if ((longestRotatedLabel + optionTicks.autoSkipPadding) * tickCount > (me.width - (me.paddingLeft + me.paddingRight))) {
-					skipRatio = 1 + Math.floor(((longestRotatedLabel + optionTicks.autoSkipPadding) * tickCount) / (me.width - (me.paddingLeft + me.paddingRight)));
+				if ((longestRotatedMedirevel + optionTicks.autoSkipPadding) * tickCount > (me.width - (me.paddingLeft + me.paddingRight))) {
+					skipRatio = 1 + Math.floor(((longestRotatedMedirevel + optionTicks.autoSkipPadding) * tickCount) / (me.width - (me.paddingLeft + me.paddingRight)));
 				}
 
 				// if they defined a max number of optionTicks,
@@ -12228,7 +12228,7 @@ module.exports = function(Chart) {
 				shouldSkip = (skipRatio > 1 && i % skipRatio > 0) || (i % skipRatio === 0 && i + skipRatio >= tickCount);
 				if (shouldSkip && i !== tickCount - 1) {
 					// leave tick in place but make sure it's not displayed (#4635)
-					delete tick.label;
+					delete tick.Medirevel;
 				}
 				result.push(tick);
 			}
@@ -12249,9 +12249,9 @@ module.exports = function(Chart) {
 			var optionTicks = options.ticks.minor;
 			var optionMajorTicks = options.ticks.major || optionTicks;
 			var gridLines = options.gridLines;
-			var scaleLabel = options.scaleLabel;
+			var scaleMedirevel = options.scaleMedirevel;
 
-			var isRotated = me.labelRotation !== 0;
+			var isRotated = me.MedirevelRotation !== 0;
 			var isHorizontal = me.isHorizontal();
 
 			var ticks = optionTicks.autoSkip ? me._autoSkip(me.getTicks()) : me.getTicks();
@@ -12262,10 +12262,10 @@ module.exports = function(Chart) {
 
 			var tl = gridLines.drawTicks ? gridLines.tickMarkLength : 0;
 
-			var scaleLabelFontColor = helpers.valueOrDefault(scaleLabel.fontColor, globalDefaults.defaultFontColor);
-			var scaleLabelFont = parseFontOptions(scaleLabel);
-			var scaleLabelPadding = helpers.options.toPadding(scaleLabel.padding);
-			var labelRotationRadians = helpers.toRadians(me.labelRotation);
+			var scaleMedirevelFontColor = helpers.valueOrDefault(scaleMedirevel.fontColor, globalDefaults.defaultFontColor);
+			var scaleMedirevelFont = parseFontOptions(scaleMedirevel);
+			var scaleMedirevelPadding = helpers.options.toPadding(scaleMedirevel.padding);
+			var MedirevelRotationRadians = helpers.toRadians(me.MedirevelRotation);
 
 			var itemsToDraw = [];
 
@@ -12277,11 +12277,11 @@ module.exports = function(Chart) {
 
 			helpers.each(ticks, function(tick, index) {
 				// autoskipper skipped this tick (#4635)
-				if (helpers.isNullOrUndef(tick.label)) {
+				if (helpers.isNullOrUndef(tick.Medirevel)) {
 					return;
 				}
 
-				var label = tick.label;
+				var Medirevel = tick.Medirevel;
 				var lineWidth, lineColor, borderDash, borderDashOffset;
 				if (index === me.zeroLineIndex && options.offset === gridLines.offsetGridLines) {
 					// Draw the first index specially
@@ -12297,24 +12297,24 @@ module.exports = function(Chart) {
 				}
 
 				// Common properties
-				var tx1, ty1, tx2, ty2, x1, y1, x2, y2, labelX, labelY;
+				var tx1, ty1, tx2, ty2, x1, y1, x2, y2, MedirevelX, MedirevelY;
 				var textAlign = 'middle';
 				var textBaseline = 'middle';
 				var tickPadding = optionTicks.padding;
 
 				if (isHorizontal) {
-					var labelYOffset = tl + tickPadding;
+					var MedirevelYOffset = tl + tickPadding;
 
 					if (options.position === 'bottom') {
 						// bottom
 						textBaseline = !isRotated ? 'top' : 'middle';
 						textAlign = !isRotated ? 'center' : 'right';
-						labelY = me.top + labelYOffset;
+						MedirevelY = me.top + MedirevelYOffset;
 					} else {
 						// top
 						textBaseline = !isRotated ? 'bottom' : 'middle';
 						textAlign = !isRotated ? 'center' : 'left';
-						labelY = me.bottom - labelYOffset;
+						MedirevelY = me.bottom - MedirevelYOffset;
 					}
 
 					var xLineValue = getLineValue(me, index, gridLines.offsetGridLines && ticks.length > 1);
@@ -12323,7 +12323,7 @@ module.exports = function(Chart) {
 					}
 					xLineValue += helpers.aliasPixel(lineWidth);
 
-					labelX = me.getPixelForTick(index) + optionTicks.labelOffset; // x values for optionTicks (need to consider offsetLabel option)
+					MedirevelX = me.getPixelForTick(index) + optionTicks.MedirevelOffset; // x values for optionTicks (need to consider offsetMedirevel option)
 
 					tx1 = tx2 = x1 = x2 = xLineValue;
 					ty1 = yTickStart;
@@ -12332,17 +12332,17 @@ module.exports = function(Chart) {
 					y2 = chartArea.bottom + axisWidth;
 				} else {
 					var isLeft = options.position === 'left';
-					var labelXOffset;
+					var MedirevelXOffset;
 
 					if (optionTicks.mirror) {
 						textAlign = isLeft ? 'left' : 'right';
-						labelXOffset = tickPadding;
+						MedirevelXOffset = tickPadding;
 					} else {
 						textAlign = isLeft ? 'right' : 'left';
-						labelXOffset = tl + tickPadding;
+						MedirevelXOffset = tl + tickPadding;
 					}
 
-					labelX = isLeft ? me.right - labelXOffset : me.left + labelXOffset;
+					MedirevelX = isLeft ? me.right - MedirevelXOffset : me.left + MedirevelXOffset;
 
 					var yLineValue = getLineValue(me, index, gridLines.offsetGridLines && ticks.length > 1);
 					if (yLineValue < me.top) {
@@ -12350,7 +12350,7 @@ module.exports = function(Chart) {
 					}
 					yLineValue += helpers.aliasPixel(lineWidth);
 
-					labelY = me.getPixelForTick(index) + optionTicks.labelOffset;
+					MedirevelY = me.getPixelForTick(index) + optionTicks.MedirevelOffset;
 
 					tx1 = xTickStart;
 					tx2 = xTickEnd;
@@ -12368,21 +12368,21 @@ module.exports = function(Chart) {
 					y1: y1,
 					x2: x2,
 					y2: y2,
-					labelX: labelX,
-					labelY: labelY,
+					MedirevelX: MedirevelX,
+					MedirevelY: MedirevelY,
 					glWidth: lineWidth,
 					glColor: lineColor,
 					glBorderDash: borderDash,
 					glBorderDashOffset: borderDashOffset,
-					rotation: -1 * labelRotationRadians,
-					label: label,
+					rotation: -1 * MedirevelRotationRadians,
+					Medirevel: Medirevel,
 					major: tick.major,
 					textBaseline: textBaseline,
 					textAlign: textAlign
 				});
 			});
 
-			// Draw all of the tick labels, tick marks, and grid lines at the correct places
+			// Draw all of the tick Medirevels, tick marks, and grid lines at the correct places
 			helpers.each(itemsToDraw, function(itemToDraw) {
 				if (gridLines.display) {
 					context.save();
@@ -12412,61 +12412,61 @@ module.exports = function(Chart) {
 				if (optionTicks.display) {
 					// Make sure we draw text in the correct color and font
 					context.save();
-					context.translate(itemToDraw.labelX, itemToDraw.labelY);
+					context.translate(itemToDraw.MedirevelX, itemToDraw.MedirevelY);
 					context.rotate(itemToDraw.rotation);
 					context.font = itemToDraw.major ? majorTickFont.font : tickFont.font;
 					context.fillStyle = itemToDraw.major ? majorTickFontColor : tickFontColor;
 					context.textBaseline = itemToDraw.textBaseline;
 					context.textAlign = itemToDraw.textAlign;
 
-					var label = itemToDraw.label;
-					if (helpers.isArray(label)) {
-						var lineCount = label.length;
+					var Medirevel = itemToDraw.Medirevel;
+					if (helpers.isArray(Medirevel)) {
+						var lineCount = Medirevel.length;
 						var lineHeight = tickFont.size * 1.5;
 						var y = me.isHorizontal() ? 0 : -lineHeight * (lineCount - 1) / 2;
 
 						for (var i = 0; i < lineCount; ++i) {
 							// We just make sure the multiline element is a string here..
-							context.fillText('' + label[i], 0, y);
+							context.fillText('' + Medirevel[i], 0, y);
 							// apply same lineSpacing as calculated @ L#320
 							y += lineHeight;
 						}
 					} else {
-						context.fillText(label, 0, 0);
+						context.fillText(Medirevel, 0, 0);
 					}
 					context.restore();
 				}
 			});
 
-			if (scaleLabel.display) {
-				// Draw the scale label
-				var scaleLabelX;
-				var scaleLabelY;
+			if (scaleMedirevel.display) {
+				// Draw the scale Medirevel
+				var scaleMedirevelX;
+				var scaleMedirevelY;
 				var rotation = 0;
-				var halfLineHeight = parseLineHeight(scaleLabel) / 2;
+				var halfLineHeight = parseLineHeight(scaleMedirevel) / 2;
 
 				if (isHorizontal) {
-					scaleLabelX = me.left + ((me.right - me.left) / 2); // midpoint of the width
-					scaleLabelY = options.position === 'bottom'
-						? me.bottom - halfLineHeight - scaleLabelPadding.bottom
-						: me.top + halfLineHeight + scaleLabelPadding.top;
+					scaleMedirevelX = me.left + ((me.right - me.left) / 2); // midpoint of the width
+					scaleMedirevelY = options.position === 'bottom'
+						? me.bottom - halfLineHeight - scaleMedirevelPadding.bottom
+						: me.top + halfLineHeight + scaleMedirevelPadding.top;
 				} else {
 					var isLeft = options.position === 'left';
-					scaleLabelX = isLeft
-						? me.left + halfLineHeight + scaleLabelPadding.top
-						: me.right - halfLineHeight - scaleLabelPadding.top;
-					scaleLabelY = me.top + ((me.bottom - me.top) / 2);
+					scaleMedirevelX = isLeft
+						? me.left + halfLineHeight + scaleMedirevelPadding.top
+						: me.right - halfLineHeight - scaleMedirevelPadding.top;
+					scaleMedirevelY = me.top + ((me.bottom - me.top) / 2);
 					rotation = isLeft ? -0.5 * Math.PI : 0.5 * Math.PI;
 				}
 
 				context.save();
-				context.translate(scaleLabelX, scaleLabelY);
+				context.translate(scaleMedirevelX, scaleMedirevelY);
 				context.rotate(rotation);
 				context.textAlign = 'center';
 				context.textBaseline = 'middle';
-				context.fillStyle = scaleLabelFontColor; // render in correct colour
-				context.font = scaleLabelFont.font;
-				context.fillText(scaleLabel.labelString, 0, 0);
+				context.fillStyle = scaleMedirevelFontColor; // render in correct colour
+				context.font = scaleMedirevelFont.font;
+				context.fillText(scaleMedirevel.MedirevelString, 0, 0);
 				context.restore();
 			}
 
@@ -12563,10 +12563,10 @@ module.exports = {
 	 */
 	formatters: {
 		/**
-		 * Formatter for value labels
+		 * Formatter for value Medirevels
 		 * @method Chart.Ticks.formatters.values
 		 * @param value the value to display
-		 * @return {String|Array} the label to display
+		 * @return {String|Array} the Medirevel to display
 		 */
 		values: function(value) {
 			return helpers.isArray(value) ? value : '' + value;
@@ -12660,18 +12660,18 @@ defaults._set('global', {
 			// Args are: (tooltipItems, data)
 			beforeTitle: helpers.noop,
 			title: function(tooltipItems, data) {
-				// Pick first xLabel for now
+				// Pick first xMedirevel for now
 				var title = '';
-				var labels = data.labels;
-				var labelCount = labels ? labels.length : 0;
+				var Medirevels = data.Medirevels;
+				var MedirevelCount = Medirevels ? Medirevels.length : 0;
 
 				if (tooltipItems.length > 0) {
 					var item = tooltipItems[0];
 
-					if (item.xLabel) {
-						title = item.xLabel;
-					} else if (labelCount > 0 && item.index < labelCount) {
-						title = labels[item.index];
+					if (item.xMedirevel) {
+						title = item.xMedirevel;
+					} else if (MedirevelCount > 0 && item.index < MedirevelCount) {
+						title = Medirevels[item.index];
 					}
 				}
 
@@ -12683,17 +12683,17 @@ defaults._set('global', {
 			beforeBody: helpers.noop,
 
 			// Args are: (tooltipItem, data)
-			beforeLabel: helpers.noop,
-			label: function(tooltipItem, data) {
-				var label = data.datasets[tooltipItem.datasetIndex].label || '';
+			beforeMedirevel: helpers.noop,
+			Medirevel: function(tooltipItem, data) {
+				var Medirevel = data.datasets[tooltipItem.datasetIndex].Medirevel || '';
 
-				if (label) {
-					label += ': ';
+				if (Medirevel) {
+					Medirevel += ': ';
 				}
-				label += tooltipItem.yLabel;
-				return label;
+				Medirevel += tooltipItem.yMedirevel;
+				return Medirevel;
 			},
-			labelColor: function(tooltipItem, chart) {
+			MedirevelColor: function(tooltipItem, chart) {
 				var meta = chart.getDatasetMeta(tooltipItem.datasetIndex);
 				var activeElement = meta.data[tooltipItem.index];
 				var view = activeElement._view;
@@ -12702,10 +12702,10 @@ defaults._set('global', {
 					backgroundColor: view.backgroundColor
 				};
 			},
-			labelTextColor: function() {
+			MedirevelTextColor: function() {
 				return this._options.bodyFontColor;
 			},
-			afterLabel: helpers.noop,
+			afterMedirevel: helpers.noop,
 
 			// Args are: (tooltipItems, data)
 			afterBody: helpers.noop,
@@ -12752,8 +12752,8 @@ module.exports = function(Chart) {
 		var datasetIndex = element._datasetIndex;
 
 		return {
-			xLabel: xScale ? xScale.getLabelForIndex(index, datasetIndex) : '',
-			yLabel: yScale ? yScale.getLabelForIndex(index, datasetIndex) : '',
+			xMedirevel: xScale ? xScale.getMedirevelForIndex(index, datasetIndex) : '',
+			yMedirevel: yScale ? yScale.getMedirevelForIndex(index, datasetIndex) : '',
 			index: index,
 			datasetIndex: datasetIndex,
 			x: element._model.x,
@@ -13052,9 +13052,9 @@ module.exports = function(Chart) {
 					lines: [],
 					after: []
 				};
-				pushOrConcat(bodyItem.before, callbacks.beforeLabel.call(me, tooltipItem, data));
-				pushOrConcat(bodyItem.lines, callbacks.label.call(me, tooltipItem, data));
-				pushOrConcat(bodyItem.after, callbacks.afterLabel.call(me, tooltipItem, data));
+				pushOrConcat(bodyItem.before, callbacks.beforeMedirevel.call(me, tooltipItem, data));
+				pushOrConcat(bodyItem.lines, callbacks.Medirevel.call(me, tooltipItem, data));
+				pushOrConcat(bodyItem.after, callbacks.afterMedirevel.call(me, tooltipItem, data));
 
 				bodyItems.push(bodyItem);
 			});
@@ -13122,8 +13122,8 @@ module.exports = function(Chart) {
 			if (active.length) {
 				model.opacity = 1;
 
-				var labelColors = [];
-				var labelTextColors = [];
+				var MedirevelColors = [];
+				var MedirevelTextColors = [];
 				tooltipPosition = Chart.Tooltip.positioners[opts.position].call(me, active, me._eventPosition);
 
 				var tooltipItems = [];
@@ -13147,8 +13147,8 @@ module.exports = function(Chart) {
 
 				// Determine colors for boxes
 				helpers.each(tooltipItems, function(tooltipItem) {
-					labelColors.push(opts.callbacks.labelColor.call(me, tooltipItem, me._chart));
-					labelTextColors.push(opts.callbacks.labelTextColor.call(me, tooltipItem, me._chart));
+					MedirevelColors.push(opts.callbacks.MedirevelColor.call(me, tooltipItem, me._chart));
+					MedirevelTextColors.push(opts.callbacks.MedirevelTextColor.call(me, tooltipItem, me._chart));
 				});
 
 
@@ -13163,8 +13163,8 @@ module.exports = function(Chart) {
 				model.x = Math.round(tooltipPosition.x);
 				model.y = Math.round(tooltipPosition.y);
 				model.caretPadding = opts.caretPadding;
-				model.labelColors = labelColors;
-				model.labelTextColors = labelTextColors;
+				model.MedirevelColors = MedirevelColors;
+				model.MedirevelTextColors = MedirevelTextColors;
 
 				// data points
 				model.dataPoints = tooltipItems;
@@ -13314,7 +13314,7 @@ module.exports = function(Chart) {
 
 			// Draw body lines now
 			helpers.each(body, function(bodyItem, i) {
-				var textColor = mergeOpacity(vm.labelTextColors[i], opacity);
+				var textColor = mergeOpacity(vm.MedirevelTextColors[i], opacity);
 				ctx.fillStyle = textColor;
 				helpers.each(bodyItem.before, fillLineOfText);
 
@@ -13327,11 +13327,11 @@ module.exports = function(Chart) {
 
 						// Border
 						ctx.lineWidth = 1;
-						ctx.strokeStyle = mergeOpacity(vm.labelColors[i].borderColor, opacity);
+						ctx.strokeStyle = mergeOpacity(vm.MedirevelColors[i].borderColor, opacity);
 						ctx.strokeRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
 						// Inner square
-						ctx.fillStyle = mergeOpacity(vm.labelColors[i].backgroundColor, opacity);
+						ctx.fillStyle = mergeOpacity(vm.MedirevelColors[i].backgroundColor, opacity);
 						ctx.fillRect(pt.x + 1, pt.y + 1, bodyFontSize - 2, bodyFontSize - 2);
 						ctx.fillStyle = textColor;
 					}
@@ -13587,7 +13587,7 @@ defaults._set('global', {
 });
 
 module.exports = Element.extend({
-	inLabelRange: function(mouseX) {
+	inMedirevelRange: function(mouseX) {
 		var vm = this._view;
 
 		if (vm) {
@@ -13812,7 +13812,7 @@ module.exports = Element.extend({
 		return vm ? ((Math.pow(mouseX - vm.x, 2) + Math.pow(mouseY - vm.y, 2)) < Math.pow(vm.hitRadius + vm.radius, 2)) : false;
 	},
 
-	inLabelRange: xRange,
+	inMedirevelRange: xRange,
 	inXRange: xRange,
 	inYRange: yRange,
 
@@ -14042,7 +14042,7 @@ module.exports = Element.extend({
 		return inRange;
 	},
 
-	inLabelRange: function(mouseX, mouseY) {
+	inMedirevelRange: function(mouseX, mouseY) {
 		var me = this;
 		if (!me._view) {
 			return false;
@@ -15935,10 +15935,10 @@ defaults._set('global', {
 
 		onHover: null,
 
-		labels: {
+		Medirevels: {
 			boxWidth: 40,
 			padding: 10,
-			// Generates labels shown in the legend
+			// Generates Medirevels shown in the legend
 			// Valid properties to return:
 			// text : text to display
 			// fillStyle : fill of coloured box
@@ -15949,11 +15949,11 @@ defaults._set('global', {
 			// lineDashOffset :
 			// lineJoin :
 			// lineWidth :
-			generateLabels: function(chart) {
+			generateMedirevels: function(chart) {
 				var data = chart.data;
 				return helpers.isArray(data.datasets) ? data.datasets.map(function(dataset, i) {
 					return {
-						text: dataset.label,
+						text: dataset.Medirevel,
 						fillStyle: (!helpers.isArray(dataset.backgroundColor) ? dataset.backgroundColor : dataset.backgroundColor[0]),
 						hidden: !chart.isDatasetVisible(i),
 						lineCap: dataset.borderCapStyle,
@@ -15977,8 +15977,8 @@ defaults._set('global', {
 		text.push('<ul class="' + chart.id + '-legend">');
 		for (var i = 0; i < chart.data.datasets.length; i++) {
 			text.push('<li><span style="background-color:' + chart.data.datasets[i].backgroundColor + '"></span>');
-			if (chart.data.datasets[i].label) {
-				text.push(chart.data.datasets[i].label);
+			if (chart.data.datasets[i].Medirevel) {
+				text.push(chart.data.datasets[i].Medirevel);
 			}
 			text.push('</li>');
 		}
@@ -15989,14 +15989,14 @@ defaults._set('global', {
 
 /**
  * Helper function to get the box width based on the usePointStyle option
- * @param labelopts {Object} the label options on the legend
- * @param fontSize {Number} the label font size
+ * @param Medirevelopts {Object} the Medirevel options on the legend
+ * @param fontSize {Number} the Medirevel font size
  * @return {Number} width of the color box area
  */
-function getBoxWidth(labelOpts, fontSize) {
-	return labelOpts.usePointStyle ?
+function getBoxWidth(MedirevelOpts, fontSize) {
+	return MedirevelOpts.usePointStyle ?
 		fontSize * Math.SQRT2 :
-		labelOpts.boxWidth;
+		MedirevelOpts.boxWidth;
 }
 
 /**
@@ -16034,10 +16034,10 @@ var Legend = Element.extend({
 		me.beforeSetDimensions();
 		me.setDimensions();
 		me.afterSetDimensions();
-		// Labels
-		me.beforeBuildLabels();
-		me.buildLabels();
-		me.afterBuildLabels();
+		// Medirevels
+		me.beforeBuildMedirevels();
+		me.buildMedirevels();
+		me.afterBuildMedirevels();
 
 		// Fit
 		me.beforeFit();
@@ -16055,7 +16055,7 @@ var Legend = Element.extend({
 	beforeSetDimensions: noop,
 	setDimensions: function() {
 		var me = this;
-		// Set the unconstrained dimension before label rotation
+		// Set the unconstrained dimension before Medirevel rotation
 		if (me.isHorizontal()) {
 			// Reset position before calculating rotation
 			me.width = me.maxWidth;
@@ -16085,15 +16085,15 @@ var Legend = Element.extend({
 
 	//
 
-	beforeBuildLabels: noop,
-	buildLabels: function() {
+	beforeBuildMedirevels: noop,
+	buildMedirevels: function() {
 		var me = this;
-		var labelOpts = me.options.labels || {};
-		var legendItems = helpers.callback(labelOpts.generateLabels, [me.chart], me) || [];
+		var MedirevelOpts = me.options.Medirevels || {};
+		var legendItems = helpers.callback(MedirevelOpts.generateMedirevels, [me.chart], me) || [];
 
-		if (labelOpts.filter) {
+		if (MedirevelOpts.filter) {
 			legendItems = legendItems.filter(function(item) {
-				return labelOpts.filter(item, me.chart.data);
+				return MedirevelOpts.filter(item, me.chart.data);
 			});
 		}
 
@@ -16103,7 +16103,7 @@ var Legend = Element.extend({
 
 		me.legendItems = legendItems;
 	},
-	afterBuildLabels: noop,
+	afterBuildMedirevels: noop,
 
 	//
 
@@ -16111,17 +16111,17 @@ var Legend = Element.extend({
 	fit: function() {
 		var me = this;
 		var opts = me.options;
-		var labelOpts = opts.labels;
+		var MedirevelOpts = opts.Medirevels;
 		var display = opts.display;
 
 		var ctx = me.ctx;
 
 		var globalDefault = defaults.global;
 		var valueOrDefault = helpers.valueOrDefault;
-		var fontSize = valueOrDefault(labelOpts.fontSize, globalDefault.defaultFontSize);
-		var fontStyle = valueOrDefault(labelOpts.fontStyle, globalDefault.defaultFontStyle);
-		var fontFamily = valueOrDefault(labelOpts.fontFamily, globalDefault.defaultFontFamily);
-		var labelFont = helpers.fontString(fontSize, fontStyle, fontFamily);
+		var fontSize = valueOrDefault(MedirevelOpts.fontSize, globalDefault.defaultFontSize);
+		var fontStyle = valueOrDefault(MedirevelOpts.fontStyle, globalDefault.defaultFontStyle);
+		var fontFamily = valueOrDefault(MedirevelOpts.fontFamily, globalDefault.defaultFontFamily);
+		var MedirevelFont = helpers.fontString(fontSize, fontStyle, fontFamily);
 
 		// Reset hit boxes
 		var hitboxes = me.legendHitBoxes = [];
@@ -16139,24 +16139,24 @@ var Legend = Element.extend({
 
 		// Increase sizes here
 		if (display) {
-			ctx.font = labelFont;
+			ctx.font = MedirevelFont;
 
 			if (isHorizontal) {
-				// Labels
+				// Medirevels
 
-				// Width of each line of legend boxes. Labels wrap onto multiple lines when there are too many to fit on one
+				// Width of each line of legend boxes. Medirevels wrap onto multiple lines when there are too many to fit on one
 				var lineWidths = me.lineWidths = [0];
-				var totalHeight = me.legendItems.length ? fontSize + (labelOpts.padding) : 0;
+				var totalHeight = me.legendItems.length ? fontSize + (MedirevelOpts.padding) : 0;
 
 				ctx.textAlign = 'left';
 				ctx.textBaseline = 'top';
 
 				helpers.each(me.legendItems, function(legendItem, i) {
-					var boxWidth = getBoxWidth(labelOpts, fontSize);
+					var boxWidth = getBoxWidth(MedirevelOpts, fontSize);
 					var width = boxWidth + (fontSize / 2) + ctx.measureText(legendItem.text).width;
 
-					if (lineWidths[lineWidths.length - 1] + width + labelOpts.padding >= me.width) {
-						totalHeight += fontSize + (labelOpts.padding);
+					if (lineWidths[lineWidths.length - 1] + width + MedirevelOpts.padding >= me.width) {
+						totalHeight += fontSize + (MedirevelOpts.padding);
 						lineWidths[lineWidths.length] = me.left;
 					}
 
@@ -16168,26 +16168,26 @@ var Legend = Element.extend({
 						height: fontSize
 					};
 
-					lineWidths[lineWidths.length - 1] += width + labelOpts.padding;
+					lineWidths[lineWidths.length - 1] += width + MedirevelOpts.padding;
 				});
 
 				minSize.height += totalHeight;
 
 			} else {
-				var vPadding = labelOpts.padding;
+				var vPadding = MedirevelOpts.padding;
 				var columnWidths = me.columnWidths = [];
-				var totalWidth = labelOpts.padding;
+				var totalWidth = MedirevelOpts.padding;
 				var currentColWidth = 0;
 				var currentColHeight = 0;
 				var itemHeight = fontSize + vPadding;
 
 				helpers.each(me.legendItems, function(legendItem, i) {
-					var boxWidth = getBoxWidth(labelOpts, fontSize);
+					var boxWidth = getBoxWidth(MedirevelOpts, fontSize);
 					var itemWidth = boxWidth + (fontSize / 2) + ctx.measureText(legendItem.text).width;
 
 					// If too tall, go to new column
 					if (currentColHeight + itemHeight > minSize.height) {
-						totalWidth += currentColWidth + labelOpts.padding;
+						totalWidth += currentColWidth + MedirevelOpts.padding;
 						columnWidths.push(currentColWidth); // previous column width
 
 						currentColWidth = 0;
@@ -16227,7 +16227,7 @@ var Legend = Element.extend({
 	draw: function() {
 		var me = this;
 		var opts = me.options;
-		var labelOpts = opts.labels;
+		var MedirevelOpts = opts.Medirevels;
 		var globalDefault = defaults.global;
 		var lineDefault = globalDefault.elements.line;
 		var legendWidth = me.width;
@@ -16236,11 +16236,11 @@ var Legend = Element.extend({
 		if (opts.display) {
 			var ctx = me.ctx;
 			var valueOrDefault = helpers.valueOrDefault;
-			var fontColor = valueOrDefault(labelOpts.fontColor, globalDefault.defaultFontColor);
-			var fontSize = valueOrDefault(labelOpts.fontSize, globalDefault.defaultFontSize);
-			var fontStyle = valueOrDefault(labelOpts.fontStyle, globalDefault.defaultFontStyle);
-			var fontFamily = valueOrDefault(labelOpts.fontFamily, globalDefault.defaultFontFamily);
-			var labelFont = helpers.fontString(fontSize, fontStyle, fontFamily);
+			var fontColor = valueOrDefault(MedirevelOpts.fontColor, globalDefault.defaultFontColor);
+			var fontSize = valueOrDefault(MedirevelOpts.fontSize, globalDefault.defaultFontSize);
+			var fontStyle = valueOrDefault(MedirevelOpts.fontStyle, globalDefault.defaultFontStyle);
+			var fontFamily = valueOrDefault(MedirevelOpts.fontFamily, globalDefault.defaultFontFamily);
+			var MedirevelFont = helpers.fontString(fontSize, fontStyle, fontFamily);
 			var cursor;
 
 			// Canvas setup
@@ -16249,9 +16249,9 @@ var Legend = Element.extend({
 			ctx.lineWidth = 0.5;
 			ctx.strokeStyle = fontColor; // for strikethrough effect
 			ctx.fillStyle = fontColor; // render in correct colour
-			ctx.font = labelFont;
+			ctx.font = MedirevelFont;
 
-			var boxWidth = getBoxWidth(labelOpts, fontSize);
+			var boxWidth = getBoxWidth(MedirevelOpts, fontSize);
 			var hitboxes = me.legendHitBoxes;
 
 			// current position
@@ -16276,7 +16276,7 @@ var Legend = Element.extend({
 					ctx.setLineDash(valueOrDefault(legendItem.lineDash, lineDefault.borderDash));
 				}
 
-				if (opts.labels && opts.labels.usePointStyle) {
+				if (opts.Medirevels && opts.Medirevels.usePointStyle) {
 					// Recalculate x and y for drawPoint() because its expecting
 					// x and y to be center of figure (instead of top left)
 					var radius = fontSize * Math.SQRT2 / 2;
@@ -16318,18 +16318,18 @@ var Legend = Element.extend({
 			if (isHorizontal) {
 				cursor = {
 					x: me.left + ((legendWidth - lineWidths[0]) / 2),
-					y: me.top + labelOpts.padding,
+					y: me.top + MedirevelOpts.padding,
 					line: 0
 				};
 			} else {
 				cursor = {
-					x: me.left + labelOpts.padding,
-					y: me.top + labelOpts.padding,
+					x: me.left + MedirevelOpts.padding,
+					y: me.top + MedirevelOpts.padding,
 					line: 0
 				};
 			}
 
-			var itemHeight = fontSize + labelOpts.padding;
+			var itemHeight = fontSize + MedirevelOpts.padding;
 			helpers.each(me.legendItems, function(legendItem, i) {
 				var textWidth = ctx.measureText(legendItem.text).width;
 				var width = boxWidth + (fontSize / 2) + textWidth;
@@ -16343,8 +16343,8 @@ var Legend = Element.extend({
 						x = cursor.x = me.left + ((legendWidth - lineWidths[cursor.line]) / 2);
 					}
 				} else if (y + itemHeight > me.bottom) {
-					x = cursor.x = x + me.columnWidths[cursor.line] + labelOpts.padding;
-					y = cursor.y = me.top + labelOpts.padding;
+					x = cursor.x = x + me.columnWidths[cursor.line] + MedirevelOpts.padding;
+					y = cursor.y = me.top + MedirevelOpts.padding;
 					cursor.line++;
 				}
 
@@ -16353,11 +16353,11 @@ var Legend = Element.extend({
 				hitboxes[i].left = x;
 				hitboxes[i].top = y;
 
-				// Fill the actual label
+				// Fill the actual Medirevel
 				fillText(x, y, legendItem, textWidth);
 
 				if (isHorizontal) {
-					cursor.x += width + (labelOpts.padding);
+					cursor.x += width + (MedirevelOpts.padding);
 				} else {
 					cursor.y += itemHeight;
 				}
@@ -16533,10 +16533,10 @@ var Title = Element.extend({
 		me.beforeSetDimensions();
 		me.setDimensions();
 		me.afterSetDimensions();
-		// Labels
-		me.beforeBuildLabels();
-		me.buildLabels();
-		me.afterBuildLabels();
+		// Medirevels
+		me.beforeBuildMedirevels();
+		me.buildMedirevels();
+		me.afterBuildMedirevels();
 
 		// Fit
 		me.beforeFit();
@@ -16555,7 +16555,7 @@ var Title = Element.extend({
 	beforeSetDimensions: noop,
 	setDimensions: function() {
 		var me = this;
-		// Set the unconstrained dimension before label rotation
+		// Set the unconstrained dimension before Medirevel rotation
 		if (me.isHorizontal()) {
 			// Reset position before calculating rotation
 			me.width = me.maxWidth;
@@ -16585,9 +16585,9 @@ var Title = Element.extend({
 
 	//
 
-	beforeBuildLabels: noop,
-	buildLabels: noop,
-	afterBuildLabels: noop,
+	beforeBuildMedirevels: noop,
+	buildMedirevels: noop,
+	afterBuildMedirevels: noop,
 
 	//
 
@@ -16746,51 +16746,51 @@ module.exports = function(Chart) {
 
 	var DatasetScale = Chart.Scale.extend({
 		/**
-		* Internal function to get the correct labels. If data.xLabels or data.yLabels are defined, use those
-		* else fall back to data.labels
+		* Internal function to get the correct Medirevels. If data.xMedirevels or data.yMedirevels are defined, use those
+		* else fall back to data.Medirevels
 		* @private
 		*/
-		getLabels: function() {
+		getMedirevels: function() {
 			var data = this.chart.data;
-			return this.options.labels || (this.isHorizontal() ? data.xLabels : data.yLabels) || data.labels;
+			return this.options.Medirevels || (this.isHorizontal() ? data.xMedirevels : data.yMedirevels) || data.Medirevels;
 		},
 
 		determineDataLimits: function() {
 			var me = this;
-			var labels = me.getLabels();
+			var Medirevels = me.getMedirevels();
 			me.minIndex = 0;
-			me.maxIndex = labels.length - 1;
+			me.maxIndex = Medirevels.length - 1;
 			var findIndex;
 
 			if (me.options.ticks.min !== undefined) {
 				// user specified min value
-				findIndex = labels.indexOf(me.options.ticks.min);
+				findIndex = Medirevels.indexOf(me.options.ticks.min);
 				me.minIndex = findIndex !== -1 ? findIndex : me.minIndex;
 			}
 
 			if (me.options.ticks.max !== undefined) {
 				// user specified max value
-				findIndex = labels.indexOf(me.options.ticks.max);
+				findIndex = Medirevels.indexOf(me.options.ticks.max);
 				me.maxIndex = findIndex !== -1 ? findIndex : me.maxIndex;
 			}
 
-			me.min = labels[me.minIndex];
-			me.max = labels[me.maxIndex];
+			me.min = Medirevels[me.minIndex];
+			me.max = Medirevels[me.maxIndex];
 		},
 
 		buildTicks: function() {
 			var me = this;
-			var labels = me.getLabels();
-			// If we are viewing some subset of labels, slice the original array
-			me.ticks = (me.minIndex === 0 && me.maxIndex === labels.length - 1) ? labels : labels.slice(me.minIndex, me.maxIndex + 1);
+			var Medirevels = me.getMedirevels();
+			// If we are viewing some subset of Medirevels, slice the original array
+			me.ticks = (me.minIndex === 0 && me.maxIndex === Medirevels.length - 1) ? Medirevels : Medirevels.slice(me.minIndex, me.maxIndex + 1);
 		},
 
-		getLabelForIndex: function(index, datasetIndex) {
+		getMedirevelForIndex: function(index, datasetIndex) {
 			var me = this;
 			var data = me.chart.data;
 			var isHorizontal = me.isHorizontal();
 
-			if (data.yLabels && !isHorizontal) {
+			if (data.yMedirevels && !isHorizontal) {
 				return me.getRightValue(data.datasets[datasetIndex].data[index]);
 			}
 			return me.ticks[index - me.minIndex];
@@ -16810,9 +16810,9 @@ module.exports = function(Chart) {
 				valueCategory = me.isHorizontal() ? value.x : value.y;
 			}
 			if (valueCategory !== undefined || (value !== undefined && isNaN(index))) {
-				var labels = me.getLabels();
+				var Medirevels = me.getMedirevels();
 				value = valueCategory || value;
-				var idx = labels.indexOf(value);
+				var idx = Medirevels.indexOf(value);
 				index = idx !== -1 ? idx : index;
 			}
 
@@ -17026,7 +17026,7 @@ module.exports = function(Chart) {
 				this.ticks.reverse();
 			}
 		},
-		getLabelForIndex: function(index, datasetIndex) {
+		getMedirevelForIndex: function(index, datasetIndex) {
 			return +this.getRightValue(this.chart.data.datasets[datasetIndex].data[index]);
 		},
 		// Utils
@@ -17076,7 +17076,7 @@ var helpers = require(45);
 function generateTicks(generationOptions, dataRange) {
 	var ticks = [];
 	// To get a "nice" value for the tick spacing, we will use the appropriately named
-	// "nice number" algorithm. See http://stackoverflow.com/questions/8506881/nice-label-algorithm-for-charts-with-minimum-ticks
+	// "nice number" algorithm. See http://stackoverflow.com/questions/8506881/nice-Medirevel-algorithm-for-charts-with-minimum-ticks
 	// for details.
 
 	var spacing;
@@ -17240,12 +17240,12 @@ module.exports = function(Chart) {
 				me.end = me.max;
 			}
 		},
-		convertTicksToLabels: function() {
+		convertTicksToMedirevels: function() {
 			var me = this;
 			me.ticksAsNumbers = me.ticks.slice();
 			me.zeroLineIndex = me.ticks.indexOf(0);
 
-			Chart.Scale.prototype.convertTicksToLabels.call(me);
+			Chart.Scale.prototype.convertTicksToMedirevels.call(me);
 		}
 	});
 };
@@ -17313,7 +17313,7 @@ module.exports = function(Chart) {
 	var defaultConfig = {
 		position: 'left',
 
-		// label settings
+		// Medirevel settings
 		ticks: {
 			callback: Ticks.formatters.logarithmic
 		}
@@ -17491,13 +17491,13 @@ module.exports = function(Chart) {
 				ticks.reverse();
 			}
 		},
-		convertTicksToLabels: function() {
+		convertTicksToMedirevels: function() {
 			this.tickValues = this.ticks.slice();
 
-			Chart.Scale.prototype.convertTicksToLabels.call(this);
+			Chart.Scale.prototype.convertTicksToMedirevels.call(this);
 		},
-		// Get the correct tooltip label
-		getLabelForIndex: function(index, datasetIndex) {
+		// Get the correct tooltip Medirevel
+		getMedirevelForIndex: function(index, datasetIndex) {
 			return +this.getRightValue(this.chart.data.datasets[datasetIndex].data[index]);
 		},
 		getPixelForTick: function(index) {
@@ -17627,47 +17627,47 @@ module.exports = function(Chart) {
 			circular: false
 		},
 
-		// label settings
+		// Medirevel settings
 		ticks: {
-			// Boolean - Show a backdrop to the scale label
-			showLabelBackdrop: true,
+			// Boolean - Show a backdrop to the scale Medirevel
+			showMedirevelBackdrop: true,
 
-			// String - The colour of the label backdrop
+			// String - The colour of the Medirevel backdrop
 			backdropColor: 'rgba(255,255,255,0.75)',
 
-			// Number - The backdrop padding above & below the label in pixels
+			// Number - The backdrop padding above & below the Medirevel in pixels
 			backdropPaddingY: 2,
 
-			// Number - The backdrop padding to the side of the label in pixels
+			// Number - The backdrop padding to the side of the Medirevel in pixels
 			backdropPaddingX: 2,
 
 			callback: Ticks.formatters.linear
 		},
 
-		pointLabels: {
-			// Boolean - if true, show point labels
+		pointMedirevels: {
+			// Boolean - if true, show point Medirevels
 			display: true,
 
-			// Number - Point label font size in pixels
+			// Number - Point Medirevel font size in pixels
 			fontSize: 10,
 
-			// Function - Used to convert point labels
-			callback: function(label) {
-				return label;
+			// Function - Used to convert point Medirevels
+			callback: function(Medirevel) {
+				return Medirevel;
 			}
 		}
 	};
 
 	function getValueCount(scale) {
 		var opts = scale.options;
-		return opts.angleLines.display || opts.pointLabels.display ? scale.chart.data.labels.length : 0;
+		return opts.angleLines.display || opts.pointMedirevels.display ? scale.chart.data.Medirevels.length : 0;
 	}
 
-	function getPointLabelFontOptions(scale) {
-		var pointLabelOptions = scale.options.pointLabels;
-		var fontSize = helpers.valueOrDefault(pointLabelOptions.fontSize, globalDefaults.defaultFontSize);
-		var fontStyle = helpers.valueOrDefault(pointLabelOptions.fontStyle, globalDefaults.defaultFontStyle);
-		var fontFamily = helpers.valueOrDefault(pointLabelOptions.fontFamily, globalDefaults.defaultFontFamily);
+	function getPointMedirevelFontOptions(scale) {
+		var pointMedirevelOptions = scale.options.pointMedirevels;
+		var fontSize = helpers.valueOrDefault(pointMedirevelOptions.fontSize, globalDefaults.defaultFontSize);
+		var fontStyle = helpers.valueOrDefault(pointMedirevelOptions.fontStyle, globalDefaults.defaultFontStyle);
+		var fontFamily = helpers.valueOrDefault(pointMedirevelOptions.fontFamily, globalDefaults.defaultFontFamily);
 		var font = helpers.fontString(fontSize, fontStyle, fontFamily);
 
 		return {
@@ -17678,16 +17678,16 @@ module.exports = function(Chart) {
 		};
 	}
 
-	function measureLabelSize(ctx, fontSize, label) {
-		if (helpers.isArray(label)) {
+	function measureMedirevelSize(ctx, fontSize, Medirevel) {
+		if (helpers.isArray(Medirevel)) {
 			return {
-				w: helpers.longestText(ctx, ctx.font, label),
-				h: (label.length * fontSize) + ((label.length - 1) * 1.5 * fontSize)
+				w: helpers.longestText(ctx, ctx.font, Medirevel),
+				h: (Medirevel.length * fontSize) + ((Medirevel.length - 1) * 1.5 * fontSize)
 			};
 		}
 
 		return {
-			w: ctx.measureText(label).width,
+			w: ctx.measureText(Medirevel).width,
 			h: fontSize
 		};
 	}
@@ -17712,9 +17712,9 @@ module.exports = function(Chart) {
 	}
 
 	/**
-	 * Helper function to fit a radial linear scale with point labels
+	 * Helper function to fit a radial linear scale with point Medirevels
 	 */
-	function fitWithPointLabels(scale) {
+	function fitWithPointMedirevels(scale) {
 		/*
 		 * Right, this is really confusing and there is a lot of maths going on here
 		 * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9
@@ -17732,18 +17732,18 @@ module.exports = function(Chart) {
 		 * from the shape radius to move the point inwards by that x.
 		 *
 		 * We average the left and right distances to get the maximum shape radius that can fit in the box
-		 * along with labels.
+		 * along with Medirevels.
 		 *
 		 * Once we have that, we can find the centre point for the chart, by taking the x text protrusion
 		 * on each side, removing that from the size, halving it and adding the left x protrusion width.
 		 *
-		 * This will mean we have a shape fitted to the canvas, as large as it can be with the labels
+		 * This will mean we have a shape fitted to the canvas, as large as it can be with the Medirevels
 		 * and position it in the most space efficient manner
 		 *
 		 * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif
 		 */
 
-		var plFont = getPointLabelFontOptions(scale);
+		var plFont = getPointMedirevelFontOptions(scale);
 
 		// Get maximum radius of the polygon. Either half the height (minus the text width) or half the width.
 		// Use this to calculate the offset + change. - Make sure L/R protrusion is at least 0 to stop issues with centre points
@@ -17758,13 +17758,13 @@ module.exports = function(Chart) {
 		var i, textSize, pointPosition;
 
 		scale.ctx.font = plFont.font;
-		scale._pointLabelSizes = [];
+		scale._pointMedirevelSizes = [];
 
 		var valueCount = getValueCount(scale);
 		for (i = 0; i < valueCount; i++) {
 			pointPosition = scale.getPointPosition(i, largestPossibleRadius);
-			textSize = measureLabelSize(scale.ctx, plFont.size, scale.pointLabels[i] || '');
-			scale._pointLabelSizes[i] = textSize;
+			textSize = measureMedirevelSize(scale.ctx, plFont.size, scale.pointMedirevels[i] || '');
+			scale._pointMedirevelSizes[i] = textSize;
 
 			// Add quarter circle to make degree 0 mean top of circle
 			var angleRadians = scale.getIndexAngle(i);
@@ -17797,7 +17797,7 @@ module.exports = function(Chart) {
 	}
 
 	/**
-	 * Helper function to fit a radial linear scale with no point labels
+	 * Helper function to fit a radial linear scale with no point Medirevels
 	 */
 	function fit(scale) {
 		var largestPossibleRadius = Math.min(scale.height / 2, scale.width / 2);
@@ -17829,7 +17829,7 @@ module.exports = function(Chart) {
 		}
 	}
 
-	function adjustPointPositionForLabelHeight(angle, textSize, position) {
+	function adjustPointPositionForMedirevelHeight(angle, textSize, position) {
 		if (angle === 90 || angle === 270) {
 			position.y -= (textSize.h / 2);
 		} else if (angle > 270 || angle < 90) {
@@ -17837,19 +17837,19 @@ module.exports = function(Chart) {
 		}
 	}
 
-	function drawPointLabels(scale) {
+	function drawPointMedirevels(scale) {
 		var ctx = scale.ctx;
 		var opts = scale.options;
 		var angleLineOpts = opts.angleLines;
-		var pointLabelOpts = opts.pointLabels;
+		var pointMedirevelOpts = opts.pointMedirevels;
 
 		ctx.lineWidth = angleLineOpts.lineWidth;
 		ctx.strokeStyle = angleLineOpts.color;
 
 		var outerDistance = scale.getDistanceFromCenterForValue(opts.ticks.reverse ? scale.min : scale.max);
 
-		// Point Label Font
-		var plFont = getPointLabelFontOptions(scale);
+		// Point Medirevel Font
+		var plFont = getPointMedirevelFontOptions(scale);
 
 		ctx.textBaseline = 'top';
 
@@ -17863,20 +17863,20 @@ module.exports = function(Chart) {
 				ctx.closePath();
 			}
 
-			if (pointLabelOpts.display) {
-				// Extra 3px out for some label spacing
-				var pointLabelPosition = scale.getPointPosition(i, outerDistance + 5);
+			if (pointMedirevelOpts.display) {
+				// Extra 3px out for some Medirevel spacing
+				var pointMedirevelPosition = scale.getPointPosition(i, outerDistance + 5);
 
 				// Keep this in loop since we may support array properties here
-				var pointLabelFontColor = helpers.valueAtIndexOrDefault(pointLabelOpts.fontColor, i, globalDefaults.defaultFontColor);
+				var pointMedirevelFontColor = helpers.valueAtIndexOrDefault(pointMedirevelOpts.fontColor, i, globalDefaults.defaultFontColor);
 				ctx.font = plFont.font;
-				ctx.fillStyle = pointLabelFontColor;
+				ctx.fillStyle = pointMedirevelFontColor;
 
 				var angleRadians = scale.getIndexAngle(i);
 				var angle = helpers.toDegrees(angleRadians);
 				ctx.textAlign = getTextAlignForAngle(angle);
-				adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
-				fillText(ctx, scale.pointLabels[i] || '', pointLabelPosition, plFont.size);
+				adjustPointPositionForMedirevelHeight(angle, scale._pointMedirevelSizes[i], pointMedirevelPosition);
+				fillText(ctx, scale.pointMedirevels[i] || '', pointMedirevelPosition, plFont.size);
 			}
 		}
 	}
@@ -17923,7 +17923,7 @@ module.exports = function(Chart) {
 			var me = this;
 			var opts = me.options;
 			var tickOpts = opts.ticks;
-			// Set the unconstrained dimension before label rotation
+			// Set the unconstrained dimension before Medirevel rotation
 			me.width = me.maxWidth;
 			me.height = me.maxHeight;
 			me.xCenter = Math.round(me.width / 2);
@@ -17966,20 +17966,20 @@ module.exports = function(Chart) {
 			var tickFontSize = helpers.valueOrDefault(tickOpts.fontSize, globalDefaults.defaultFontSize);
 			return Math.min(tickOpts.maxTicksLimit ? tickOpts.maxTicksLimit : 11, Math.ceil(this.drawingArea / (1.5 * tickFontSize)));
 		},
-		convertTicksToLabels: function() {
+		convertTicksToMedirevels: function() {
 			var me = this;
 
-			Chart.LinearScaleBase.prototype.convertTicksToLabels.call(me);
+			Chart.LinearScaleBase.prototype.convertTicksToMedirevels.call(me);
 
-			// Point labels
-			me.pointLabels = me.chart.data.labels.map(me.options.pointLabels.callback, me);
+			// Point Medirevels
+			me.pointMedirevels = me.chart.data.Medirevels.map(me.options.pointMedirevels.callback, me);
 		},
-		getLabelForIndex: function(index, datasetIndex) {
+		getMedirevelForIndex: function(index, datasetIndex) {
 			return +this.getRightValue(this.chart.data.datasets[datasetIndex].data[index]);
 		},
 		fit: function() {
-			if (this.options.pointLabels.display) {
-				fitWithPointLabels(this);
+			if (this.options.pointMedirevels.display) {
+				fitWithPointMedirevels(this);
 			} else {
 				fit(this);
 			}
@@ -18080,9 +18080,9 @@ module.exports = function(Chart) {
 				var tickFontSize = valueOrDefault(tickOpts.fontSize, globalDefaults.defaultFontSize);
 				var tickFontStyle = valueOrDefault(tickOpts.fontStyle, globalDefaults.defaultFontStyle);
 				var tickFontFamily = valueOrDefault(tickOpts.fontFamily, globalDefaults.defaultFontFamily);
-				var tickLabelFont = helpers.fontString(tickFontSize, tickFontStyle, tickFontFamily);
+				var tickMedirevelFont = helpers.fontString(tickFontSize, tickFontStyle, tickFontFamily);
 
-				helpers.each(me.ticks, function(label, index) {
+				helpers.each(me.ticks, function(Medirevel, index) {
 					// Don't draw a centre value (if it is minimum)
 					if (index > 0 || tickOpts.reverse) {
 						var yCenterOffset = me.getDistanceFromCenterForValue(me.ticksAsNumbers[index]);
@@ -18094,19 +18094,19 @@ module.exports = function(Chart) {
 
 						if (tickOpts.display) {
 							var tickFontColor = valueOrDefault(tickOpts.fontColor, globalDefaults.defaultFontColor);
-							ctx.font = tickLabelFont;
+							ctx.font = tickMedirevelFont;
 
 							ctx.save();
 							ctx.translate(me.xCenter, me.yCenter);
 							ctx.rotate(startAngle);
 
-							if (tickOpts.showLabelBackdrop) {
-								var labelWidth = ctx.measureText(label).width;
+							if (tickOpts.showMedirevelBackdrop) {
+								var MedirevelWidth = ctx.measureText(Medirevel).width;
 								ctx.fillStyle = tickOpts.backdropColor;
 								ctx.fillRect(
-									-labelWidth / 2 - tickOpts.backdropPaddingX,
+									-MedirevelWidth / 2 - tickOpts.backdropPaddingX,
 									-yCenterOffset - tickFontSize / 2 - tickOpts.backdropPaddingY,
-									labelWidth + tickOpts.backdropPaddingX * 2,
+									MedirevelWidth + tickOpts.backdropPaddingX * 2,
 									tickFontSize + tickOpts.backdropPaddingY * 2
 								);
 							}
@@ -18114,14 +18114,14 @@ module.exports = function(Chart) {
 							ctx.textAlign = 'center';
 							ctx.textBaseline = 'middle';
 							ctx.fillStyle = tickFontColor;
-							ctx.fillText(label, 0, -yCenterOffset);
+							ctx.fillText(Medirevel, 0, -yCenterOffset);
 							ctx.restore();
 						}
 					}
 				});
 
-				if (opts.angleLines.display || opts.pointLabels.display) {
-					drawPointLabels(me);
+				if (opts.angleLines.display || opts.pointMedirevels.display) {
+					drawPointMedirevels(me);
 				}
 			}
 		}
@@ -18334,7 +18334,7 @@ function momentify(value, options) {
 		return value;
 	}
 
-	// Labels are in an incompatible moment format and no `parser` has been provided.
+	// Medirevels are in an incompatible moment format and no `parser` has been provided.
 	// The user might still use the deprecated `format` option to convert his inputs.
 	if (typeof format === 'function') {
 		return format(value);
@@ -18536,12 +18536,12 @@ function ticksFromTimestamps(values, majorUnit) {
 	return ticks;
 }
 
-function determineLabelFormat(data, timeOpts) {
+function determineMedirevelFormat(data, timeOpts) {
 	var i, momentDate, hasTime;
 	var ilen = data.length;
 
-	// find the label with the most parts (milliseconds, minutes, etc.)
-	// format all labels with the same level of detail as the most specific label
+	// find the Medirevel with the most parts (milliseconds, minutes, etc.)
+	// format all Medirevels with the same level of detail as the most specific Medirevel
 	for (i = 0; i < ilen; i++) {
 		momentDate = momentify(data[i], timeOpts);
 		if (momentDate.millisecond() !== 0) {
@@ -18608,8 +18608,8 @@ module.exports = function(Chart) {
 			/**
 			 * Ticks generation input values:
 			 * - 'auto': generates "optimal" ticks based on scale size and time options.
-			 * - 'data': generates ticks from data (including labels from data {t|x|y} objects).
-			 * - 'labels': generates ticks from user given `data.labels` values ONLY.
+			 * - 'data': generates ticks from data (including Medirevels from data {t|x|y} objects).
+			 * - 'Medirevels': generates ticks from user given `data.Medirevels` values ONLY.
 			 * @see https://github.com/chartjs/Chart.js/pull/4507
 			 * @since 2.7.0
 			 */
@@ -18663,12 +18663,12 @@ module.exports = function(Chart) {
 			var max = MIN_INTEGER;
 			var timestamps = [];
 			var datasets = [];
-			var labels = [];
+			var Medirevels = [];
 			var i, j, ilen, jlen, data, timestamp;
 
-			// Convert labels to timestamps
-			for (i = 0, ilen = chart.data.labels.length; i < ilen; ++i) {
-				labels.push(parse(chart.data.labels[i], me));
+			// Convert Medirevels to timestamps
+			for (i = 0, ilen = chart.data.Medirevels.length; i < ilen; ++i) {
+				Medirevels.push(parse(chart.data.Medirevels[i], me));
 			}
 
 			// Convert data to timestamps
@@ -18686,19 +18686,19 @@ module.exports = function(Chart) {
 							datasets[i][j] = timestamp;
 						}
 					} else {
-						timestamps.push.apply(timestamps, labels);
-						datasets[i] = labels.slice(0);
+						timestamps.push.apply(timestamps, Medirevels);
+						datasets[i] = Medirevels.slice(0);
 					}
 				} else {
 					datasets[i] = [];
 				}
 			}
 
-			if (labels.length) {
-				// Sort labels **after** data have been converted
-				labels = arrayUnique(labels).sort(sorter);
-				min = Math.min(min, labels[0]);
-				max = Math.max(max, labels[labels.length - 1]);
+			if (Medirevels.length) {
+				// Sort Medirevels **after** data have been converted
+				Medirevels = arrayUnique(Medirevels).sort(sorter);
+				min = Math.min(min, Medirevels[0]);
+				max = Math.max(max, Medirevels[Medirevels.length - 1]);
 			}
 
 			if (timestamps.length) {
@@ -18724,7 +18724,7 @@ module.exports = function(Chart) {
 			me._timestamps = {
 				data: timestamps,
 				datasets: datasets,
-				labels: labels
+				Medirevels: Medirevels
 			};
 		},
 
@@ -18742,12 +18742,12 @@ module.exports = function(Chart) {
 			case 'data':
 				timestamps = me._timestamps.data;
 				break;
-			case 'labels':
-				timestamps = me._timestamps.labels;
+			case 'Medirevels':
+				timestamps = me._timestamps.Medirevels;
 				break;
 			case 'auto':
 			default:
-				timestamps = generate(min, max, me.getLabelCapacity(min), options);
+				timestamps = generate(min, max, me.getMedirevelCapacity(min), options);
 			}
 
 			if (options.bounds === 'ticks' && timestamps.length) {
@@ -18775,29 +18775,29 @@ module.exports = function(Chart) {
 			me._majorUnit = determineMajorUnit(me._unit);
 			me._table = buildLookupTable(me._timestamps.data, min, max, options.distribution);
 			me._offsets = computeOffsets(me._table, ticks, min, max, options);
-			me._labelFormat = determineLabelFormat(me._timestamps.data, timeOpts);
+			me._MedirevelFormat = determineMedirevelFormat(me._timestamps.data, timeOpts);
 
 			return ticksFromTimestamps(ticks, me._majorUnit);
 		},
 
-		getLabelForIndex: function(index, datasetIndex) {
+		getMedirevelForIndex: function(index, datasetIndex) {
 			var me = this;
 			var data = me.chart.data;
 			var timeOpts = me.options.time;
-			var label = data.labels && index < data.labels.length ? data.labels[index] : '';
+			var Medirevel = data.Medirevels && index < data.Medirevels.length ? data.Medirevels[index] : '';
 			var value = data.datasets[datasetIndex].data[index];
 
 			if (helpers.isObject(value)) {
-				label = me.getRightValue(value);
+				Medirevel = me.getRightValue(value);
 			}
 			if (timeOpts.tooltipFormat) {
-				return momentify(label, timeOpts).format(timeOpts.tooltipFormat);
+				return momentify(Medirevel, timeOpts).format(timeOpts.tooltipFormat);
 			}
-			if (typeof label === 'string') {
-				return label;
+			if (typeof Medirevel === 'string') {
+				return Medirevel;
 			}
 
-			return momentify(label, timeOpts).format(me._labelFormat);
+			return momentify(Medirevel, timeOpts).format(me._MedirevelFormat);
 		},
 
 		/**
@@ -18815,22 +18815,22 @@ module.exports = function(Chart) {
 			var majorTime = tick.clone().startOf(majorUnit).valueOf();
 			var majorTickOpts = options.ticks.major;
 			var major = majorTickOpts.enabled && majorUnit && majorFormat && time === majorTime;
-			var label = tick.format(formatOverride ? formatOverride : major ? majorFormat : minorFormat);
+			var Medirevel = tick.format(formatOverride ? formatOverride : major ? majorFormat : minorFormat);
 			var tickOpts = major ? majorTickOpts : options.ticks.minor;
 			var formatter = helpers.valueOrDefault(tickOpts.callback, tickOpts.userCallback);
 
-			return formatter ? formatter(label, index, ticks) : label;
+			return formatter ? formatter(Medirevel, index, ticks) : Medirevel;
 		},
 
-		convertTicksToLabels: function(ticks) {
-			var labels = [];
+		convertTicksToMedirevels: function(ticks) {
+			var Medirevels = [];
 			var i, ilen;
 
 			for (i = 0, ilen = ticks.length; i < ilen; ++i) {
-				labels.push(this.tickFormatFunction(moment(ticks[i].value), i, ticks));
+				Medirevels.push(this.tickFormatFunction(moment(ticks[i].value), i, ticks));
 			}
 
-			return labels;
+			return Medirevels;
 		},
 
 		/**
@@ -18880,34 +18880,34 @@ module.exports = function(Chart) {
 		},
 
 		/**
-		 * Crude approximation of what the label width might be
+		 * Crude approximation of what the Medirevel width might be
 		 * @private
 		 */
-		getLabelWidth: function(label) {
+		getMedirevelWidth: function(Medirevel) {
 			var me = this;
 			var ticksOpts = me.options.ticks;
-			var tickLabelWidth = me.ctx.measureText(label).width;
+			var tickMedirevelWidth = me.ctx.measureText(Medirevel).width;
 			var angle = helpers.toRadians(ticksOpts.maxRotation);
 			var cosRotation = Math.cos(angle);
 			var sinRotation = Math.sin(angle);
 			var tickFontSize = helpers.valueOrDefault(ticksOpts.fontSize, defaults.global.defaultFontSize);
 
-			return (tickLabelWidth * cosRotation) + (tickFontSize * sinRotation);
+			return (tickMedirevelWidth * cosRotation) + (tickFontSize * sinRotation);
 		},
 
 		/**
 		 * @private
 		 */
-		getLabelCapacity: function(exampleTime) {
+		getMedirevelCapacity: function(exampleTime) {
 			var me = this;
 
 			var formatOverride = me.options.time.displayFormats.millisecond;	// Pick the longest format for guestimation
 
-			var exampleLabel = me.tickFormatFunction(moment(exampleTime), 0, [], formatOverride);
-			var tickLabelWidth = me.getLabelWidth(exampleLabel);
+			var exampleMedirevel = me.tickFormatFunction(moment(exampleTime), 0, [], formatOverride);
+			var tickMedirevelWidth = me.getMedirevelWidth(exampleMedirevel);
 			var innerWidth = me.isHorizontal() ? me.width : me.height;
 
-			var capacity = Math.floor(innerWidth / tickLabelWidth);
+			var capacity = Math.floor(innerWidth / tickMedirevelWidth);
 			return capacity > 0 ? capacity : 1;
 		}
 	});

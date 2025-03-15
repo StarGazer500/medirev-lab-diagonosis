@@ -24,12 +24,12 @@ $(document).ready(function() {
         
         // Modal HTML structure with dynamic body content - Updated for Bootstrap 5
         var modalHTML = `
-          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-Medirevelledby="dynamicModalMedirevel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dynamicModalLabel">Notification</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="dynamicModalMedirevel">Notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-Medirevel="Close"></button>
                 </div>
                 <div class="modal-body">
                   ${bodyContent}
@@ -63,14 +63,14 @@ $(document).ready(function() {
     }
 
 
-    function fetchLabResultData() {
+    function fetchMedirevResultData() {
         // let id = 1; // Replace with the actual patient ID if need
         // ed
         
-        let labresultId= localStorage.getItem('labresultId');
-        console.log("lab results",labresultId)
+        let MedirevresultId= localStorage.getItem('MedirevresultId');
+        console.log("Medirev results",MedirevresultId)
         $.ajax({
-            url: `/laboratory/get-lab-result//${labresultId}`, // Replace with your actual endpoint
+            url: `/Medirevoratory/get-Medirev-result//${MedirevresultId}`, // Replace with your actual endpoint
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
@@ -81,8 +81,8 @@ $(document).ready(function() {
                     console.log(response)
                     // Call the function to populate the patient data
                     // populatePatientData(response);
-                    $('input[name="lab_result_id"]').val(response.id);
-                    fetchLabDoctorsData()
+                    $('input[name="Medirev_result_id"]').val(response.id);
+                    fetchMedirevDoctorsData()
                   
                 } 
             },
@@ -101,16 +101,16 @@ $(document).ready(function() {
         });
     }
 
-    // window.location.href = `/laboratory/add-appointment/`;
+    // window.location.href = `/Medirevoratory/add-appointment/`;
     let source_url = localStorage.getItem("source_url")
     // fetchPatientData()
     console.log(source_url)
    
-    source_url==="http://localhost:8000/laboratory/lab-results/" ? fetchLabResultData() : null
+    source_url==="http://localhost:8000/Medirevoratory/Medirev-results/" ? fetchMedirevResultData() : null
 
-    function fetchLabDoctorsData() {
+    function fetchMedirevDoctorsData() {
         $.ajax({
-            url: `/laboratory/get-all-doctor/`, // Replace with your actual endpoint
+            url: `/Medirevoratory/get-all-doctor/`, // Replace with your actual endpoint
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
@@ -161,12 +161,12 @@ $(document).ready(function() {
    
     
 
-    $('#labreportForm').on('submit', function(e) {
+    $('#MedirevreportForm').on('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
         
         // let patientId = localStorage.getItem('patientId');
         let formData = {
-            lab_result_id: $('input[name="lab_result_id"]').val(),
+            Medirev_result_id: $('input[name="Medirev_result_id"]').val(),
             report_data: $('input[name="report_data"]').val().trim(),
             shared_with_doctor: $('input[name="shared_with_doctor"]').prop('checked'),
             doctor_id: $('#doctorDropdown').val() 
@@ -174,7 +174,7 @@ $(document).ready(function() {
         };
     
         $.ajax({
-            url: `/laboratory/create-lab-report/`, // Adjust the endpoint as needed
+            url: `/Medirevoratory/create-Medirev-report/`, // Adjust the endpoint as needed
             type: 'POST',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
@@ -182,7 +182,7 @@ $(document).ready(function() {
             },
             data: JSON.stringify(formData),
             success: function(response) {
-                var modal = createModal("Lab Report  submitted successfully.An appointment date will be forwarded in your email in short time!");
+                var modal = createModal("Medirev Report  submitted successfully.An appointment date will be forwarded in your email in short time!");
                 modal.show();
                 
             },

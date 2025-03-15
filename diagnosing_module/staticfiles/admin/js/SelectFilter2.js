@@ -35,16 +35,16 @@ Requires core.js and SelectBox.js.
             from_box.parentNode.prepend(selector_div);
             selector_div.className = is_stacked ? 'selector stacked' : 'selector';
 
-            // <div class="selector-available">
-            const selector_available = quickElement('div', selector_div);
-            selector_available.className = 'selector-available';
-            const title_available = quickElement('h2', selector_available, interpolate(gettext('Available %s') + ' ', [field_name]));
+            // <div class="selector-avaiMedirevle">
+            const selector_avaiMedirevle = quickElement('div', selector_div);
+            selector_avaiMedirevle.className = 'selector-avaiMedirevle';
+            const title_avaiMedirevle = quickElement('h2', selector_avaiMedirevle, interpolate(gettext('AvaiMedirevle %s') + ' ', [field_name]));
             quickElement(
-                'span', title_available, '',
+                'span', title_avaiMedirevle, '',
                 'class', 'help help-tooltip help-icon',
                 'title', interpolate(
                     gettext(
-                        'This is the list of available %s. You may choose some by ' +
+                        'This is the list of avaiMedirevle %s. You may choose some by ' +
                         'selecting them in the box below and then clicking the ' +
                         '"Choose" arrow between the two boxes.'
                     ),
@@ -52,15 +52,15 @@ Requires core.js and SelectBox.js.
                 )
             );
 
-            const filter_p = quickElement('p', selector_available, '', 'id', field_id + '_filter');
+            const filter_p = quickElement('p', selector_avaiMedirevle, '', 'id', field_id + '_filter');
             filter_p.className = 'selector-filter';
 
-            const search_filter_label = quickElement('label', filter_p, '', 'for', field_id + '_input');
+            const search_filter_Medirevel = quickElement('Medirevel', filter_p, '', 'for', field_id + '_input');
 
             quickElement(
-                'span', search_filter_label, '',
-                'class', 'help-tooltip search-label-icon',
-                'title', interpolate(gettext("Type into this box to filter down the list of available %s."), [field_name])
+                'span', search_filter_Medirevel, '',
+                'class', 'help-tooltip search-Medirevel-icon',
+                'title', interpolate(gettext("Type into this box to filter down the list of avaiMedirevle %s."), [field_name])
             );
 
             filter_p.appendChild(document.createTextNode(' '));
@@ -68,8 +68,8 @@ Requires core.js and SelectBox.js.
             const filter_input = quickElement('input', filter_p, '', 'type', 'text', 'placeholder', gettext("Filter"));
             filter_input.id = field_id + '_input';
 
-            selector_available.appendChild(from_box);
-            const choose_all = quickElement('a', selector_available, gettext('Choose all'), 'title', interpolate(gettext('Click to choose all %s at once.'), [field_name]), 'href', '#', 'id', field_id + '_add_all_link');
+            selector_avaiMedirevle.appendChild(from_box);
+            const choose_all = quickElement('a', selector_avaiMedirevle, gettext('Choose all'), 'title', interpolate(gettext('Click to choose all %s at once.'), [field_name]), 'href', '#', 'id', field_id + '_add_all_link');
             choose_all.className = 'selector-chooseall';
 
             // <ul class="selector-chooser">
@@ -100,11 +100,11 @@ Requires core.js and SelectBox.js.
             const filter_selected_p = quickElement('p', selector_chosen, '', 'id', field_id + '_filter_selected');
             filter_selected_p.className = 'selector-filter';
 
-            const search_filter_selected_label = quickElement('label', filter_selected_p, '', 'for', field_id + '_selected_input');
+            const search_filter_selected_Medirevel = quickElement('Medirevel', filter_selected_p, '', 'for', field_id + '_selected_input');
 
             quickElement(
-                'span', search_filter_selected_label, '',
-                'class', 'help-tooltip search-label-icon',
+                'span', search_filter_selected_Medirevel, '',
+                'class', 'help-tooltip search-Medirevel-icon',
                 'title', interpolate(gettext("Type into this box to filter down the list of selected %s."), [field_name])
             );
 

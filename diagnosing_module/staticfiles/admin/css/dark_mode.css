@@ -97,15 +97,15 @@ theme.
     display: none;
 }
 
-html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+html[data-theme="auto"] .theme-toggle .theme-Medirevel-when-auto {
     display: block;
 }
 
-html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+html[data-theme="dark"] .theme-toggle .theme-Medirevel-when-dark {
     display: block;
 }
 
-html[data-theme="light"] .theme-toggle .theme-label-when-light {
+html[data-theme="light"] .theme-toggle .theme-Medirevel-when-light {
     display: block;
 }
 

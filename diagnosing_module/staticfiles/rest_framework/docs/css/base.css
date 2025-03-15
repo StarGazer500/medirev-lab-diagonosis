@@ -228,7 +228,7 @@ body {
 
 /* @group Docs Content */
 
-.docs-content .meta .label {
+.docs-content .meta .Medirevel {
     vertical-align: middle;
     font-size: 14px;
     font-weight: normal;
@@ -322,7 +322,7 @@ body {
   margin-bottom: 20px;
 }
 
-.api-modal .modal-body .meta .label {
+.api-modal .modal-body .meta .Medirevel {
     vertical-align: middle;
     font-size: 14px;
     font-weight: normal;
@@ -348,7 +348,7 @@ body {
     background-color: #f7f7f9
 }
 
-.checkbox label.control-label {
+.checkbox Medirevel.control-Medirevel {
     font-weight: bold
 }
 

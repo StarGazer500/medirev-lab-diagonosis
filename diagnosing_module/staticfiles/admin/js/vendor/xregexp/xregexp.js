@@ -50,7 +50,7 @@ var _default = function _default(XRegExp) {
    * - Adds the `XRegExp.addUnicodeData` method used by other addons to provide character data.
    *
    * Unicode Base relies on externally provided Unicode character data. Official addons are
-   * available to provide data for Unicode categories, scripts, and properties.
+   * avaiMedirevle to provide data for Unicode categories, scripts, and properties.
    *
    * @requires XRegExp
    */
@@ -959,7 +959,7 @@ function runTokens(pattern, flags, pos, scope, context) {
 /**
  * Enables or disables implicit astral mode opt-in. When enabled, flag A is automatically added to
  * all new regexes created by XRegExp. This causes an error to be thrown when creating regexes if
- * the Unicode Base addon is not available, since flag A is registered by that addon.
+ * the Unicode Base addon is not avaiMedirevle, since flag A is registered by that addon.
  *
  * @private
  * @param {Boolean} on `true` to enable; `false` to disable.
@@ -1035,7 +1035,7 @@ function XRegExp(pattern, flags) {
   flags = flags === undefined ? '' : String(flags);
 
   if (XRegExp.isInstalled('astral') && !((0, _indexOf["default"])(flags).call(flags, 'A') !== -1)) {
-    // This causes an error to be thrown if the Unicode Base addon is not available
+    // This causes an error to be thrown if the Unicode Base addon is not avaiMedirevle
     flags += 'A';
   }
 
@@ -2798,30 +2798,30 @@ module.exports = parent;
 
 },{"../../actual/symbol":33,"../../modules/esnext.symbol.async-dispose":200,"../../modules/esnext.symbol.dispose":201,"../../modules/esnext.symbol.matcher":202,"../../modules/esnext.symbol.metadata":203,"../../modules/esnext.symbol.observable":204,"../../modules/esnext.symbol.pattern-match":205,"../../modules/esnext.symbol.replace-all":206}],57:[function(require,module,exports){
 var global = require('../internals/global');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var tryToString = require('../internals/try-to-string');
 
 var TypeError = global.TypeError;
 
-// `Assert: IsCallable(argument) is true`
+// `Assert: IsCalMedirevle(argument) is true`
 module.exports = function (argument) {
-  if (isCallable(argument)) return argument;
+  if (isCalMedirevle(argument)) return argument;
   throw TypeError(tryToString(argument) + ' is not a function');
 };
 
-},{"../internals/global":104,"../internals/is-callable":114,"../internals/try-to-string":162}],58:[function(require,module,exports){
+},{"../internals/global":104,"../internals/is-calMedirevle":114,"../internals/try-to-string":162}],58:[function(require,module,exports){
 var global = require('../internals/global');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 
 var String = global.String;
 var TypeError = global.TypeError;
 
 module.exports = function (argument) {
-  if (typeof argument == 'object' || isCallable(argument)) return argument;
+  if (typeof argument == 'object' || isCalMedirevle(argument)) return argument;
   throw TypeError("Can't set " + String(argument) + ' as a prototype');
 };
 
-},{"../internals/global":104,"../internals/is-callable":114}],59:[function(require,module,exports){
+},{"../internals/global":104,"../internals/is-calMedirevle":114}],59:[function(require,module,exports){
 module.exports = function () { /* empty */ };
 
 },{}],60:[function(require,module,exports){
@@ -3212,7 +3212,7 @@ module.exports = function (it) {
 },{"../internals/function-uncurry-this":99}],75:[function(require,module,exports){
 var global = require('../internals/global');
 var TO_STRING_TAG_SUPPORT = require('../internals/to-string-tag-support');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var classofRaw = require('../internals/classof-raw');
 var wellKnownSymbol = require('../internals/well-known-symbol');
 
@@ -3238,10 +3238,10 @@ module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
     // builtinTag case
     : CORRECT_ARGUMENTS ? classofRaw(O)
     // ES3 arguments fallback
-    : (result = classofRaw(O)) == 'Object' && isCallable(O.callee) ? 'Arguments' : result;
+    : (result = classofRaw(O)) == 'Object' && isCalMedirevle(O.callee) ? 'Arguments' : result;
 };
 
-},{"../internals/classof-raw":74,"../internals/global":104,"../internals/is-callable":114,"../internals/to-string-tag-support":160,"../internals/well-known-symbol":166}],76:[function(require,module,exports){
+},{"../internals/classof-raw":74,"../internals/global":104,"../internals/is-calMedirevle":114,"../internals/to-string-tag-support":160,"../internals/well-known-symbol":166}],76:[function(require,module,exports){
 var fails = require('../internals/fails');
 
 module.exports = !fails(function () {
@@ -3309,7 +3309,7 @@ var $ = require('../internals/export');
 var call = require('../internals/function-call');
 var IS_PURE = require('../internals/is-pure');
 var FunctionName = require('../internals/function-name');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var createIteratorConstructor = require('../internals/create-iterator-constructor');
 var getPrototypeOf = require('../internals/object-get-prototype-of');
 var setPrototypeOf = require('../internals/object-set-prototype-of');
@@ -3361,7 +3361,7 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
       if (!IS_PURE && getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
         if (setPrototypeOf) {
           setPrototypeOf(CurrentIteratorPrototype, IteratorPrototype);
-        } else if (!isCallable(CurrentIteratorPrototype[ITERATOR])) {
+        } else if (!isCalMedirevle(CurrentIteratorPrototype[ITERATOR])) {
           redefine(CurrentIteratorPrototype, ITERATOR, returnThis);
         }
       }
@@ -3404,7 +3404,7 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
   return methods;
 };
 
-},{"../internals/create-iterator-constructor":77,"../internals/create-non-enumerable-property":78,"../internals/export":93,"../internals/function-call":97,"../internals/function-name":98,"../internals/is-callable":114,"../internals/is-pure":118,"../internals/iterators":122,"../internals/iterators-core":121,"../internals/object-get-prototype-of":134,"../internals/object-set-prototype-of":139,"../internals/redefine":143,"../internals/set-to-string-tag":147,"../internals/well-known-symbol":166}],82:[function(require,module,exports){
+},{"../internals/create-iterator-constructor":77,"../internals/create-non-enumerable-property":78,"../internals/export":93,"../internals/function-call":97,"../internals/function-name":98,"../internals/is-calMedirevle":114,"../internals/is-pure":118,"../internals/iterators":122,"../internals/iterators-core":121,"../internals/object-get-prototype-of":134,"../internals/object-set-prototype-of":139,"../internals/redefine":143,"../internals/set-to-string-tag":147,"../internals/well-known-symbol":166}],82:[function(require,module,exports){
 var path = require('../internals/path');
 var hasOwn = require('../internals/has-own-property');
 var wrappedWellKnownSymbolModule = require('../internals/well-known-symbol-wrapped');
@@ -3552,7 +3552,7 @@ module.exports = [
 var global = require('../internals/global');
 var apply = require('../internals/function-apply');
 var uncurryThis = require('../internals/function-uncurry-this');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var getOwnPropertyDescriptor = require('../internals/object-get-own-property-descriptor').f;
 var isForced = require('../internals/is-forced');
 var path = require('../internals/path');
@@ -3580,7 +3580,7 @@ var wrapConstructor = function (NativeConstructor) {
   options.stat        - export as static methods of target
   options.proto       - export as prototype methods of target
   options.real        - real prototype method for the `pure` version
-  options.forced      - export even if the native feature is available
+  options.forced      - export even if the native feature is avaiMedirevle
   options.bind        - bind methods to the target, required for the `pure` version
   options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
   options.unsafe      - use the simple assignment of property instead of delete + defineProperty
@@ -3625,7 +3625,7 @@ module.exports = function (options, source) {
     // wrap global constructors for prevent changs in this version
     else if (options.wrap && USE_NATIVE) resultProperty = wrapConstructor(sourceProperty);
     // make static versions for prototype methods
-    else if (PROTO && isCallable(sourceProperty)) resultProperty = uncurryThis(sourceProperty);
+    else if (PROTO && isCalMedirevle(sourceProperty)) resultProperty = uncurryThis(sourceProperty);
     // default case
     else resultProperty = sourceProperty;
 
@@ -3651,7 +3651,7 @@ module.exports = function (options, source) {
   }
 };
 
-},{"../internals/create-non-enumerable-property":78,"../internals/function-apply":95,"../internals/function-bind-context":96,"../internals/function-uncurry-this":99,"../internals/global":104,"../internals/has-own-property":105,"../internals/is-callable":114,"../internals/is-forced":116,"../internals/object-get-own-property-descriptor":130,"../internals/path":142}],94:[function(require,module,exports){
+},{"../internals/create-non-enumerable-property":78,"../internals/function-apply":95,"../internals/function-bind-context":96,"../internals/function-uncurry-this":99,"../internals/global":104,"../internals/has-own-property":105,"../internals/is-calMedirevle":114,"../internals/is-forced":116,"../internals/object-get-own-property-descriptor":130,"../internals/path":142}],94:[function(require,module,exports){
 module.exports = function (exec) {
   try {
     return !!exec();
@@ -3673,19 +3673,19 @@ module.exports = typeof Reflect == 'object' && Reflect.apply || (bind ? call.bin
 
 },{}],96:[function(require,module,exports){
 var uncurryThis = require('../internals/function-uncurry-this');
-var aCallable = require('../internals/a-callable');
+var aCalMedirevle = require('../internals/a-calMedirevle');
 
 var bind = uncurryThis(uncurryThis.bind);
 
 // optional / simple context binding
 module.exports = function (fn, that) {
-  aCallable(fn);
+  aCalMedirevle(fn);
   return that === undefined ? fn : bind ? bind(fn, that) : function (/* ...args */) {
     return fn.apply(that, arguments);
   };
 };
 
-},{"../internals/a-callable":57,"../internals/function-uncurry-this":99}],97:[function(require,module,exports){
+},{"../internals/a-calMedirevle":57,"../internals/function-uncurry-this":99}],97:[function(require,module,exports){
 var call = Function.prototype.call;
 
 module.exports = call.bind ? call.bind(call) : function () {
@@ -3728,10 +3728,10 @@ module.exports = bind ? function (fn) {
 },{}],100:[function(require,module,exports){
 var path = require('../internals/path');
 var global = require('../internals/global');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 
 var aFunction = function (variable) {
-  return isCallable(variable) ? variable : undefined;
+  return isCalMedirevle(variable) ? variable : undefined;
 };
 
 module.exports = function (namespace, method) {
@@ -3739,7 +3739,7 @@ module.exports = function (namespace, method) {
     : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
 };
 
-},{"../internals/global":104,"../internals/is-callable":114,"../internals/path":142}],101:[function(require,module,exports){
+},{"../internals/global":104,"../internals/is-calMedirevle":114,"../internals/path":142}],101:[function(require,module,exports){
 var classof = require('../internals/classof');
 var getMethod = require('../internals/get-method');
 var Iterators = require('../internals/iterators');
@@ -3756,7 +3756,7 @@ module.exports = function (it) {
 },{"../internals/classof":75,"../internals/get-method":103,"../internals/iterators":122,"../internals/well-known-symbol":166}],102:[function(require,module,exports){
 var global = require('../internals/global');
 var call = require('../internals/function-call');
-var aCallable = require('../internals/a-callable');
+var aCalMedirevle = require('../internals/a-calMedirevle');
 var anObject = require('../internals/an-object');
 var tryToString = require('../internals/try-to-string');
 var getIteratorMethod = require('../internals/get-iterator-method');
@@ -3765,21 +3765,21 @@ var TypeError = global.TypeError;
 
 module.exports = function (argument, usingIterator) {
   var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
-  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
+  if (aCalMedirevle(iteratorMethod)) return anObject(call(iteratorMethod, argument));
   throw TypeError(tryToString(argument) + ' is not iterable');
 };
 
-},{"../internals/a-callable":57,"../internals/an-object":60,"../internals/function-call":97,"../internals/get-iterator-method":101,"../internals/global":104,"../internals/try-to-string":162}],103:[function(require,module,exports){
-var aCallable = require('../internals/a-callable');
+},{"../internals/a-calMedirevle":57,"../internals/an-object":60,"../internals/function-call":97,"../internals/get-iterator-method":101,"../internals/global":104,"../internals/try-to-string":162}],103:[function(require,module,exports){
+var aCalMedirevle = require('../internals/a-calMedirevle');
 
 // `GetMethod` abstract operation
 // https://tc39.es/ecma262/#sec-getmethod
 module.exports = function (V, P) {
   var func = V[P];
-  return func == null ? undefined : aCallable(func);
+  return func == null ? undefined : aCalMedirevle(func);
 };
 
-},{"../internals/a-callable":57}],104:[function(require,module,exports){
+},{"../internals/a-calMedirevle":57}],104:[function(require,module,exports){
 (function (global){(function (){
 var check = function (it) {
   return it && it.Math == Math && it;
@@ -3850,13 +3850,13 @@ module.exports = fails(function () {
 
 },{"../internals/classof-raw":74,"../internals/fails":94,"../internals/function-uncurry-this":99,"../internals/global":104}],110:[function(require,module,exports){
 var uncurryThis = require('../internals/function-uncurry-this');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var store = require('../internals/shared-store');
 
 var functionToString = uncurryThis(Function.toString);
 
 // this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
-if (!isCallable(store.inspectSource)) {
+if (!isCalMedirevle(store.inspectSource)) {
   store.inspectSource = function (it) {
     return functionToString(it);
   };
@@ -3864,7 +3864,7 @@ if (!isCallable(store.inspectSource)) {
 
 module.exports = store.inspectSource;
 
-},{"../internals/function-uncurry-this":99,"../internals/is-callable":114,"../internals/shared-store":149}],111:[function(require,module,exports){
+},{"../internals/function-uncurry-this":99,"../internals/is-calMedirevle":114,"../internals/shared-store":149}],111:[function(require,module,exports){
 var NATIVE_WEAK_MAP = require('../internals/native-weak-map');
 var global = require('../internals/global');
 var uncurryThis = require('../internals/function-uncurry-this');
@@ -3958,8 +3958,8 @@ module.exports = Array.isArray || function isArray(argument) {
 };
 
 },{"../internals/classof-raw":74}],114:[function(require,module,exports){
-// `IsCallable` abstract operation
-// https://tc39.es/ecma262/#sec-iscallable
+// `IsCalMedirevle` abstract operation
+// https://tc39.es/ecma262/#sec-iscalMedirevle
 module.exports = function (argument) {
   return typeof argument == 'function';
 };
@@ -3967,7 +3967,7 @@ module.exports = function (argument) {
 },{}],115:[function(require,module,exports){
 var uncurryThis = require('../internals/function-uncurry-this');
 var fails = require('../internals/fails');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var classof = require('../internals/classof');
 var getBuiltIn = require('../internals/get-built-in');
 var inspectSource = require('../internals/inspect-source');
@@ -3980,7 +3980,7 @@ var exec = uncurryThis(constructorRegExp.exec);
 var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
 
 var isConstructorModern = function isConstructor(argument) {
-  if (!isCallable(argument)) return false;
+  if (!isCalMedirevle(argument)) return false;
   try {
     construct(noop, empty, argument);
     return true;
@@ -3990,7 +3990,7 @@ var isConstructorModern = function isConstructor(argument) {
 };
 
 var isConstructorLegacy = function isConstructor(argument) {
-  if (!isCallable(argument)) return false;
+  if (!isCalMedirevle(argument)) return false;
   switch (classof(argument)) {
     case 'AsyncFunction':
     case 'GeneratorFunction':
@@ -4018,9 +4018,9 @@ module.exports = !construct || fails(function () {
     || called;
 }) ? isConstructorLegacy : isConstructorModern;
 
-},{"../internals/classof":75,"../internals/fails":94,"../internals/function-uncurry-this":99,"../internals/get-built-in":100,"../internals/inspect-source":110,"../internals/is-callable":114}],116:[function(require,module,exports){
+},{"../internals/classof":75,"../internals/fails":94,"../internals/function-uncurry-this":99,"../internals/get-built-in":100,"../internals/inspect-source":110,"../internals/is-calMedirevle":114}],116:[function(require,module,exports){
 var fails = require('../internals/fails');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 
 var replacement = /#|\.prototype\./;
 
@@ -4028,7 +4028,7 @@ var isForced = function (feature, detection) {
   var value = data[normalize(feature)];
   return value == POLYFILL ? true
     : value == NATIVE ? false
-    : isCallable(detection) ? fails(detection)
+    : isCalMedirevle(detection) ? fails(detection)
     : !!detection;
 };
 
@@ -4042,20 +4042,20 @@ var POLYFILL = isForced.POLYFILL = 'P';
 
 module.exports = isForced;
 
-},{"../internals/fails":94,"../internals/is-callable":114}],117:[function(require,module,exports){
-var isCallable = require('../internals/is-callable');
+},{"../internals/fails":94,"../internals/is-calMedirevle":114}],117:[function(require,module,exports){
+var isCalMedirevle = require('../internals/is-calMedirevle');
 
 module.exports = function (it) {
-  return typeof it == 'object' ? it !== null : isCallable(it);
+  return typeof it == 'object' ? it !== null : isCalMedirevle(it);
 };
 
-},{"../internals/is-callable":114}],118:[function(require,module,exports){
+},{"../internals/is-calMedirevle":114}],118:[function(require,module,exports){
 module.exports = true;
 
 },{}],119:[function(require,module,exports){
 var global = require('../internals/global');
 var getBuiltIn = require('../internals/get-built-in');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var isPrototypeOf = require('../internals/object-is-prototype-of');
 var USE_SYMBOL_AS_UID = require('../internals/use-symbol-as-uid');
 
@@ -4065,10 +4065,10 @@ module.exports = USE_SYMBOL_AS_UID ? function (it) {
   return typeof it == 'symbol';
 } : function (it) {
   var $Symbol = getBuiltIn('Symbol');
-  return isCallable($Symbol) && isPrototypeOf($Symbol.prototype, Object(it));
+  return isCalMedirevle($Symbol) && isPrototypeOf($Symbol.prototype, Object(it));
 };
 
-},{"../internals/get-built-in":100,"../internals/global":104,"../internals/is-callable":114,"../internals/object-is-prototype-of":135,"../internals/use-symbol-as-uid":164}],120:[function(require,module,exports){
+},{"../internals/get-built-in":100,"../internals/global":104,"../internals/is-calMedirevle":114,"../internals/object-is-prototype-of":135,"../internals/use-symbol-as-uid":164}],120:[function(require,module,exports){
 var call = require('../internals/function-call');
 var anObject = require('../internals/an-object');
 var getMethod = require('../internals/get-method');
@@ -4096,7 +4096,7 @@ module.exports = function (iterator, kind, value) {
 },{"../internals/an-object":60,"../internals/function-call":97,"../internals/get-method":103}],121:[function(require,module,exports){
 'use strict';
 var fails = require('../internals/fails');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var create = require('../internals/object-create');
 var getPrototypeOf = require('../internals/object-get-prototype-of');
 var redefine = require('../internals/redefine');
@@ -4132,7 +4132,7 @@ else if (IS_PURE) IteratorPrototype = create(IteratorPrototype);
 
 // `%IteratorPrototype%[@@iterator]()` method
 // https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
-if (!isCallable(IteratorPrototype[ITERATOR])) {
+if (!isCalMedirevle(IteratorPrototype[ITERATOR])) {
   redefine(IteratorPrototype, ITERATOR, function () {
     return this;
   });
@@ -4143,7 +4143,7 @@ module.exports = {
   BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
 };
 
-},{"../internals/fails":94,"../internals/is-callable":114,"../internals/is-pure":118,"../internals/object-create":127,"../internals/object-get-prototype-of":134,"../internals/redefine":143,"../internals/well-known-symbol":166}],122:[function(require,module,exports){
+},{"../internals/fails":94,"../internals/is-calMedirevle":114,"../internals/is-pure":118,"../internals/object-create":127,"../internals/object-get-prototype-of":134,"../internals/redefine":143,"../internals/well-known-symbol":166}],122:[function(require,module,exports){
 arguments[4][106][0].apply(exports,arguments)
 },{"dup":106}],123:[function(require,module,exports){
 var toLength = require('../internals/to-length');
@@ -4171,14 +4171,14 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 
 },{"../internals/engine-v8-version":89,"../internals/fails":94}],125:[function(require,module,exports){
 var global = require('../internals/global');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var inspectSource = require('../internals/inspect-source');
 
 var WeakMap = global.WeakMap;
 
-module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
+module.exports = isCalMedirevle(WeakMap) && /native code/.test(inspectSource(WeakMap));
 
-},{"../internals/global":104,"../internals/inspect-source":110,"../internals/is-callable":114}],126:[function(require,module,exports){
+},{"../internals/global":104,"../internals/inspect-source":110,"../internals/is-calMedirevle":114}],126:[function(require,module,exports){
 var global = require('../internals/global');
 var fails = require('../internals/fails');
 var uncurryThis = require('../internals/function-uncurry-this');
@@ -4401,7 +4401,7 @@ exports.f = Object.getOwnPropertySymbols;
 },{}],134:[function(require,module,exports){
 var global = require('../internals/global');
 var hasOwn = require('../internals/has-own-property');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var toObject = require('../internals/to-object');
 var sharedKey = require('../internals/shared-key');
 var CORRECT_PROTOTYPE_GETTER = require('../internals/correct-prototype-getter');
@@ -4416,12 +4416,12 @@ module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O)
   var object = toObject(O);
   if (hasOwn(object, IE_PROTO)) return object[IE_PROTO];
   var constructor = object.constructor;
-  if (isCallable(constructor) && object instanceof constructor) {
+  if (isCalMedirevle(constructor) && object instanceof constructor) {
     return constructor.prototype;
   } return object instanceof Object ? ObjectPrototype : null;
 };
 
-},{"../internals/correct-prototype-getter":76,"../internals/global":104,"../internals/has-own-property":105,"../internals/is-callable":114,"../internals/shared-key":148,"../internals/to-object":157}],135:[function(require,module,exports){
+},{"../internals/correct-prototype-getter":76,"../internals/global":104,"../internals/has-own-property":105,"../internals/is-calMedirevle":114,"../internals/shared-key":148,"../internals/to-object":157}],135:[function(require,module,exports){
 var uncurryThis = require('../internals/function-uncurry-this');
 
 module.exports = uncurryThis({}.isPrototypeOf);
@@ -4518,7 +4518,7 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
 },{"../internals/classof":75,"../internals/to-string-tag-support":160}],141:[function(require,module,exports){
 var global = require('../internals/global');
 var call = require('../internals/function-call');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var isObject = require('../internals/is-object');
 
 var TypeError = global.TypeError;
@@ -4527,13 +4527,13 @@ var TypeError = global.TypeError;
 // https://tc39.es/ecma262/#sec-ordinarytoprimitive
 module.exports = function (input, pref) {
   var fn, val;
-  if (pref === 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
-  if (isCallable(fn = input.valueOf) && !isObject(val = call(fn, input))) return val;
-  if (pref !== 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input))) return val;
+  if (pref === 'string' && isCalMedirevle(fn = input.toString) && !isObject(val = call(fn, input))) return val;
+  if (isCalMedirevle(fn = input.valueOf) && !isObject(val = call(fn, input))) return val;
+  if (pref !== 'string' && isCalMedirevle(fn = input.toString) && !isObject(val = call(fn, input))) return val;
   throw TypeError("Can't convert object to primitive value");
 };
 
-},{"../internals/function-call":97,"../internals/global":104,"../internals/is-callable":114,"../internals/is-object":117}],142:[function(require,module,exports){
+},{"../internals/function-call":97,"../internals/global":104,"../internals/is-calMedirevle":114,"../internals/is-object":117}],142:[function(require,module,exports){
 arguments[4][106][0].apply(exports,arguments)
 },{"dup":106}],143:[function(require,module,exports){
 var createNonEnumerableProperty = require('../internals/create-non-enumerable-property');
@@ -5144,7 +5144,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 'use strict';
 var $ = require('../internals/export');
 var uncurryThis = require('../internals/function-uncurry-this');
-var aCallable = require('../internals/a-callable');
+var aCalMedirevle = require('../internals/a-calMedirevle');
 var toObject = require('../internals/to-object');
 var lengthOfArrayLike = require('../internals/length-of-array-like');
 var toString = require('../internals/to-string');
@@ -5221,7 +5221,7 @@ var getSortCompare = function (comparefn) {
 // https://tc39.es/ecma262/#sec-array.prototype.sort
 $({ target: 'Array', proto: true, forced: FORCED }, {
   sort: function sort(comparefn) {
-    if (comparefn !== undefined) aCallable(comparefn);
+    if (comparefn !== undefined) aCalMedirevle(comparefn);
 
     var array = toObject(this);
 
@@ -5247,7 +5247,7 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
   }
 });
 
-},{"../internals/a-callable":57,"../internals/array-method-is-strict":66,"../internals/array-sort":69,"../internals/engine-ff-version":86,"../internals/engine-is-ie-or-edge":87,"../internals/engine-v8-version":89,"../internals/engine-webkit-version":90,"../internals/export":93,"../internals/fails":94,"../internals/function-uncurry-this":99,"../internals/length-of-array-like":123,"../internals/to-object":157,"../internals/to-string":161}],176:[function(require,module,exports){
+},{"../internals/a-calMedirevle":57,"../internals/array-method-is-strict":66,"../internals/array-sort":69,"../internals/engine-ff-version":86,"../internals/engine-is-ie-or-edge":87,"../internals/engine-v8-version":89,"../internals/engine-webkit-version":90,"../internals/export":93,"../internals/fails":94,"../internals/function-uncurry-this":99,"../internals/length-of-array-like":123,"../internals/to-object":157,"../internals/to-string":161}],176:[function(require,module,exports){
 var global = require('../internals/global');
 var setToStringTag = require('../internals/set-to-string-tag');
 
@@ -5372,7 +5372,7 @@ var NATIVE_SYMBOL = require('../internals/native-symbol');
 var fails = require('../internals/fails');
 var hasOwn = require('../internals/has-own-property');
 var isArray = require('../internals/is-array');
-var isCallable = require('../internals/is-callable');
+var isCalMedirevle = require('../internals/is-calMedirevle');
 var isObject = require('../internals/is-object');
 var isPrototypeOf = require('../internals/object-is-prototype-of');
 var isSymbol = require('../internals/is-symbol');
@@ -5658,7 +5658,7 @@ if ($stringify) {
       var $replacer = replacer;
       if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
       if (!isArray(replacer)) replacer = function (key, value) {
-        if (isCallable($replacer)) value = call($replacer, this, key, value);
+        if (isCalMedirevle($replacer)) value = call($replacer, this, key, value);
         if (!isSymbol(value)) return value;
       };
       args[1] = replacer;
@@ -5683,7 +5683,7 @@ setToStringTag($Symbol, SYMBOL);
 
 hiddenKeys[HIDDEN] = true;
 
-},{"../internals/an-object":60,"../internals/array-iteration":64,"../internals/array-slice":68,"../internals/create-property-descriptor":79,"../internals/define-well-known-symbol":82,"../internals/descriptors":83,"../internals/export":93,"../internals/fails":94,"../internals/function-apply":95,"../internals/function-call":97,"../internals/function-uncurry-this":99,"../internals/get-built-in":100,"../internals/global":104,"../internals/has-own-property":105,"../internals/hidden-keys":106,"../internals/internal-state":111,"../internals/is-array":113,"../internals/is-callable":114,"../internals/is-object":117,"../internals/is-pure":118,"../internals/is-symbol":119,"../internals/native-symbol":124,"../internals/object-create":127,"../internals/object-define-property":129,"../internals/object-get-own-property-descriptor":130,"../internals/object-get-own-property-names":132,"../internals/object-get-own-property-names-external":131,"../internals/object-get-own-property-symbols":133,"../internals/object-is-prototype-of":135,"../internals/object-keys":137,"../internals/object-property-is-enumerable":138,"../internals/redefine":143,"../internals/set-to-string-tag":147,"../internals/shared":150,"../internals/shared-key":148,"../internals/to-indexed-object":154,"../internals/to-object":157,"../internals/to-property-key":159,"../internals/to-string":161,"../internals/uid":163,"../internals/well-known-symbol":166,"../internals/well-known-symbol-wrapped":165}],191:[function(require,module,exports){
+},{"../internals/an-object":60,"../internals/array-iteration":64,"../internals/array-slice":68,"../internals/create-property-descriptor":79,"../internals/define-well-known-symbol":82,"../internals/descriptors":83,"../internals/export":93,"../internals/fails":94,"../internals/function-apply":95,"../internals/function-call":97,"../internals/function-uncurry-this":99,"../internals/get-built-in":100,"../internals/global":104,"../internals/has-own-property":105,"../internals/hidden-keys":106,"../internals/internal-state":111,"../internals/is-array":113,"../internals/is-calMedirevle":114,"../internals/is-object":117,"../internals/is-pure":118,"../internals/is-symbol":119,"../internals/native-symbol":124,"../internals/object-create":127,"../internals/object-define-property":129,"../internals/object-get-own-property-descriptor":130,"../internals/object-get-own-property-names":132,"../internals/object-get-own-property-names-external":131,"../internals/object-get-own-property-symbols":133,"../internals/object-is-prototype-of":135,"../internals/object-keys":137,"../internals/object-property-is-enumerable":138,"../internals/redefine":143,"../internals/set-to-string-tag":147,"../internals/shared":150,"../internals/shared-key":148,"../internals/to-indexed-object":154,"../internals/to-object":157,"../internals/to-property-key":159,"../internals/to-string":161,"../internals/uid":163,"../internals/well-known-symbol":166,"../internals/well-known-symbol-wrapped":165}],191:[function(require,module,exports){
 var defineWellKnownSymbol = require('../internals/define-well-known-symbol');
 
 // `Symbol.matchAll` well-known symbol

@@ -38,7 +38,7 @@
     CalendarApp.prototype.onEventClick =  function (calEvent, jsEvent, view) {
         var $this = this;
             var form = $("<form></form>");
-            form.append("<label>Change event name</label>");
+            form.append("<Medirevel>Change event name</Medirevel>");
             form.append("<div class='input-group m-b-20'><input class='form-control' type=text value='" + calEvent.title + "' /><span class='input-group-append'><button type='submit' class='btn btn-primary'>Save</button></span></div>");
             $this.$modal.modal({
                 backdrop: 'static'
@@ -65,8 +65,8 @@
             var form = $("<form></form>");
             form.append("<div class='row'></div>");
             form.find(".row")
-                .append("<div class='col-md-6'><div class='form-group'><label>Event Name</label><input class='form-control' type='text' name='title'/></div></div>")
-                .append("<div class='col-md-6'><div class='form-group'><label>Category</label><select class='select form-control' name='category'></select></div></div>")
+                .append("<div class='col-md-6'><div class='form-group'><Medirevel>Event Name</Medirevel><input class='form-control' type='text' name='title'/></div></div>")
+                .append("<div class='col-md-6'><div class='form-group'><Medirevel>Category</Medirevel><select class='select form-control' name='category'></select></div></div>")
                 .find("select[name='category']")
                 .append("<option value='bg-danger'>Danger</option>")
                 .append("<option value='bg-success'>Success</option>")

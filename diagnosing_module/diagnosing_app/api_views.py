@@ -330,6 +330,9 @@ class CreateLabOrderRequestView(View):
 
 
 
+
+
+
 class GetLabOrderRequestView(View):
 
     # GET method to retrieve lab order request details
@@ -359,6 +362,63 @@ class GetLabOrderRequestView(View):
             
             # Update fields if they are provided in the request
             lab_order_request.test_description = data.get('test_description', lab_order_request.test_description)
+            lab_order_request.request_status = data.get('request_status', lab_order_request.request_status)
+     
+           
+
+            # Save the updated lab order request
+            await lab_order_request.asave()
+
+            # Prepare response with updated data
+            response_data = {
+                "id": lab_order_request.id,
+                "patient": f"{lab_order_request.patient.first_name} {lab_order_request.patient.last_name}",
+                "test_description": lab_order_request.test_description,
+                "status": lab_order_request.request_status,
+                "requested_date": lab_order_request.requested_date,
+                "order_date": lab_order_request.order_date,
+            }
+            return JsonResponse(response_data, status=200)
+        except LabOrderRequest.DoesNotExist:
+            return JsonResponse({"error": "Order not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print("error",e)
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # DELETE method to remove a lab order request
+    async def delete(self, request, *args, **kwargs):
+        order_id = kwargs.get('order_id')
+        try:
+            # Try to get the lab order request object to delete
+            lab_order_request = await LabOrderRequest.objects.aget(id=order_id)
+            
+            # Delete the lab order request
+            await lab_order_request.adelete()
+            
+            # Return success response
+            return JsonResponse({"message": "Lab order request deleted successfully"}, status=200)
+        except LabOrderRequest.DoesNotExist:
+            return JsonResponse({"error": "Order not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+
+class ApproveLabRequest(View):
+
+  
+
+    # PUT method to update an existing lab order request
+    async def put(self, request, *args, **kwargs):
+        order_id = kwargs.get('order_id')
+        try:
+            lab_order_request = await LabOrderRequest.objects.select_related('patient').aget(id=order_id)
+            # Parse the incoming JSON data
+            data = json.loads(request.body)
+            
+            # Update fields if they are provided in the request
+            
             lab_order_request.request_status = data.get('request_status', lab_order_request.request_status)
      
            
@@ -583,16 +643,15 @@ class GetAllLabResultView(View):
 # @method_decorator(csrf_exempt, name='dispatch')
 class CreateLabReportView(View):
     async def post(self, request, *args, **kwargs):
-
         try:
             data = json.loads(request.body)
-            print("data",data)
+            print("data", data)
             lab_result_id = data.get('lab_result_id')
             doctor_id = data.get('doctor_id')
             report_data = data.get('report_data')
             shared_with_doctor = data.get('shared_with_doctor', False)
 
-            # Fetch the LabResult
+            # Fetch the LabResult and Doctor
             lab_result = await LabResult.objects.select_related('lab_order').aget(id=lab_result_id)
             doctor = await Doctor.objects.aget(id=doctor_id)
 
@@ -604,32 +663,29 @@ class CreateLabReportView(View):
                 shared_with_doctor=shared_with_doctor
             )
 
+            # Generate and save PDF report
+            await sync_to_async(lab_report.generate_pdf_report)()  # Wrap synchronous call
+            await lab_report.asave()  # Save the instance with the PDF file
+
             response_data = {
                 "id": lab_report.id,
                 "lab_result": lab_report.lab_result.id,
                 "doctor": f"{lab_report.doctor.first_name} {lab_report.doctor.last_name}",
                 "report_data": lab_report.report_data,
+                "report_file": lab_report.report_file.url if lab_report.report_file else None,
                 "generated_at": lab_report.generated_at.isoformat(),
                 "shared_with_doctor": lab_report.shared_with_doctor,
             }
             return JsonResponse(response_data, status=201)
     
         except IntegrityError as e:
-            print("intergrity")
-            # Handle unique constraint errors or other integrity errors
+            print("integrity error:", str(e))
             if 'UNIQUE constraint failed' in str(e):
-                return JsonResponse({"message": "The report has already been generated. Please provide a Id."}, status=400)
-            else:
-                print("different int")
-                # If it's another integrity error, log the error and return a generic message
-                return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
+                return JsonResponse({"message": "The report has already been generated. Please provide a different ID."}, status=400)
+            return JsonResponse({"message": "An error occurred while processing your request. Please try again."}, status=400)
 
         except Exception as e:
-
-            # Log the exception for debugging (use logging in production)
-            print(str(e))  # In production, use a proper logging mechanism
-            
-            # Return a generic error message
+            print("error:", str(e))
             return JsonResponse({"message": "An unexpected error occurred. Please try again later."}, status=500)
 
 
@@ -644,6 +700,7 @@ class GetLabReportView(View):
             response_data = {
                 "id": lab_report.id,
                 "lab_result": lab_report.lab_result.id,
+                "report_file": lab_report.report_file.url if lab_report.report_file else None,
                 "report_data": lab_report.report_data,
                 "doctor_id": lab_report.doctor.id,
                 "generated_at": lab_report.generated_at.isoformat(),
@@ -673,6 +730,10 @@ class GetLabReportView(View):
                 lab_report.doctor = doctor
 
             # Save the updated lab report
+            
+            await lab_report.asave()
+
+            await sync_to_async(lab_report.generate_pdf_report)()  # Wrap synchronous call in sync_to_async
             await lab_report.asave()
 
             # Prepare the response with updated data
@@ -727,6 +788,7 @@ class GetAllLabReportView(View):
                 "report_data": lab_report.report_data,
                 "generated_at": lab_report.generated_at.isoformat(),
                 "shared_with_doctor": lab_report.shared_with_doctor,
+                "report_file": lab_report.report_file.url if lab_report.report_file else None,
                 }
                 for lab_report in lab_reports
             ]

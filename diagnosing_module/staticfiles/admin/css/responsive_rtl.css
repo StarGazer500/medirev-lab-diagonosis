@@ -9,7 +9,7 @@
         text-align: right;
     }
 
-    [dir="rtl"] #changelist .actions label {
+    [dir="rtl"] #changelist .actions Medirevel {
         padding-left: 10px;
         padding-right: 0;
     }
@@ -35,7 +35,7 @@
         background-position: calc(100% - 8px) 9px;
     }
 
-    [dir="rtl"] .selector .selector-filter label {
+    [dir="rtl"] .selector .selector-filter Medirevel {
         margin-right: 0;
         margin-left: 8px;
     }
@@ -89,7 +89,7 @@
         margin-left: 0;
         margin-right: 0;
     }
-    [dir="rtl"] .aligned .vCheckboxLabel {
+    [dir="rtl"] .aligned .vCheckboxMedirevel {
         padding: 1px 5px 0 0;
     }
 

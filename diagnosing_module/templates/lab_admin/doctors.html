@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <title>Preclinic - Medical & Hospital - Bootstrap 4 Admin Template</title>
+    <title>Laboratory Test Admin - Medical & Hospital - Bootstrap 4 Admin Template</title>
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/bootstrap.min.css' %}" >
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/font-awesome.min.css' %}" >
     <link rel="stylesheet" type="text/css" src="{% static 'lab_admin/assets/css/select2.min.css' %}">
@@ -25,7 +25,7 @@
         <div class="header">
 			<div class="header-left">
 				<a href="{% url 'index-2' %}"class="logo">
-					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Preclinic</span>
+					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Laboratory Test Admin</span>
 				</a>
 			</div>
 			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -86,13 +86,13 @@
                             <a href="{% url 'schedule' %}"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
                         </li>
                          <li>
-                            <a href="{% url 'departments' %}"><i class="fa fa-departments-o"></i> <span>Departments</span></a>
+                            <a href="{% url 'departments' %}"><i class="fa fa-building"></i> <span>Departments</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-results' %}"><i class="fa fa-lab-results-o"></i> <span>Lab Results</span></a>
+                            <a href="{% url 'lab-results' %}"><i class="fa fa-flask"></i> <span>Lab Results</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-reports' %}"><i class="fa fa-lab-reports-o"></i> <span>Lab Reports</span></a>
+                            <a href="{% url 'lab-reports' %}"><i class="fa fa-file-text"></i> <span>Lab Reports</span></a>
                         </li>
 						
                     </ul>
@@ -106,7 +106,7 @@
                         <h4 class="page-title">Doctors</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="{% url 'add-doctor' %}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Doctor</a>
+                        
                     </div>
                 </div>
 				<div class="row doctor-grid">
@@ -115,13 +115,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-03.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                          
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Cristina Groves</a></h4>
                             <div class="doc-prof">Gynecologist</div>
                             <div class="user-country">
@@ -134,13 +128,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-07.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                            
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Marie Wells</a></h4>
                             <div class="doc-prof">Psychiatrist</div>
                             <div class="user-country">
@@ -153,13 +141,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-04.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                            
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Henry Daniels</a></h4>
                             <div class="doc-prof">Cardiologist</div>
                             <div class="user-country">
@@ -172,13 +154,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-11.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Mark Hunter</a></h4>
                             <div class="doc-prof">Urologist</div>
                             <div class="user-country">
@@ -191,13 +167,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="#"><img alt="" src="assets/img/doctor-thumb-12.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Michael Sullivan</a></h4>
                             <div class="doc-prof">Ophthalmologist</div>
                             <div class="user-country">
@@ -210,13 +180,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-02.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Linda Barrett</a></h4>
                             <div class="doc-prof">Dentist</div>
                             <div class="user-country">
@@ -229,13 +193,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-09.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                            
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Ronald Jacobs</a></h4>
                             <div class="doc-prof">Oncologist</div>
                             <div class="user-country">
@@ -248,13 +206,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-01.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Albert Sandoval</a></h4>
                             <div class="doc-prof">Neurologist</div>
                             <div class="user-country">
@@ -267,13 +219,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-05.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Diana Bailey</a></h4>
                             <div class="doc-prof">General Surgery</div>
                             <div class="user-country">
@@ -286,13 +232,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-10.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Shirley Willis</a></h4>
                             <div class="doc-prof">Radiologist</div>
                             <div class="user-country">
@@ -305,13 +245,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-08.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Pamela Curtis</a></h4>
                             <div class="doc-prof">Pediatrics</div>
                             <div class="user-country">
@@ -324,13 +258,7 @@
                             <div class="doctor-img">
                                 <a class="avatar" href="{% url 'profile' %}"><img alt="" src="assets/img/doctor-thumb-06.jpg"></a>
                             </div>
-                            <div class="dropdown profile-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{% url 'edit-doctor' %}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
+                           
                             <h4 class="doctor-name text-ellipsis"><a href="{% url 'profile' %}">Justin Parker</a></h4>
                             <div class="doc-prof">Physical Therapist</div>
                             <div class="user-country">

@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Function to fetch patient data from the server
     function fetchPatientData() {
         $.ajax({
-            url: '/laboratory/get-all-patient/', // Replace with your actual endpoint
+            url: '/Medirevoratory/get-all-patient/', // Replace with your actual endpoint
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
@@ -47,7 +47,7 @@ $(document).ready(function() {
         // Create table row with patient data
         var patientRow = `
             <tr>
-                <td><img width="28" height="28" src="/static/lab_admin/assets/img/user.jpg" class="rounded-circle m-r-5" alt=""> ${patient.first_name} ${patient.last_name}</td>
+                <td><img width="28" height="28" src="/static/Medirev_admin/assets/img/user.jpg" class="rounded-circle m-r-5" alt=""> ${patient.first_name} ${patient.last_name}</td>
                 <td>${patient.first_name}</td>
                 <td>${patient.last_name}</td>
                 <td>${formattedDate}</td>
@@ -58,7 +58,7 @@ $(document).ready(function() {
                     <div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/laboratory/edit-patient/${patient.id}/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item" href="/Medirevoratory/edit-patient/${patient.id}/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                             <a class="dropdown-item" href="#" data-patient-id="${patient.id}" class="delete-patient-btn"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         </div>
                     </div>
@@ -118,7 +118,7 @@ $(document).ready(function() {
             const id = $(this).data('id');
             
             $.ajax({
-                url: `/laboratory/delete-patient/${id}/`,
+                url: `/Medirevoratory/delete-patient/${id}/`,
                 type: 'POST',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken')
@@ -162,12 +162,12 @@ $(document).ready(function() {
         
         // Modal HTML structure with dynamic body content - Updated for Bootstrap 5
         var modalHTML = `
-          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-Medirevelledby="dynamicModalMedirevel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dynamicModalLabel">Notification</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="dynamicModalMedirevel">Notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-Medirevel="Close"></button>
                 </div>
                 <div class="modal-body">
                   ${bodyContent}

@@ -59,6 +59,7 @@ urlpatterns = [
     path('create-laborder-request/',CreateLabOrderRequestView.as_view(),name="create-laborder-request"),
     path('get-laborder-request/<int:order_id>/',GetLabOrderRequestView.as_view(),name="get-laborder-request"),
     path('get-all-laborder-request/',GetAllLabOrderRequestView.as_view(),name='get-all-laborder-request'),
+    path('approve/<int:order_id>/',ApproveLabRequest.as_view(),name='approve'),
 
     path('create-lab-results/',CreateLabResultView.as_view(),name="create-lab-results"),
     path('get-lab-result/<int:lab_result_id>/',GetLabResultView.as_view(),name="get-lab-result"),

@@ -1,33 +1,33 @@
 $(document).ready(function() {
-    // Function to fetch lab request data from the server
-    function fetchLabRequestData() {
+    // Function to fetch Medirev request data from the server
+    function fetchMedirevRequestData() {
         $.ajax({
-            url: '/laboratory/get-all-laborder-request/',
+            url: '/Medirevoratory/get-all-Medirevorder-request/',
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
             },
             success: function(response) {
                 // Clear existing table rows
-                $('#labrequest-tbody').empty();
+                $('#Medirevrequest-tbody').empty();
                 
                 // Check if response has data
                 if (response && response.length > 0) {
                     console.log("res", response);
                     
-                    // Append each lab request to the table
-                    $.each(response, function(index, labrequest) {
-                        appendLabRequestToTable(labrequest);
+                    // Append each Medirev request to the table
+                    $.each(response, function(index, Medirevrequest) {
+                        appendMedirevRequestToTable(Medirevrequest);
                     });
                 } else {
-                    // Show message if no lab requests
-                    $('#labrequest-tbody').append('<tr><td colspan="7" class="text-center">No Lab Request records found</td></tr>');
+                    // Show message if no Medirev requests
+                    $('#Medirevrequest-tbody').append('<tr><td colspan="7" class="text-center">No Medirev Request records found</td></tr>');
                 }
             },
             error: function(xhr, status, error) {
-                console.log("Error fetching Lab Request data:", error);
+                console.log("Error fetching Medirev Request data:", error);
                 
-                var errorMessage = 'Failed to load Lab Request data.';
+                var errorMessage = 'Failed to load Medirev Request data.';
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
@@ -38,27 +38,27 @@ $(document).ready(function() {
         });
     }
     
-    // Function to append a single lab request to the table
-    function appendLabRequestToTable(labrequest) {
+    // Function to append a single Medirev request to the table
+    function appendMedirevRequestToTable(Medirevrequest) {
         // Format dates (assuming date is in ISO format)
-        let formattedOrderDate = formatDate(labrequest.order_date);
-        let formattedRequestDate = formatDate(labrequest.requested_date);
+        let formattedOrderDate = formatDate(Medirevrequest.order_date);
+        let formattedRequestDate = formatDate(Medirevrequest.requested_date);
         
-        // Create table row with lab request data
-        var labrequestRow = `
+        // Create table row with Medirev request data
+        var MedirevrequestRow = `
             <tr>
-                <td>${labrequest.id}</td>
-                <td>${labrequest.patient}</td>
-                <td>${labrequest.test_description}</td>
+                <td>${Medirevrequest.id}</td>
+                <td>${Medirevrequest.patient}</td>
+                <td>${Medirevrequest.test_description}</td>
                 <td>${formattedOrderDate}</td>
                 <td>${formattedRequestDate}</td>
-                <td>${labrequest.request_status}</td>
+                <td>${Medirevrequest.request_status}</td>
                 <td class="text-right">
                     <div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/laboratory/edit-labrequest/${labrequest.id}/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item delete-labrequest-btn" href="#" data-labrequest-id="${labrequest.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item" href="/Medirevoratory/edit-Medirevrequest/${Medirevrequest.id}/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item delete-Medirevrequest-btn" href="#" data-Medirevrequest-id="${Medirevrequest.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         </div>
                     </div>
                 </td>
@@ -66,7 +66,7 @@ $(document).ready(function() {
         `;
         
         // Append the row to the table body
-        $('#labrequest-tbody').append(labrequestRow);
+        $('#Medirevrequest-tbody').append(MedirevrequestRow);
     }
     
     // Helper function to format date (YYYY-MM-DD to DD-MM-YY)
@@ -99,15 +99,15 @@ $(document).ready(function() {
         return cookieValue;
     }
     
-    // Delete lab request handler (using event delegation)
-    $(document).on('click', '.delete-labrequest-btn', function(e) {
+    // Delete Medirev request handler (using event delegation)
+    $(document).on('click', '.delete-Medirevrequest-btn', function(e) {
         e.preventDefault();
-        const labrequestId = $(this).data('labrequest-id');
+        const MedirevrequestId = $(this).data('Medirevrequest-id');
         
         // Show confirmation modal
-        var modal = createModal(`Are you sure you want to delete this Lab Request record? <br><br>
+        var modal = createModal(`Are you sure you want to delete this Medirev Request record? <br><br>
             <div class="text-center">
-                <button type="button" class="btn btn-danger" id="confirmDelete" data-id="${labrequestId}">Delete</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete" data-id="${MedirevrequestId}">Delete</button>
                 <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">Cancel</button>
             </div>`);
         modal.show();
@@ -117,7 +117,7 @@ $(document).ready(function() {
             const id = $(this).data('id');
             
             $.ajax({
-                url: `/laboratory/delete-labrequest/${id}/`,
+                url: `/Medirevoratory/delete-Medirevrequest/${id}/`,
                 type: 'POST',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken')
@@ -126,16 +126,16 @@ $(document).ready(function() {
                     modal.hide();
                     
                     // Show success message
-                    var successModal = createModal("Lab Request record deleted successfully.");
+                    var successModal = createModal("Medirev Request record deleted successfully.");
                     successModal.show();
                     
-                    // Refresh lab request list
-                    fetchLabRequestData();
+                    // Refresh Medirev request list
+                    fetchMedirevRequestData();
                 },
                 error: function(xhr, status, error) {
-                    console.log("Error deleting Lab Request:", error);
+                    console.log("Error deleting Medirev Request:", error);
                     
-                    var errorMessage = 'Failed to delete Lab Request record.';
+                    var errorMessage = 'Failed to delete Medirev Request record.';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
                     }
@@ -155,12 +155,12 @@ $(document).ready(function() {
         
         // Modal HTML structure with dynamic body content - Updated for Bootstrap 5
         var modalHTML = `
-          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-Medirevelledby="dynamicModalMedirevel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dynamicModalLabel">Notification</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="dynamicModalMedirevel">Notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-Medirevel="Close"></button>
                 </div>
                 <div class="modal-body">
                   ${bodyContent}
@@ -205,6 +205,6 @@ $(document).ready(function() {
         }
     });
     
-    // Initial load of lab request data
-    fetchLabRequestData();
+    // Initial load of Medirev request data
+    fetchMedirevRequestData();
 });

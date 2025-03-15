@@ -5,12 +5,12 @@ $(document).ready(function() {
         
         // Modal HTML structure with dynamic body content - Updated for Bootstrap 5
         var modalHTML = `
-          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-Medirevelledby="dynamicModalMedirevel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dynamicModalLabel">Notification</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="dynamicModalMedirevel">Notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-Medirevel="Close"></button>
                 </div>
                 <div class="modal-body">
                   ${bodyContent}
@@ -93,7 +93,7 @@ $(document).ready(function() {
         
         // Perform AJAX request to submit the data to the server
         $.ajax({
-            url: '/laboratory/create-laborder-request/',
+            url: '/Medirevoratory/create-Medirevorder-request/',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),

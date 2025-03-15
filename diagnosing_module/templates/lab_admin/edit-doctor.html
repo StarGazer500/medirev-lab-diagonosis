@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <title>Preclinic - Medical & Hospital - Bootstrap 4 Admin Template</title>
+    <title>Laboratory Test Admin - Medical & Hospital - Bootstrap 4 Admin Template</title>
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/bootstrap.min.css' %}" >
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/font-awesome.min.css' %}" >
     <link rel="stylesheet" type="text/css" src="{% static 'lab_admin/assets/css/select2.min.css' %}">
@@ -25,7 +25,7 @@
         <div class="header">
 			<div class="header-left">
 				<a href="{% url 'index-2' %}"class="logo">
-					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Preclinic</span>
+					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Laboratory Test Admin</span>
 				</a>
 			</div>
 			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -86,13 +86,13 @@
                             <a href="{% url 'schedule' %}"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
                         </li>
                          <li>
-                            <a href="{% url 'departments' %}"><i class="fa fa-departments-o"></i> <span>Departments</span></a>
+                            <a href="{% url 'departments' %}"><i class="fa fa-building"></i> <span>Departments</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-results' %}"><i class="fa fa-lab-results-o"></i> <span>Lab Results</span></a>
+                            <a href="{% url 'lab-results' %}"><i class="fa fa-flask"></i> <span>Lab Results</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-reports' %}"><i class="fa fa-lab-reports-o"></i> <span>Lab Reports</span></a>
+                            <a href="{% url 'lab-reports' %}"><i class="fa fa-file-text"></i> <span>Lab Reports</span></a>
                         </li>
 						
                 </div>

@@ -42,6 +42,7 @@ $(document).ready(function() {
     function  appendLabReportsToTable(labreport) {
         // Format dates (assuming date is in ISO format)
         let formattedgeneratedatDate = formatDate(labreport.generated_at);
+        const hasReport = labreport.report_file && labreport.report_file !== '';
        
         // Create table row with lab request data
         var labreportRow = `
@@ -58,6 +59,10 @@ $(document).ready(function() {
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item edit-labreport-btn" href="/laboratory/edit-lab-report/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                             <a class="dropdown-item delete-labreport-btn" href="#" data-labreport-id="${labreport.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            ${hasReport ? `
+                                <a class="dropdown-item view-report-btn" href="${labreport.report_file}" target="_blank"><i class="fa fa-eye m-r-5"></i> View Report</a>
+                                <a class="dropdown-item download-report-btn" href="${labreport.report_file}" download="lab_report_${labreport.id}.pdf"><i class="fa fa-download m-r-5"></i> Download Report</a>
+                            ` : ''}
                         </div>
                     </div>
                 </td>
@@ -69,6 +74,24 @@ $(document).ready(function() {
 
     }
 
+    $(document).on('click', '.view-report-btn', function(event) {
+        event.preventDefault();
+        const reportUrl = $(this).attr('href');
+        window.open(reportUrl, '_blank');
+    });
+
+    $(document).on('click', '.download-report-btn', function(event) {
+        event.preventDefault();
+        const reportUrl = $(this).attr('href');
+        const link = document.createElement('a');
+        link.href = reportUrl;
+        link.download = `lab_report_${$(this).closest('tr').data('labreport-id')}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    
     $(document).on('click', '.add-lab-report-btn', function(event) {
         event.preventDefault(); // Prevent default action (navigation)
        

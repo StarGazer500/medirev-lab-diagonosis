@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <title>Preclinic - Medical & Hospital - Bootstrap 4 Admin Template</title>
+    <title>Laboratory Test Admin - Medical & Hospital - Bootstrap 4 Admin Template</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/bootstrap.min.css' %}" >
     <link rel="stylesheet" type="text/css" href="{% static 'lab_admin/assets/css/font-awesome.min.css' %}" >
@@ -24,9 +24,9 @@
 <body>
     <div class="main-wrapper">
         <div class="header">
-			<div class="header-left">
+			<div   class="header-left">
 				<a href="{% url 'index-2' %}"class="logo">
-					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Preclinic</span>
+					<img src="{% static 'lab_admin/assets/img/logo.png' %}" width="35" height="35" alt=""> <span>Laboratory Test Admin</span>
 				</a>
 			</div>
 			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -91,13 +91,13 @@
                             <a href="{% url 'schedule' %}"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
                         </li>
                          <li>
-                            <a href="{% url 'departments' %}"><i class="fa fa-departments-o"></i> <span>Departments</span></a>
+                            <a href="{% url 'departments' %}"><i class="fa fa-building"></i> <span>Departments</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-results' %}"><i class="fa fa-lab-results-o"></i> <span>Lab Results</span></a>
+                            <a href="{% url 'lab-results' %}"><i class="fa fa-flask"></i> <span>Lab Results</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'lab-reports' %}"><i class="fa fa-lab-reports-o"></i> <span>Lab Reports</span></a>
+                            <a href="{% url 'lab-reports' %}"><i class="fa fa-file-text"></i> <span>Lab Reports</span></a>
                         </li>
 						
                        
@@ -131,7 +131,7 @@
                             <span class="dash-widget-bg3"><i class="fa fa-user-md" aria-hidden="true"></i></span>
                             <div class="dash-widget-info text-right">
                                 <h3>72</h3>
-                                <span class="widget-title3">Attend <i class="fa fa-check" aria-hidden="true"></i></span>
+                                <span class="widget-title3">Appointments Completed <i class="fa fa-check" aria-hidden="true"></i></span>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                             <span class="dash-widget-bg4"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
                             <div class="dash-widget-info text-right">
                                 <h3>618</h3>
-                                <span class="widget-title4">Pending <i class="fa fa-check" aria-hidden="true"></i></span>
+                                <span class="widget-title4">Appointment Pending <i class="fa fa-check" aria-hidden="true"></i></span>
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="chart-title">
-									<h4>Patients In</h4>
+									<h4>Appointment Total</h4>
 									<div class="float-right">
 										<ul class="chat-user-total">
 											<li><i class="fa fa-circle current-users" aria-hidden="true"></i>ICU</li>
@@ -178,7 +178,7 @@
 					<div class="col-12 col-md-6 col-lg-8 col-xl-8">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="card-title d-inline-block">Upcoming Appointments</h4> <a href="{% url 'appointments' %}" class="btn btn-primary float-right">View all</a>
+								<h4 class="card-title d-inline-block">Upcoming Lab Appointments</h4> <a href="{% url 'appointments' %}" class="btn btn-primary float-right">View all</a>
 							</div>
 							<div class="card-body p-0">
 								<div class="table-responsive">
@@ -186,97 +186,15 @@
 										<thead class="d-none">
 											<tr>
 												<th>Patient Name</th>
-												<th>Doctor Name</th>
+												<th>Appointment status</th>
 												<th>Timing</th>
 												<th class="text-right">Status</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td style="min-width: 200px;">
-													<a class="avatar" href="{% url 'profile' %}">B</a>
-													<h2><a href="{% url 'profile' %}">Bernardo Galaviz <span>New York, USA</span></a></h2>
-												</td>                 
-												<td>
-													<h5 class="time-title p-0">Appointment With</h5>
-													<p>Dr. Cristina Groves</p>
-												</td>
-												<td>
-													<h5 class="time-title p-0">Timing</h5>
-													<p>7.00 PM</p>
-												</td>
-												<td class="text-right">
-													<a href="{% url 'appointments' %}" class="btn btn-outline-primary take-btn">Take up</a>
-												</td>
-											</tr>
-											<tr>
-												<td style="min-width: 200px;">
-													<a class="avatar" href="{% url 'profile' %}">B</a>
-													<h2><a href="{% url 'profile' %}">Bernardo Galaviz <span>New York, USA</span></a></h2>
-												</td>                 
-												<td>
-													<h5 class="time-title p-0">Appointment With</h5>
-													<p>Dr. Cristina Groves</p>
-												</td>
-												<td>
-													<h5 class="time-title p-0">Timing</h5>
-													<p>7.00 PM</p>
-												</td>
-												<td class="text-right">
-													<a href="{% url 'appointments' %}" class="btn btn-outline-primary take-btn">Take up</a>
-												</td>
-											</tr>
-											<tr>
-												<td style="min-width: 200px;">
-													<a class="avatar" href="{% url 'profile' %}">B</a>
-													<h2><a href="{% url 'profile' %}">Bernardo Galaviz <span>New York, USA</span></a></h2>
-												</td>                 
-												<td>
-													<h5 class="time-title p-0">Appointment With</h5>
-													<p>Dr. Cristina Groves</p>
-												</td>
-												<td>
-													<h5 class="time-title p-0">Timing</h5>
-													<p>7.00 PM</p>
-												</td>
-												<td class="text-right">
-													<a href="{% url 'appointments' %}" class="btn btn-outline-primary take-btn">Take up</a>
-												</td>
-											</tr>
-											<tr>
-												<td style="min-width: 200px;">
-													<a class="avatar" href="{% url 'profile' %}">B</a>
-													<h2><a href="{% url 'profile' %}">Bernardo Galaviz <span>New York, USA</span></a></h2>
-												</td>                 
-												<td>
-													<h5 class="time-title p-0">Appointment With</h5>
-													<p>Dr. Cristina Groves</p>
-												</td>
-												<td>
-													<h5 class="time-title p-0">Timing</h5>
-													<p>7.00 PM</p>
-												</td>
-												<td class="text-right">
-													<a href="{% url 'appointments' %}" class="btn btn-outline-primary take-btn">Take up</a>
-												</td>
-											</tr>
-											<tr>
-												<td style="min-width: 200px;">
-													<a class="avatar" href="{% url 'profile' %}">B</a>
-													<h2><a href="{% url 'profile' %}">Bernardo Galaviz <span>New York, USA</span></a></h2>
-												</td>                 
-												<td>
-													<h5 class="time-title p-0">Appointment With</h5>
-													<p>Dr. Cristina Groves</p>
-												</td>
-												<td>
-													<h5 class="time-title p-0">Timing</h5>
-													<p>7.00 PM</p>
-												</td>
-												<td class="text-right">
-													<a href="{% url 'appointments' %}" class="btn btn-outline-primary take-btn">Take up</a>
-												</td>
-											</tr>
+										<tbody id ="appointment-tbody">
+											
+											
+											
 										</tbody>
 									</table>
 								</div>
@@ -288,74 +206,11 @@
 							<div class="card-header bg-white">
 								<h4 class="card-title mb-0">Doctors</h4>
 							</div>
-                            <div class="card-body">
-                                <ul class="contact-list">
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="John Doe"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">John Doe</span>
-                                                <span class="contact-date">MBBS, MD</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="Richard Miles"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status offline"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">Richard Miles</span>
-                                                <span class="contact-date">MD</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="John Doe"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status away"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">John Doe</span>
-                                                <span class="contact-date">BMBS</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="Richard Miles"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">Richard Miles</span>
-                                                <span class="contact-date">MS, MD</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="John Doe"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status offline"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">John Doe</span>
-                                                <span class="contact-date">MBBS</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="contact-cont">
-                                            <div class="float-left user-img m-r-10">
-                                                <a href="{% url 'profile' %}" title="Richard Miles"><img src="{% static 'lab_admin/assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status away"></span></a>
-                                            </div>
-                                            <div class="contact-info">
-                                                <span class="contact-name text-ellipsis">Richard Miles</span>
-                                                <span class="contact-date">MBBS, MD</span>
-                                            </div>
-                                        </div>
-                                    </li>
+                            <div class="card-body" >
+                                <ul class="contact-list" id ="doctors-list">
+                                    
+                                  
+                                   
                                 </ul>
                             </div>
                             <div class="card-footer text-center bg-white">
@@ -373,43 +228,10 @@
 							<div class="card-block">
 								<div class="table-responsive">
 									<table class="table mb-0 new-patient-table">
-										<tbody>
-											<tr>
-												<td>
-													<img width="28" height="28" class="rounded-circle" src="{% static 'lab_admin/assets/img/user.jpg' %}" alt=""> 
-													<h2>John Doe</h2>
-												</td>
-												<td>Johndoe21@gmail.com</td>
-												<td>+1-202-555-0125</td>
-												<td><button class="btn btn-primary btn-primary-one float-right">Fever</button></td>
-											</tr>
-											<tr>
-												<td>
-													<img width="28" height="28" class="rounded-circle" src="{% static 'lab_admin/assets/img/user.jpg' %}" alt=""> 
-													<h2>Richard</h2>
-												</td>
-												<td>Richard123@yahoo.com</td>
-												<td>202-555-0127</td>
-												<td><button class="btn btn-primary btn-primary-two float-right">Cancer</button></td>
-											</tr>
-											<tr>
-												<td>
-													<img width="28" height="28" class="rounded-circle" src="{% static 'lab_admin/assets/img/user.jpg' %}" alt=""> 
-													<h2>Villiam</h2>
-												</td>
-												<td>Richard123@yahoo.com</td>
-												<td>+1-202-555-0106</td>
-												<td><button class="btn btn-primary btn-primary-three float-right">Eye</button></td>
-											</tr>
-											<tr>
-												<td>
-													<img width="28" height="28" class="rounded-circle" src="{% static 'lab_admin/assets/img/user.jpg' %}" alt=""> 
-													<h2>Martin</h2>
-												</td>
-												<td>Richard123@yahoo.com</td>
-												<td>776-2323 89562015</td>
-												<td><button class="btn btn-primary btn-primary-four float-right">Fever</button></td>
-											</tr>
+										<tbody id ="patient-tbody">
+											
+											
+										
 										</tbody>
 									</table>
 								</div>
@@ -503,6 +325,7 @@
     <script src="{% static 'lab_admin/assets/js/Chart.bundle.js' %}"></script>
     <script src="{% static 'lab_admin/assets/js/chart.js' %}"></script>
     <script src="{% static 'lab_admin/assets/js/app.js' %}"></script>
+	<script src="{% static 'lab_admin/assets/js/admin/index.js' %}"></script>
 
 </body>
 

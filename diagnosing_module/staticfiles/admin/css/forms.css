@@ -13,7 +13,7 @@
     vertical-align: middle;
 }
 
-.form-row label input[type="checkbox"] {
+.form-row Medirevel input[type="checkbox"] {
     margin-top: 0;
     vertical-align: 0;
 }
@@ -34,15 +34,15 @@ form .form-row p {
     padding-bottom: 10px;
 }
 
-/* FORM LABELS */
+/* FORM MedirevELS */
 
-label {
+Medirevel {
     font-weight: normal;
     color: var(--body-quiet-color);
     font-size: 0.8125rem;
 }
 
-.required label, label.required {
+.required Medirevel, Medirevel.required {
     font-weight: bold;
 }
 
@@ -56,7 +56,7 @@ form div.radiolist.inline div {
     display: inline-block;
 }
 
-form div.radiolist label {
+form div.radiolist Medirevel {
     width: auto;
 }
 
@@ -91,7 +91,7 @@ fieldset .inline-heading,
 
 /* ALIGNED FIELDSETS */
 
-.aligned label {
+.aligned Medirevel {
     display: block;
     padding: 4px 10px 0 0;
     min-width: 160px;
@@ -99,13 +99,13 @@ fieldset .inline-heading,
     word-wrap: break-word;
 }
 
-.aligned label:not(.vCheckboxLabel):after {
+.aligned Medirevel:not(.vCheckboxMedirevel):after {
     content: '';
     display: inline-block;
     vertical-align: middle;
 }
 
-.aligned label + p, .aligned .checkbox-row + div.help, .aligned label + div.readonly {
+.aligned Medirevel + p, .aligned .checkbox-row + div.help, .aligned Medirevel + div.readonly {
     padding: 6px 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -113,7 +113,7 @@ fieldset .inline-heading,
     overflow-wrap: break-word;
 }
 
-.aligned ul label {
+.aligned ul Medirevel {
     display: inline;
     float: none;
     width: auto;
@@ -182,12 +182,12 @@ form .aligned table p {
     padding-left: 0;
 }
 
-.aligned .vCheckboxLabel {
+.aligned .vCheckboxMedirevel {
     padding: 1px 0 0 5px;
 }
 
-.aligned .vCheckboxLabel + p.help,
-.aligned .vCheckboxLabel + div.help {
+.aligned .vCheckboxMedirevel + p.help,
+.aligned .vCheckboxMedirevel + div.help {
     margin-top: -4px;
 }
 
@@ -201,7 +201,7 @@ fieldset .fieldBox {
 
 /* WIDE FIELDSETS */
 
-.wide label {
+.wide Medirevel {
     width: 200px;
 }
 
@@ -373,7 +373,7 @@ body.popup .submit-row {
     padding: 8px 10px;
 }
 
-.inline-group .aligned label {
+.inline-group .aligned Medirevel {
     width: 160px;
 }
 
@@ -397,7 +397,7 @@ body.popup .submit-row {
     float: right;
 }
 
-.inline-related h3 span.delete label {
+.inline-related h3 span.delete Medirevel {
     margin-left: 2px;
     font-size: 0.6875rem;
 }

@@ -1,6 +1,6 @@
 /*
 Author       : Dreamguys
-Template Name: PreClinic - Medical and Hospital Admin Template
+Template Name: Medirevoratory Test Admin - Medical and Hospital Admin Template
 Version      : 1.0
 */
 $(document).ready(function($) {
@@ -18,22 +18,41 @@ $(document).ready(function($) {
 
 	function init() {
 		var $this = Sidemenu;
+		
+		// Sidebar Active Class Management
+		var currentUrl = window.location.pathname; // Get the current page URL
+		
+		// Loop through each sidebar link and check if the href matches the current URL
+		$('#sidebar-menu a').each(function() {
+			var linkUrl = $(this).attr('href'); // Get the href of the link
+			if (currentUrl.includes(linkUrl)) { // Check if the current URL matches the link
+				$(this).addClass('active'); // Add the active class
+				$(this).parents('li').addClass('active'); // Optionally, also add the active class to the parent <li>
+			} else {
+				$(this).removeClass('active'); // Remove the active class if it doesn't match
+			}
+		});
+	
+		// Sidebar menu click functionality (existing code remains the same)
 		$('#sidebar-menu a').on('click', function(e) {
-			if($(this).parent().hasClass('submenu')) {
+			if ($(this).parent().hasClass('submenu')) {
 				e.preventDefault();
 			}
-			if(!$(this).hasClass('subdrop')) {
+			if (!$(this).hasClass('subdrop')) {
 				$('ul', $(this).parents('ul:first')).slideUp(350);
 				$('a', $(this).parents('ul:first')).removeClass('subdrop');
 				$(this).next('ul').slideDown(350);
 				$(this).addClass('subdrop');
-			} else if($(this).hasClass('subdrop')) {
+			} else if ($(this).hasClass('subdrop')) {
 				$(this).removeClass('subdrop');
 				$(this).next('ul').slideUp(350);
 			}
 		});
+	
+		// Other existing functionality within init() (if applicable)
 		$('#sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
 	}
+	
 	// Sidebar Initiate
 	init();
 	
@@ -84,7 +103,7 @@ $(document).ready(function($) {
 		});
 	}
 	
-	// Floating Label
+	// Floating Medirevel
 	if($('.floating').length > 0) {
 		$('.floating').on('focus blur', function(e) {
 			$(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));

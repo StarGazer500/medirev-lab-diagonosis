@@ -1,6 +1,6 @@
 /*
 Author       : Dreamguys
-Template Name: PreClinic - Medical and Hospital Admin Template
+Template Name: Medirevoratory Test Admin - Medical and Hospital Admin Template
 Version      : 1.0
 */
 
@@ -22,7 +22,7 @@ Version      : 1.0
 13. Holidays
 14. Edit Profile
 15. Chat
-16. Focus Label
+16. Focus Medirevel
 17. Leave
 18. Employee
 19. Events
@@ -712,25 +712,33 @@ textarea.form-control {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 .header .header-left {
-	float: left;
-	height: 50px;
-	padding: 0 20px;
-	position: relative;
-	text-align: center;
-	width: 230px;
-	z-index: 1;
+    float: left;
+    height: 50px;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
+    /* Remove or increase width to accommodate longer text */
+    width: auto; /* Changed from 230px to auto */
+    z-index: 1;
 }
+
 .logo {
-	align-items: center;
-	display: flex;
-	height: 50px;
-	justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 50px;
+    justify-content: center;
 }
+
 .logo span {
-	color: #fff;
-	font-size: 18px;
-	font-weight: 500;
-	margin-left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 10px;
+    white-space: nowrap; /* Prevents text from wrapping to a new line */
+    /* Optional: Add truncation for very long text */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    /* max-width: 200px; */ /* Adjust this value based on your design */
 }
 .header .navbar-nav .badge {
 	position: absolute;
@@ -1099,7 +1107,7 @@ textarea.form-control {
 .account-box textarea.form-control {
 	height: 130px;
 }
-.account-box label {
+.account-box Medirevel {
 	color: #323232;
 	font-size: 14px;
 	font-weight: normal;
@@ -1654,14 +1662,14 @@ ul.chat-user-total li i.old-users {
 .modal-header.bg-danger .modal-title {
 	color: #fff;
 }
-.dropdown.action-label {
+.dropdown.action-Medirevel {
 	display: inline-block;
 }
-.action-label > a {
+.action-Medirevel > a {
 	display: inline-block;
 	min-width: 103px;
 }
-.action-label .btn-sm {
+.action-Medirevel .btn-sm {
 	padding: 5px;
 }
 
@@ -2360,7 +2368,7 @@ ul.chat-user-total li i.old-users {
 }
 
 /*-----------------
-	16. Focus Label
+	16. Focus Medirevel
 -----------------------*/
 
 .form-focus {
@@ -2368,7 +2376,7 @@ ul.chat-user-total li i.old-users {
 	height: 50px;
 	position: relative;
 }
-.form-focus .focus-label {
+.form-focus .focus-Medirevel {
 	font-size: 16px;
 	font-weight: 400;
 	opacity: 0.4;
@@ -2385,7 +2393,7 @@ ul.chat-user-total li i.old-users {
 	z-index: 1;
 	color: #888;
 }
-.form-focus.focused .focus-label {
+.form-focus.focused .focus-Medirevel {
 	opacity: 1;
 	font-weight: 300;
 	top: -14px;
@@ -2462,22 +2470,22 @@ ul.chat-user-total li i.old-users {
 	padding: 12px;
 	text-transform: uppercase;
 }
-.form-focus.select-focus .focus-label {
+.form-focus.select-focus .focus-Medirevel {
 	opacity: 1;
 	font-weight: 300;
 	top: -20px;
 	font-size: 12px;
 	z-index: 1;
 }
-.action-label .label {
+.action-Medirevel .Medirevel {
 	display: inline-block;
 	min-width: 85px;
 	padding: 0.5em 0.6em;
 }
-.action-label i {
+.action-Medirevel i {
 	margin-right: 3px;
 }
-.action-label .dropdown-menu > li > a {
+.action-Medirevel .dropdown-menu > li > a {
 	padding: 3px 10px;
 }
 
@@ -2928,13 +2936,13 @@ a.fc-event:not([href]) {
 .material-switch > input[type="checkbox"] {
 	display: none;
 }
-.material-switch > label {
+.material-switch > Medirevel {
 	cursor: pointer;
 	height: 0px;
 	position: relative;
 	width: 40px;
 }
-.material-switch > label:before {
+.material-switch > Medirevel:before {
 	background: rgb(0, 0, 0);
 	box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
 	border-radius: 8px;
@@ -2946,7 +2954,7 @@ a.fc-event:not([href]) {
 	transition: all 0.4s ease-in-out;
 	width: 40px;
 }
-.material-switch > label:after {
+.material-switch > Medirevel:after {
 	background: rgb(255, 255, 255);
 	border-radius: 16px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -2959,11 +2967,11 @@ a.fc-event:not([href]) {
 	transition: all 0.3s ease-in-out;
 	width: 24px;
 }
-.material-switch > input[type="checkbox"]:checked + label:before {
+.material-switch > input[type="checkbox"]:checked + Medirevel:before {
 	background: inherit;
 	opacity: 0.5;
 }
-.material-switch > input[type="checkbox"]:checked + label:after {
+.material-switch > input[type="checkbox"]:checked + Medirevel:after {
 	background: inherit;
 	left: 20px;
 }
@@ -3240,7 +3248,7 @@ html.menu-opened body {
 .upload-input {
 	width: 100%;
 }
-.gen-label {
+.gen-Medirevel {
 	display: block;
 	margin-bottom: 18px;
 }
@@ -3426,7 +3434,7 @@ a.status-grey {
 table.table-inbox tbody tr.checked {
 	background-color: #ffffcc;
 }
-.mail-label {
+.mail-Medirevel {
 	margin-right: 5px;
 }
 
@@ -3971,7 +3979,7 @@ blockquote p {
 .text-red {
 	color: #f00;
 }
-.new-comment label {
+.new-comment Medirevel {
 	font-size: 14px;
 	font-weight: 500;
 }

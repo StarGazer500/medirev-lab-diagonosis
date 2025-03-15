@@ -119,7 +119,7 @@ thead th.sorted .text {
 
 /* FORMS */
 
-.aligned label {
+.aligned Medirevel {
     padding: 0 0 3px 1em;
 }
 
@@ -277,7 +277,7 @@ form .form-row p.datetime {
     float:left;
 }
 
-.inline-related h3 span.delete label {
+.inline-related h3 span.delete Medirevel {
     margin-left: inherit;
     margin-right: 2px;
 }

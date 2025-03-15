@@ -43,6 +43,8 @@ $(document).ready(function() {
         // Format dates (assuming date is in ISO format)
         let formattedOrderDate = formatDate(labrequest.order_date);
         let formattedRequestDate = formatDate(labrequest.requested_date);
+
+       
         
         // Create table row with lab request data
         var labrequestRow = `
@@ -57,9 +59,11 @@ $(document).ready(function() {
                     <div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item approve" href=""><i class="fa fa-pencil m-r-5"></i> Approve</a> 
                             <a class="dropdown-item edit-labrequest-btn" href="/laboratory/edit-appointment/"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                             <a class="dropdown-item delete-labrequest-btn" href="#" data-labrequest-id="${labrequest.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             <a class="dropdown-item add-lab-result-btn" href="/laboratory/add-lab-result/"><i class="fa fa-pencil m-r-5"></i> Generate Results</a> 
+                            
                         </div>
                     </div>
                 </td>
@@ -70,6 +74,57 @@ $(document).ready(function() {
         $('#labrequest-tbody').append(labrequestRow);
 
     }
+
+
+    
+
+
+    $(document).on('click', '.approve', function(event) {
+        event.preventDefault(); // Prevent default action (navigation)
+
+        var labrequestRow = $(this).closest('tr');
+    
+        var labrequestId =labrequestRow.data('labrequest-id');
+        
+        let formData = {
+            request_status: "COMPLETED"
+            
+        };
+
+
+       
+        $.ajax({
+            url: `/laboratory/approve/${labrequestId}/`, // Adjust the endpoint as needed
+            type: 'PUT',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(formData),
+            success: function(response) {
+                fetchLabRequestData()
+                console.log("approved",response)
+                
+
+                var modal = createModal('Appointment Approved successfully!');
+                modal.show();
+                
+                // Optionally refresh the data after update
+                fetchLabRequestData();
+            },
+            error: function(xhr, status, error) {
+                console.log("Error updating appointment data:", error);
+                
+                var errorMessage = 'Failed to update Appointment data.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                
+                var modal = createModal(errorMessage);
+                modal.show();
+            }
+        });
+    });
 
     $(document).on('click', '.add-appointment', function(event) {
         event.preventDefault(); // Prevent default action (navigation)
@@ -174,6 +229,9 @@ $(document).ready(function() {
         }
         return cookieValue;
     }
+
+
+
     
     // Delete lab request handler (using event delegation)
     $(document).on('click', '.delete-labrequest-btn', function(e) {

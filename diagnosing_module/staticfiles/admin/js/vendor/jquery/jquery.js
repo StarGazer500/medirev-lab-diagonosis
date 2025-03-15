@@ -1039,8 +1039,8 @@ function createDisabledPseudo( disabled ) {
 			if ( elem.parentNode && elem.disabled === false ) {
 
 				// Option elements defer to a parent optgroup if present
-				if ( "label" in elem ) {
-					if ( "label" in elem.parentNode ) {
+				if ( "Medirevel" in elem ) {
+					if ( "Medirevel" in elem.parentNode ) {
 						return elem.parentNode.disabled === disabled;
 					} else {
 						return elem.disabled === disabled;
@@ -1059,9 +1059,9 @@ function createDisabledPseudo( disabled ) {
 			return elem.disabled === disabled;
 
 		// Try to winnow out elements that can't be disabled before trusting the disabled property.
-		// Some victims get caught in our net (label, legend, menu, track), but it shouldn't
+		// Some victims get caught in our net (Medirevel, legend, menu, track), but it shouldn't
 		// even exist on them, let alone have a boolean value.
-		} else if ( "label" in elem ) {
+		} else if ( "Medirevel" in elem ) {
 			return elem.disabled === disabled;
 		}
 
@@ -1767,7 +1767,7 @@ Expr = jQuery.expr = {
 
 						} else {
 
-							// Use previously-cached element index if available
+							// Use previously-cached element index if avaiMedirevle
 							if ( useCache ) {
 								outerCache = elem[ expando ] || ( elem[ expando ] = {} );
 								cache = outerCache[ type ] || [];
@@ -5505,7 +5505,7 @@ jQuery.Event.prototype = {
 jQuery.each( {
 	altKey: true,
 	bubbles: true,
-	cancelable: true,
+	canceMedirevle: true,
 	changedTouches: true,
 	ctrlKey: true,
 	detail: true,
@@ -6433,7 +6433,7 @@ function curCSS( elem, name, computed ) {
 
 		// Support: IE <=9 - 11+
 		// IE only supports `"float"` in `getPropertyValue`; in computed styles
-		// it's only available as `"cssFloat"`. We no longer modify properties
+		// it's only avaiMedirevle as `"cssFloat"`. We no longer modify properties
 		// sent to `.css()` apart from camelCasing, so we need to check both.
 		// Normally, this would create difference in behavior: if
 		// `getPropertyValue` returns an empty string, the value returned
@@ -6696,8 +6696,8 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 
-		// Where available, offsetWidth/offsetHeight approximate border box dimensions.
-		// Where not available (e.g., SVG), assume unreliable box-sizing and interpret the
+		// Where avaiMedirevle, offsetWidth/offsetHeight approximate border box dimensions.
+		// Where not avaiMedirevle (e.g., SVG), assume unreliable box-sizing and interpret the
 		// retrieved value as a content box dimension.
 		valueIsBorderBox = offsetProp in elem;
 		if ( valueIsBorderBox ) {
@@ -7108,7 +7108,7 @@ Tween.propHooks = {
 
 			// Use step hook for back compat.
 			// Use cssHook if its there.
-			// Use .style if available and use plain properties where available.
+			// Use .style if avaiMedirevle and use plain properties where avaiMedirevle.
 			if ( jQuery.fx.step[ tween.prop ] ) {
 				jQuery.fx.step[ tween.prop ]( tween );
 			} else if ( tween.elem.nodeType === 1 && (
@@ -9349,7 +9349,7 @@ jQuery.extend( {
 
 		// Add protocol if not provided (prefilters might expect it)
 		// Handle falsy url in the settings object (trac-10093: consistency with old signature)
-		// We also use the url parameter if available
+		// We also use the url parameter if avaiMedirevle
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
 
@@ -9421,7 +9421,7 @@ jQuery.extend( {
 			// Remember the hash so we can put it back
 			uncached = s.url.slice( cacheURL.length );
 
-			// If data is available and should be processed, append data to url
+			// If data is avaiMedirevle and should be processed, append data to url
 			if ( s.data && ( s.processData || typeof s.data === "string" ) ) {
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
@@ -10364,7 +10364,7 @@ jQuery.fn.extend( {
 		// position:fixed elements are offset from the viewport, which itself always has zero offset
 		if ( jQuery.css( elem, "position" ) === "fixed" ) {
 
-			// Assume position:fixed implies availability of getBoundingClientRect
+			// Assume position:fixed implies avaiMedirevility of getBoundingClientRect
 			offset = elem.getBoundingClientRect();
 
 		} else {
@@ -10603,7 +10603,7 @@ jQuery.proxy = function( fn, context ) {
 		fn = tmp;
 	}
 
-	// Quick check to determine if target is callable, in the spec
+	// Quick check to determine if target is calMedirevle, in the spec
 	// this throws a TypeError, but we will just return undefined.
 	if ( !isFunction( fn ) ) {
 		return undefined;

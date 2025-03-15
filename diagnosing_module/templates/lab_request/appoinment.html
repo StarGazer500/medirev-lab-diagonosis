@@ -4,7 +4,7 @@
 <head>
     {% load static %}
     <meta charset="utf-8">
-    <title>Labsky - Laboratory HTML Website Template</title>
+    <title>Medirev - Laboratory HTML Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -103,17 +103,19 @@
                         <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
                         <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
                         <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                        <a href="{% url 'contact' %}"  class="nav-item nav-link">Contact</a>
+                        <a href="{% url 'appointment' %}" class="nav-item nav-link">Appointment</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Others</a>
+                            
                             <div class="dropdown-menu bg-light m-0">
                                 <a href="{% url 'feature' %}" class="dropdown-item">Features</a>
                                 <a href="{% url 'team' %}"  class="dropdown-item">Our Team</a>
                                 <a href="{% url 'testimonial' %}"  class="dropdown-item">Testimonial</a>
-                                <a href="{% url 'appointment' %}"  class="dropdown-item active">Appoinment</a>
-                                <a href="{% url '404' %}" class="dropdown-item">404 Page</a>
+                              
                             </div>
                         </div>
-                        <a href="{% url 'contact' %}"  class="nav-item nav-link">Contact</a>
+                        
                     </div>
                     <div class="ms-auto d-none d-lg-flex">
                         <a class="btn btn-sm-square btn-primary ms-2" href=""><i class="fab fa-facebook-f"></i></a>
@@ -177,24 +179,51 @@
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                <label for="name">Your Name</label>
+                                <input type="text" class="form-control" id="first-name" name ="first_name" placeholder="Your First Name">
+                                <label for="first-name">First Name</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="mail" placeholder="Your Email">
-                                <label for="mail">Your Email</label>
+                                <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Your Last Name">
+                                <label for="last-name">Last Name</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="mobile" placeholder="Your Mobile">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="birth-date" name="date_of_birth" placeholder="Date of Birth">
+                                <label for="birth-date">Date of Birth</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="gender" name="gender">
+                                    <option selected>Male</option>
+                                    <option value="">Female</option>
+                                    <option value="">Bisexual</option>
+                                    <option value="">Other</option>
+                                    
+                                </select>
+                                <!-- <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender"> -->
+                                <label for="gender">Gender</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <div class="form-floating">
+                                <input  type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="mobile" name ="contact_number" placeholder="Your Mobile">
                                 <label for="mobile">Your Mobile</label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-floating">
+                        <!-- <div class="col-sm-6"> -->
+                            <!-- <div class="form-floating">
                                 <select class="form-select" id="service">
                                     <option selected>Pathology Testing</option>
                                     <option value="">Microbiology Tests</option>
@@ -202,22 +231,46 @@
                                     <option value="">Histopatology Tests</option>
                                 </select>
                                 <label for="service">Choose A Service</label>
-                            </div>
-                        </div>
+                            </div> -->
+                        <!-- </div> -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a message here" id="message"
+                                <textarea class="form-control" name=" test_description" placeholder="Describe the Kind of Test" id="message"
                                     style="height: 130px"></textarea>
-                                <label for="message">Message</label>
+                                <label for="message"> Describe The Lab Test You Want to have</label>
                             </div>
                         </div>
                         <div class="col-12 text-center">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
+                            <button  id ="submit-btn" class="btn btn-primary w-100 py-3" type="submit">Submit Now</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <h1 style="text-align: center;margin-top: 50px;" class="display-6 mb-4">Pending Appointments</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table">
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Patient Name</th>
+                                <th>Appointment description</th>
+                                <th>Appointment Date</th>
+                                <th>Appointment Request Date</th>
+                                <th>Appointment Status</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="labrequest-tbody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- Appoinment Start -->
 
@@ -228,7 +281,7 @@
             <div class="row g-5 py-5">
                 <div class="col-lg-6 pe-lg-5">
                     <a href="{% url 'index' %}" class="navbar-brand">
-                        <h1 class="h1 text-primary mb-0">Lab<span class="text-white">sky</span></h1>
+                        <h1 class="h1 text-primary mb-0">Medirev<span class="text-white">Lab</span></h1>
                     </a>
                     <p class="fs-5 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus augue, iaculis id elit eget, ultrices pulvinar tortor.</p>
                     <p><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</p>
@@ -307,6 +360,7 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'lab_request/js/main.js' %}"></script>
+    <script src="{% static 'lab_request/js/appointment.js' %}"></script>
 </body>
 
 </html>

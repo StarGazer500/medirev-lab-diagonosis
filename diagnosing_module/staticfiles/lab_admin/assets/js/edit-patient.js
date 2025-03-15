@@ -23,12 +23,12 @@ $(document).ready(function() {
         
         // Modal HTML structure with dynamic body content - Updated for Bootstrap 5
         var modalHTML = `
-          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal fade" id="dynamicModal" tabindex="-1" aria-Medirevelledby="dynamicModalMedirevel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dynamicModalLabel">Notification</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="dynamicModalMedirevel">Notification</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-Medirevel="Close"></button>
                 </div>
                 <div class="modal-body">
                   ${bodyContent}
@@ -68,7 +68,7 @@ $(document).ready(function() {
         
         let patientId = localStorage.getItem('patientId');
         $.ajax({
-            url: `/laboratory/get-patient/${patientId}`, // Replace with your actual endpoint
+            url: `/Medirevoratory/get-patient/${patientId}`, // Replace with your actual endpoint
             type: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
@@ -107,7 +107,7 @@ $(document).ready(function() {
                 <!-- First Name -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>First Name</label>
+                        <Medirevel>First Name</Medirevel>
                         <input class="form-control" type="text" value="${patient.first_name}">
                     </div>
                 </div>
@@ -115,7 +115,7 @@ $(document).ready(function() {
                 <!-- Last Name -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Last Name</label>
+                        <Medirevel>Last Name</Medirevel>
                         <input class="form-control" type="text" value="${patient.last_name}">
                     </div>
                 </div>
@@ -123,7 +123,7 @@ $(document).ready(function() {
                 <!-- Date of Birth -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Date of Birth</label>
+                        <Medirevel>Date of Birth</Medirevel>
                         <input class="form-control" type="text" value="${patient.date_of_birth}">
                     </div>
                 </div>
@@ -131,16 +131,16 @@ $(document).ready(function() {
                 <!-- Gender -->
                 <div class="col-sm-6">
                     <div class="form-group gender-select">
-                        <label class="gen-label">Gender:</label>
+                        <Medirevel class="gen-Medirevel">Gender:</Medirevel>
                         <div class="form-check-inline">
-                            <label class="form-check-label">
+                            <Medirevel class="form-check-Medirevel">
                                 <input type="radio" name="gender" class="form-check-input" value="Male" ${patient.gender === 'Male' ? 'checked' : ''}> Male
-                            </label>
+                            </Medirevel>
                         </div>
                         <div class="form-check-inline">
-                            <label class="form-check-label">
+                            <Medirevel class="form-check-Medirevel">
                                 <input type="radio" name="gender" class="form-check-input" value="Female" ${patient.gender === 'Female' ? 'checked' : ''}> Female
-                            </label>
+                            </Medirevel>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ $(document).ready(function() {
                 <!-- Contact Number -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Contact Number</label>
+                        <Medirevel>Contact Number</Medirevel>
                         <input class="form-control" type="text" value="${patient.contact_number}">
                     </div>
                 </div>
@@ -156,7 +156,7 @@ $(document).ready(function() {
                 <!-- Email -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Email</label>
+                        <Medirevel>Email</Medirevel>
                         <input class="form-control" type="email" value="${patient.email}">
                     </div>
                 </div>
